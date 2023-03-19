@@ -2,7 +2,8 @@ import logo from './logo.svg';
 import { Routes, Route} from "react-router-dom";
 import Home from './views/Home';
 import Layout from './views/Layout';
-import './App.css';
+import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
@@ -19,6 +20,12 @@ function App() {
       </Routes>
     </div>
   );
+  // return (
+  //   <div className="App">
+  //     <Layout />
+  //     <Home />
+  //   </div>
+  // );
 }
 
 export default App;

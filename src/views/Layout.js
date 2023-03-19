@@ -11,10 +11,7 @@ function Layout() {
             <Link to="/about">About</Link>
           </li>
           <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/nothing-here">Nothing Here</Link>
+            <Link to="/dashboard">Pratice</Link>
           </li>
         </ul>
       </nav>
