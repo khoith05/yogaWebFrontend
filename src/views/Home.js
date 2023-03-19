@@ -4,10 +4,6 @@ import headerImg from "../assets/img/object.png";
 import { ArrowRightCircle } from 'react-bootstrap-icons';
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
-import {
-  BrowserRouter as Router
-} from "react-router-dom";
-
 
 function Home () {
   const [loopNum, setLoopNum] = useState(0);
@@ -51,12 +47,6 @@ function Home () {
     }
   }
 
-  const [activeLink, setActiveLink] = useState('home');
-
-  const onUpdateActiveLink = (value) => {
-    setActiveLink(value);
-  }
-
   return (
     <section className="banner" id="home">
       <Container>
@@ -68,10 +58,7 @@ function Home () {
                 <span className="tagline">Welcome to Fitty</span>
                 <h1>{`Hi! We're here to help you`} <span className="txt-rotate" dataPeriod="1000" data-rotate='[ "experiencing", "learning", "getting healthy" ]'><span className="wrap">{text}</span></span></h1>
                   <p>Yoga essentially originated in the subcontinent of India. It has been around since ancient times and was performed by yogis. The term yoga has been derived from a Sanskrit word which translates to basically union and discipline. In the earlier days, the followers of Hinduism, Buddhism, and Jainism practiced it.</p>
-                  <Router>
-                    <button onClick >Get Started <ArrowRightCircle size={25} /></button>
-                  </Router>
-                  
+                    <button onClick >Get Started <ArrowRightCircle size={25} /></button>   
               </div>}
             </TrackVisibility>
           </Col>
