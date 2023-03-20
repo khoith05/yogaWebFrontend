@@ -1,26 +1,16 @@
 import {Outlet, Link } from "react-router-dom";
+import { NavBar } from './views/NavBar';
+import Sequence from './views/Sequence';
+import { Footer } from './views/Footer';
 function Layout() {
   return (
     <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/camera">Camera</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/nothing-here">Nothing Here</Link>
-          </li>
-        </ul>
-      </nav>
-
-      <hr />
+      <NavBar />
       <Outlet />
+      <Home />
+      <Sequence />
+      <Footer />
+      
     </div>
   );
 }
