@@ -1,17 +1,13 @@
-import {Outlet, Link } from "react-router-dom";
-import { NavBar } from './views/NavBar';
-import Sequence from './views/Sequence';
-import { Footer } from './views/Footer';
+import {Outlet } from "react-router-dom";
+import { NavBar } from './NavBar';
+import { Footer } from './Footer';
 function Layout() {
   return (
-    <div>
+    <>
       <NavBar />
       <Outlet />
-      <Home />
-      <Sequence />
       <Footer />
-      
-    </div>
+    </>
   );
 }
 
