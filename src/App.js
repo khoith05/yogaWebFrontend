@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import { Routes, Route} from "react-router-dom";
 import Home from './views/Home';
 import Layout from './views/Layout';
+import Camera from './components/Camera';
 import './App.css';
 
 function App() {
@@ -11,8 +12,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          {/* <Route path="about" element={<About />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="camera" element={<Camera />} />
+          {/* <Route path="dashboard" element={<Dashboard />} />
 
           <Route path="*" element={<NoMatch />} /> */}
         </Route>
