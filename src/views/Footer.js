@@ -7,7 +7,7 @@ import navIcon3 from "../assets/img/nav-icon3.svg";
 
 export const Footer = () => {
   return (
-    <footer className="footer">
+    <div className="footer">
       <Container>
         
           <Col className="text-center">
@@ -21,6 +21,6 @@ export const Footer = () => {
           </Col>
         
       </Container>
-    </footer>
+    </div>
   )
 }
