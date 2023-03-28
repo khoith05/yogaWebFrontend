@@ -6,8 +6,6 @@ import {HashLink} from 'react-router-hash-link';
 import './ExercisePage.css'
 
 const ExercisePage= () => {
-
-
   return (
     <div className="banner1" >
     <Container>

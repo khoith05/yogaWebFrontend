@@ -84,8 +84,8 @@ const ExerciseDetail= () => {
     <Header>
       <HeaderRow style = {{backgroundColor: '#F4DCDC'}}>
         <HeaderCell>  </HeaderCell>
-        <HeaderCell> Posture </HeaderCell>
-        <HeaderCell>Time </HeaderCell>
+        <HeaderCell style = {{marginTop: '15px', marginBottom: '10px'}}> Posture </HeaderCell>
+        <HeaderCell style = {{marginTop: '15px', marginBottom: '10px'}}>Time </HeaderCell>
       </HeaderRow>
     </Header>
     <Body>
