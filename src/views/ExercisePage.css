@@ -1,0 +1,71 @@
+
+.my-button {
+    background-color: #8C1A11;
+    border: none;
+    border-radius: 4px;
+    margin-left: 700px;
+    margin-bottom: 15px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+    border-radius: 12px;
+    font-family: 'Centra';
+  }
+  .my-button1 {
+    background-color: #8C1A11;
+    border: none;
+    border-radius: 4px;
+    margin-top: 15px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+    border-radius: 12px;
+    
+  }
+h10 {
+    font-family: Centra;
+    font-size: 20px;
+    color: #651D1D;
+    font-weight: bold;
+    font-family: 'Centra';
+
+}
+h9 {
+    font-family: Centra;
+    font-size: 15px;
+    color:  #000000;
+}
+
+.banner1{
+    margin-top: 0;
+    padding: 70px 0 50px 0;
+    background-position: top center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.test{
+  color: #F80068;
+}
+.Table1{
+    height: 100%;
+    color:  #651D1D;
+    border-radius: 0px;
+    font-family: Centra;
+    background-color: #F4DCDC;
+}
+.Header1{
+  background-color: #F4DCDC;
+}
+.Row_css{
+  box-sizing: border-box;
+  border-bottom: 20 px solid #F4DCDC;
+  border-radius: 30px;
+  border-spacing: 50 px;
+  box-sizing: border-box;
+}
