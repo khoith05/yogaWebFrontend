@@ -28,6 +28,20 @@
     border-radius: 12px;
     
   }
+  .my-button-close {
+    background-color: #8C1A11;
+    border: none;
+    border-radius: 4px;
+    margin-top: 15px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+    border-radius: 12px;
+    
+  }
 h10 {
     font-family: Centra;
     font-size: 20px;
@@ -68,4 +82,11 @@ h9 {
   border-radius: 30px;
   border-spacing: 50 px;
   box-sizing: border-box;
+}
+
+.player-wrapper{
+  color: #651D1D;
+}
+.react-player{
+  color:#8C1A11;
 }
