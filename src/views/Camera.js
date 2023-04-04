@@ -6,30 +6,6 @@ import drawingUtils from '@mediapipe/drawing_utils';
 import getChecKeypoint from '../utils/CheckPositionSingleton';
 import PositionCanvas from './PositionCanvas';
 
-const drawPerson = (canvas, checkKeypoint) => {
-  const canvasCtx = canvas.getContext('2d');
-  const image = new Image();
-  image.src = '/pose_red.png';
-  image.onload = function () {
-    const { x, y, h } = checkKeypoint.getSafePositionTransform();
-    const scaleFactor = h / image.height;
-    const imgWidth = image.width * scaleFactor;
-    const imgHeight = h;
-    canvasCtx.save();
-    canvasCtx.drawImage(image, x, y, imgWidth, imgHeight);
-    console.log(
-      '🚀 ~ file: Camera.js:17 ~ drawPerson ~ x, y, imgWidth, imgHeight:',
-      x,
-      y,
-      imgWidth,
-      imgHeight,
-      canvas.width,
-      canvas.height
-    );
-    canvasCtx.restore();
-  };
-};
-
 function Camera(props) {
   const videoRef = useRef();
   const canvasRef = useRef();
