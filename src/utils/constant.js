@@ -1,4 +1,6 @@
 export const ANGLE_THRESHOLD = 15;
+export const PUNISHMENT_COEFFICIENT = 1;
+export const MAX_POINT_PER_ANGLE = 10;
 export const ANGLE_LIST = {
   A: {
     basePoint: 14,
