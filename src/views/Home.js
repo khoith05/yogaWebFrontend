@@ -4,7 +4,7 @@ import Sequence from "./Sequence";
 function Home() {
   return ( <>
   <Banner/>
-  <Sequence/>
+  <Sequence />
   </> );
 }
 
