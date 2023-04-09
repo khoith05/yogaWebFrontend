@@ -1,8 +1,7 @@
 import { useRef, useEffect } from 'react';
-import drawPose, { drawSafeRect } from './../utils/drawPose';
-
-function PositionCanvas(props) {
-  const { isVisible, isValidPosition, canvasStyle } = props;
+import drawKeypoints from '../utils/drawKeypoints';
+function KeypointsCanvas(props) {
+  const { isVisible, keypoints, canvasStyle } = props;
 
   const canvasRef = useRef();
 
@@ -14,9 +13,8 @@ function PositionCanvas(props) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    drawPose({ canvas, isValidPosition });
-    drawSafeRect({ canvas });
-  }, [isValidPosition]);
+    drawKeypoints({ canvas, keypoints });
+  }, [keypoints]);
 
   const style = {
     position: 'absolute',
@@ -31,4 +29,4 @@ function PositionCanvas(props) {
   return <></>;
 }
 
-export default PositionCanvas;
+export default KeypointsCanvas;

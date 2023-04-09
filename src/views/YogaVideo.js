@@ -1,12 +1,23 @@
 function YogaVideo(props) {
-  const { url, onFisnish, className = 'w-100' } = props;
+  const { url, onFinish, className = 'w-100', style, showVideo } = props;
+  const overwriteStyle = {
+    ...style,
+    display: showVideo ? 'block' : 'none',
+  };
   const handleVideoEnd = () => {
-    onFisnish();
+    onFinish();
   };
   return (
-    <video className={className} autoPlay loop muted onEnded={handleVideoEnd}>
-      <source src={url} type='video/mp4' allowFullScreen />
-    </video>
+    <video
+      className={className}
+      src={url}
+      style={overwriteStyle}
+      autoPlay
+      muted
+      controls={false}
+      onEnded={handleVideoEnd}
+      preload='auto'
+    />
   );
 }
 
