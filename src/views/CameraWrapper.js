@@ -2,28 +2,28 @@ import { useEffect, useState, useCallback } from 'react';
 import Camera from './Camera';
 import YogaVideo from './YogaVideo';
 import { poseList } from '../utils/constant';
-
-// const poseList = [
-//   {
-//     index: 0, // order
-//     pose: {}, // angleList
-//     url: '', // video url
-//   },
-// ];
+import checkPosition from '../utils/checkPosition';
+import checkPose from '../utils/CheckPose';
 
 function CameraWrapper() {
-  const [positionCheck, setPositionCheck] = useState(false);
-  const [poseCheck, setPoseCheck] = useState(false);
+  const [shouldCheckPosition, setShouldcheckPosition] = useState(false);
+  const [shouldCheckPose, setShouldCheckPose] = useState(false);
   const [currentPose, setCurrentPose] = useState(poseList[0]);
 
-  const checkPosition = () => {};
+  const handleCheckPosition = useCallback(({ width, keypoints }) => {
+    const isValidPosition = checkPosition({ width, keypoints });
+    isValidPosition && setShouldcheckPosition(false);
+  }, []);
 
-  const checkPose = () => {
-    console.log('🚀 ~ file: CameraWrapper.js:26 ~ checkPos ~ a:');
-    setPoseCheck(false);
-  };
+  const handleCheckPose = useCallback(({ keypoints }) => {
+    const isValidPose = checkPose({
+      angleList: currentPose.angleList,
+      keypoints,
+    });
+    isValidPose && setShouldCheckPose(false);
+  }, []);
   const handleVideoEnded = () => {
-    setPoseCheck(true);
+    setShouldCheckPose(true);
     handleNextPose();
   };
 
@@ -41,28 +41,27 @@ function CameraWrapper() {
   };
 
   const handlePoseResult = useCallback(
-    positionCheck ? checkPosition : checkPose,
-    [positionCheck]
+    shouldCheckPosition ? handleCheckPosition : handleCheckPose,
+    [shouldCheckPosition]
   );
 
   useEffect(() => {
-    if (!(poseCheck || positionCheck)) {
+    if (!(shouldCheckPose || shouldCheckPosition)) {
       handleNextPose();
     }
-  }, [poseCheck]);
+  }, [shouldCheckPose]);
 
   return (
     <>
       <Camera
-        showCamera={poseCheck || positionCheck}
+        showCamera={shouldCheckPose || shouldCheckPosition}
         onResult={handlePoseResult}
       />
       {currentPose && (
         <YogaVideo
-          key={currentPose.index}
           onFinish={handleVideoEnded}
           url={currentPose.url}
-          showVideo={!(poseCheck || positionCheck)}
+          showVideo={!(shouldCheckPose || shouldCheckPosition)}
         />
       )}
     </>

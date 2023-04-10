@@ -1,3 +1,4 @@
+import { memo } from 'react';
 function YogaVideo(props) {
   const { url, onFinish, className = 'w-100', style, showVideo } = props;
   const overwriteStyle = {
@@ -21,4 +22,4 @@ function YogaVideo(props) {
   );
 }
 
-export default YogaVideo;
+export default memo(YogaVideo);

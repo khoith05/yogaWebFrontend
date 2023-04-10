@@ -41,13 +41,19 @@ export const ANGLE_LIST = {
     adjacentPoint2: 27,
   },
 };
+export const VIEW_RATIO = 16 / 9;
+
+export const SAFE_HEIGHT_PERCENT = 0.6;
+export const RATIO_BETWEEN_HEIGHT_WIDTH = 2.35;
+export const SAFE_MIN_HEIGHT_PERCENT = 0.5;
+export const LOWER_HEIGHT_PERCENT = 0.2;
 
 //will be removed
 export const poseList = [
   {
     index: 0, // order
     name: 'warrior2',
-    pose: {
+    angleList: {
       A: 173.4995185,
       B: 175.776702,
       C: 177.8896579,
@@ -64,7 +70,7 @@ export const poseList = [
   {
     index: 1, // order
     name: 'tree',
-    pose: {
+    angleList: {
       A: 160.9636589,
       B: 155.6343737,
       C: 87.15650871,
@@ -76,12 +82,12 @@ export const poseList = [
       I: 176.3402205,
       J: 33.52708996,
     }, // angleList
-    url: 'https://res.cloudinary.com/uploaderkhoith/video/upload/v1680939086/Countdown_5_Seconds_HD_theo75.mp4', // video url
+    url: 'https://res.cloudinary.com/uploaderkhoith/video/upload/v1681028177/Countdown_5_Seconds_HD_tw4chf.mp4', // video url
   },
   {
     index: 2, // order
     name: 'Goddess',
-    pose: {
+    angleList: {
       A: 91.90709952,
       B: 97.20618786,
       C: 171.1844296,
@@ -98,7 +104,7 @@ export const poseList = [
   {
     index: 3, // order
     name: 'warrior2',
-    pose: {
+    angleList: {
       A: 173.4995185,
       B: 175.776702,
       C: 177.8896579,
@@ -115,7 +121,7 @@ export const poseList = [
   {
     index: 4, // order
     name: 'tree',
-    pose: {
+    angleList: {
       A: 160.9636589,
       B: 155.6343737,
       C: 87.15650871,
@@ -132,7 +138,7 @@ export const poseList = [
   {
     index: 5, // order
     name: 'goddess',
-    pose: {
+    angleList: {
       A: 91.90709952,
       B: 97.20618786,
       C: 171.1844296,
