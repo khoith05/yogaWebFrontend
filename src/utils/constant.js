@@ -41,12 +41,15 @@ export const ANGLE_LIST = {
     adjacentPoint2: 27,
   },
 };
-export const VIEW_RATIO = 16 / 9;
+export const VIEW_RATIO = 16 / 9; // width / height
 
 export const SAFE_HEIGHT_PERCENT = 0.6;
 export const RATIO_BETWEEN_HEIGHT_WIDTH = 2.35;
 export const SAFE_MIN_HEIGHT_PERCENT = 0.5;
 export const LOWER_HEIGHT_PERCENT = 0.2;
+
+export const CHECK_POSITION_TIMEOUT_KEY = 'CHECK_POSITION_TIMEOUT_KEY';
+export const CHECK_POSE_TIMEOUT_KEY = 'CHECK_POSE_TIMEOUT_KEY';
 
 //will be removed
 export const poseList = [

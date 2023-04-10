@@ -3,31 +3,58 @@ import Camera from './Camera';
 import YogaVideo from './YogaVideo';
 import { poseList } from '../utils/constant';
 import checkPosition from '../utils/checkPosition';
-import checkPose from '../utils/CheckPose';
+import checkPose from '../utils/checkPose';
+import {
+  CHECK_POSE_TIMEOUT_KEY,
+  CHECK_POSITION_TIMEOUT_KEY,
+} from '../utils/constant';
+import { setTimeoutWithKey, stopExcute } from '../utils/timeOut';
 
 function CameraWrapper() {
-  const [shouldCheckPosition, setShouldcheckPosition] = useState(false);
+  const [shouldCheckPosition, setShouldcheckPosition] = useState(true);
   const [shouldCheckPose, setShouldCheckPose] = useState(false);
   const [currentPose, setCurrentPose] = useState(poseList[0]);
 
   const handleCheckPosition = useCallback(({ width, keypoints }) => {
+    setTimeoutWithKey({
+      key: CHECK_POSITION_TIMEOUT_KEY,
+      callback: () => {
+        setShouldcheckPosition(false);
+        console.log('SKIP POSITION CHECK');
+      },
+      time: 4000,
+    });
     const isValidPosition = checkPosition({ width, keypoints });
-    isValidPosition && setShouldcheckPosition(false);
+    if (isValidPosition) {
+      setShouldcheckPosition(false);
+      stopExcute({ key: CHECK_POSITION_TIMEOUT_KEY });
+    }
   }, []);
 
   const handleCheckPose = useCallback(({ keypoints }) => {
+    setTimeoutWithKey({
+      key: CHECK_POSE_TIMEOUT_KEY,
+      callback: () => {
+        setShouldCheckPose(false);
+        console.log('SKIP THIS POSE');
+      },
+      time: 7000,
+    });
     const isValidPose = checkPose({
       angleList: currentPose.angleList,
       keypoints,
     });
-    isValidPose && setShouldCheckPose(false);
+    if (isValidPose) {
+      setShouldCheckPose(false);
+      stopExcute({ key: CHECK_POSE_TIMEOUT_KEY });
+    }
   }, []);
   const handleVideoEnded = () => {
     setShouldCheckPose(true);
     handleNextPose();
   };
 
-  const handleNextPose = () => {
+  const handleNextPose = useCallback(() => {
     if (!currentPose) {
       setCurrentPose(poseList[0]);
       return;
@@ -38,7 +65,7 @@ function CameraWrapper() {
       return;
     }
     setCurrentPose(poseList[currentPose.index + 1]);
-  };
+  }, [currentPose]);
 
   const handlePoseResult = useCallback(
     shouldCheckPosition ? handleCheckPosition : handleCheckPose,
@@ -55,10 +82,12 @@ function CameraWrapper() {
     <>
       <Camera
         showCamera={shouldCheckPose || shouldCheckPosition}
+        showVirtualPose={shouldCheckPosition}
         onResult={handlePoseResult}
       />
       {currentPose && (
         <YogaVideo
+          key={currentPose.index}
           onFinish={handleVideoEnded}
           url={currentPose.url}
           showVideo={!(shouldCheckPose || shouldCheckPosition)}

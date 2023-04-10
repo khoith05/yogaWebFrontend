@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import drawPose, { drawSafeRect } from './../utils/drawPose';
 
 function PositionCanvas(props) {
-  const { isVisible, isValidPosition, canvasStyle } = props;
+  const { isValidPosition, canvasStyle } = props;
 
   const canvasRef = useRef();
 
@@ -25,10 +25,8 @@ function PositionCanvas(props) {
     width: '640px',
     ...canvasStyle,
   };
-  if (isVisible) {
-    return <canvas ref={canvasRef} style={style} />;
-  }
-  return <></>;
+
+  return <canvas ref={canvasRef} style={style} />;
 }
 
 export default PositionCanvas;

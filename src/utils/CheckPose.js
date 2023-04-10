@@ -13,7 +13,7 @@ function checkPose({ angleList, keypoints }) {
     return isValidAngle(angleList[key], angle);
   });
 
-  return angleValidList.some((valid) => !valid);
+  return angleValidList.every(Boolean);
 }
 
 export default checkPose;

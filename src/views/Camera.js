@@ -4,29 +4,30 @@ import * as CameraUtils from '@mediapipe/camera_utils';
 
 import PositionCanvas from './PositionCanvas';
 import KeypointsCanvas from './KeypointsCanvas';
+import getHeightBaseOnRatio from '../utils/getHeightBaseOnRatio';
 
 function Camera(props) {
-  const { showCamera, onResult } = props;
+  const { showCamera, onResult, showVirtualPose, width } = props;
   const videoRef = useRef();
 
   const poseRef = useRef();
   const [keypoints, setKeypoints] = useState();
   const [init, setInit] = useState(false);
   const [init2, setInit2] = useState(false);
-  const [isValidPosition, setIsValidPosition] = useState(false);
+  const cameraRef = useRef();
 
   const style = {
     video: {
       position: 'absolute',
-      width: props.width,
-      height: props.height,
+      width: `${width}px`,
+      height: `${getHeightBaseOnRatio(width)}px`,
       objectFit: 'cover',
       left: 0,
     },
     canvas: {
       position: 'absolute',
-      width: props.width,
-      height: props.height,
+      width: `${width}px`,
+      height: `${getHeightBaseOnRatio(width)}px`,
       left: 0,
     },
   };
@@ -47,14 +48,7 @@ function Camera(props) {
     });
 
     pose.setOptions(options);
-    pose.onResults((results) => {
-      const { poseLandmarks: keypoints } = results;
 
-      if (keypoints) {
-        onResult(keypoints);
-        setKeypoints(keypoints);
-      }
-    });
     setInit(true);
     poseRef.current = pose;
   }, []);
@@ -72,9 +66,35 @@ function Camera(props) {
         height: 480,
       });
       camera.start();
+      cameraRef.current = camera;
       setInit2(true);
     }
   }, [videoRef, poseRef, init]);
+
+  useEffect(() => {
+    const camera = cameraRef.current;
+    if (camera) {
+      if (showCamera) {
+        camera.start();
+      } else {
+        camera.stop();
+      }
+    }
+  }, [showCamera, cameraRef]);
+
+  useEffect(() => {
+    const pose = poseRef.current;
+    console.log('onresult change here', pose, onResult);
+    pose &&
+      pose.onResults((results) => {
+        const { poseLandmarks: keypoints } = results;
+
+        if (keypoints) {
+          onResult({ keypoints, width });
+          setKeypoints(keypoints);
+        }
+      });
+  }, [onResult, poseRef]);
 
   return (
     <div
@@ -83,7 +103,7 @@ function Camera(props) {
     >
       <video ref={videoRef} className='Video' style={style.video} playsInline />
       <KeypointsCanvas isVisible={true} keypoints={keypoints} />
-      <PositionCanvas isVisible={true} isValidPosition={isValidPosition} />
+      {showVirtualPose && <PositionCanvas isValidPosition={!showVirtualPose} />}
     </div>
   );
 }
