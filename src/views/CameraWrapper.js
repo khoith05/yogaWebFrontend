@@ -3,17 +3,21 @@ import Camera from './Camera';
 import YogaVideo from './YogaVideo';
 import { poseList } from '../utils/constant';
 import checkPosition from '../utils/checkPosition';
-import checkPose from '../utils/checkPose';
+import checkPose from '../utils/checkPoseAngles';
 import {
   CHECK_POSE_TIMEOUT_KEY,
   CHECK_POSITION_TIMEOUT_KEY,
+  CHECK_POSE_STAGE_ONE_TIME_OUT_KEY,
+  CHECK_POSE_STAGE_TWO_TIME_OUT_KEY,
+  POSE_ERROR_NOTI_INTERVAL,
 } from '../utils/constant';
-import { setTimeoutWithKey, stopExcute } from '../utils/timeOut';
+import { setTimeoutWithKey, stopExcute } from '../utils/setTimeoutWithKey';
 
 function CameraWrapper() {
   const [shouldCheckPosition, setShouldcheckPosition] = useState(true);
   const [shouldCheckPose, setShouldCheckPose] = useState(false);
   const [currentPose, setCurrentPose] = useState(poseList[0]);
+  const [shouldCheckPoseStageTwo, setShouldCheckPoseStageTwo] = useState(false);
 
   const handleCheckPosition = useCallback(({ width, keypoints }) => {
     setTimeoutWithKey({
@@ -32,6 +36,17 @@ function CameraWrapper() {
   }, []);
 
   const handleCheckPose = useCallback(({ keypoints }) => {
+    if (!shouldCheckPoseStageTwo) {
+      setTimeoutWithKey({
+        key: CHECK_POSE_STAGE_ONE_TIME_OUT_KEY,
+        callback: () => {
+          setShouldCheckPoseStageTwo(true);
+          console.log('SKIP THIS POSE');
+        },
+        time: 7000,
+      });
+    }
+
     setTimeoutWithKey({
       key: CHECK_POSE_TIMEOUT_KEY,
       callback: () => {

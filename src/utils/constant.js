@@ -41,6 +41,19 @@ export const ANGLE_LIST = {
     adjacentPoint2: 27,
   },
 };
+
+export const ANGLE_LABEL = {
+  A: 'A',
+  B: 'B',
+  C: 'C',
+  D: 'D',
+  E: 'E',
+  F: 'F',
+  G: 'G',
+  H: 'H',
+  I: 'I',
+  J: 'J',
+};
 export const VIEW_RATIO = 16 / 9; // width / height
 
 export const SAFE_HEIGHT_PERCENT = 0.6;
@@ -50,6 +63,12 @@ export const LOWER_HEIGHT_PERCENT = 0.2;
 
 export const CHECK_POSITION_TIMEOUT_KEY = 'CHECK_POSITION_TIMEOUT_KEY';
 export const CHECK_POSE_TIMEOUT_KEY = 'CHECK_POSE_TIMEOUT_KEY';
+export const CHECK_POSE_STAGE_TWO_TIME_OUT_KEY =
+  'CHECK_POSE_STAGE_TWO_TIME_OUT_KEY';
+export const CHECK_POSE_STAGE_ONE_TIME_OUT_KEY =
+  'CHECK_POSE_STAGE_ONE_TIME_OUT_KEY';
+
+export const POSE_ERROR_NOTI_INTERVAL = 'POSE_ERROR_NOTI_INTERVAL';
 
 //will be removed
 export const poseList = [
