@@ -1,8 +1,4 @@
-export default function getAngle({
-  basePoint,
-  adjacentPoint1,
-  adjacentPoint2,
-}) {
+function getAngle({ basePoint, adjacentPoint1, adjacentPoint2 }) {
   // Calculate the lengths of the sides of the triangle
   let side1 = Math.sqrt(
     Math.pow(adjacentPoint1.x - basePoint.x, 2) +
@@ -47,6 +43,18 @@ export default function getAngle({
 
 function toDegrees(angle) {
   return angle * (180 / Math.PI);
+}
+
+export default function calculateAngle({
+  basePoint,
+  adjacentPoint1,
+  adjacentPoint2,
+}) {
+  const rad =
+    Math.atan2(adjacentPoint1.y - basePoint.y, adjacentPoint1.x - basePoint.x) -
+    Math.atan2(adjacentPoint2.y - basePoint.y, adjacentPoint2.x - basePoint.x);
+  const degree = rad * (180 / Math.PI);
+  return degree < 0 ? 360 + degree : degree;
 }
 
 function calculateAngle1(x1, y1, x2, y2, x3, y3) {

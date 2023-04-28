@@ -4,6 +4,7 @@ import YogaVideo from './YogaVideo';
 import { poseList } from '../utils/constant';
 import checkPosition from '../utils/checkPosition';
 import checkPose from '../utils/checkPoseAngles';
+import calculatePosePoint from '../utils/calculatePosePoint';
 import {
   CHECK_POSE_TIMEOUT_KEY,
   CHECK_POSITION_TIMEOUT_KEY,
@@ -26,7 +27,7 @@ function CameraWrapper() {
         setShouldcheckPosition(false);
         console.log('SKIP POSITION CHECK');
       },
-      time: 4000,
+      time: 1000,
     });
     const isValidPosition = checkPosition({ width, keypoints });
     if (isValidPosition) {
@@ -36,32 +37,49 @@ function CameraWrapper() {
   }, []);
 
   const handleCheckPose = useCallback(({ keypoints }) => {
-    if (!shouldCheckPoseStageTwo) {
+    if (shouldCheckPoseStageTwo) {
       setTimeoutWithKey({
-        key: CHECK_POSE_STAGE_ONE_TIME_OUT_KEY,
+        key: CHECK_POSE_STAGE_TWO_TIME_OUT_KEY,
         callback: () => {
-          setShouldCheckPoseStageTwo(true);
-          console.log('SKIP THIS POSE');
+          setShouldCheckPose(false);
+          console.log('DONE THIS POSE');
         },
         time: 7000,
       });
-    }
-
-    setTimeoutWithKey({
-      key: CHECK_POSE_TIMEOUT_KEY,
-      callback: () => {
-        setShouldCheckPose(false);
-        console.log('SKIP THIS POSE');
-      },
-      time: 7000,
-    });
-    const isValidPose = checkPose({
-      angleList: currentPose.angleList,
-      keypoints,
-    });
-    if (isValidPose) {
-      setShouldCheckPose(false);
-      stopExcute({ key: CHECK_POSE_TIMEOUT_KEY });
+      const point = calculatePosePoint({
+        angleList: currentPose.angleList,
+        keypoints,
+      });
+      console.log(
+        '🚀 ~ file: CameraWrapper.js:53 ~ handleCheckPose ~ point:',
+        point
+      );
+    } else {
+      setTimeoutWithKey({
+        key: CHECK_POSE_STAGE_ONE_TIME_OUT_KEY,
+        callback: () => {
+          setShouldCheckPose(false);
+          console.log('SKIP THIS POSE');
+        },
+        time: 9999000,
+      });
+      // setTimeoutWithKey({
+      //   key: CHECK_POSE_TIMEOUT_KEY,
+      //   callback: () => {
+      //     setShouldCheckPose(false);
+      //     console.log('SKIP THIS POSE');
+      //   },
+      //   time: 7000,
+      // });
+      const isValidPose = checkPose({
+        angleList: currentPose.angleList,
+        keypoints,
+      });
+      if (isValidPose) {
+        // setShouldCheckPose(false);
+        setShouldCheckPoseStageTwo(true);
+        stopExcute({ key: CHECK_POSE_STAGE_ONE_TIME_OUT_KEY });
+      }
     }
   }, []);
   const handleVideoEnded = () => {

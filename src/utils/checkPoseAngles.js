@@ -1,6 +1,6 @@
 import { ANGLE_LIST } from './constant.js';
 import isValidAngle from './isValidAngle.js';
-import getAngle from './getAngle.js';
+import calculateAngle from './calculateAngle.js';
 import { setTimeoutWithKey } from './setTimeoutWithKey.js';
 import { ANGLE_THRESHOLD } from './constant.js';
 
@@ -12,7 +12,7 @@ function checkPoseAngles({ angleList, keypoints }) {
 
     const { basePoint, adjacentPoint1, adjacentPoint2 } = value;
 
-    const angle = getAngle({
+    const angle = calculateAngle({
       basePoint: keypoints[basePoint],
       adjacentPoint1: keypoints[adjacentPoint1],
       adjacentPoint2: keypoints[adjacentPoint2],
@@ -21,14 +21,14 @@ function checkPoseAngles({ angleList, keypoints }) {
     const isValid = isValidAngle(angleList[key], angle);
 
     if (!isValid) {
-      errorNoti({ key, isBiger: !!(angle - angleList[key]) });
+      errorNoti({ angle: key, isBigger: !!(angle - angleList[key] > 0) });
       temporarySkipAngles[key] = key;
       setTimeoutWithKey({
         key,
         callback: () => {
           temporarySkipAngles[key] = undefined;
         },
-        time: 1500,
+        time: 5000,
       });
     }
   });
@@ -36,8 +36,12 @@ function checkPoseAngles({ angleList, keypoints }) {
   return angleValidList.every(Boolean);
 }
 
-function errorNoti() {
-  console.log('test run here');
+function errorNoti({ angle, isBigger }) {
+  console.log(
+    'error here ~ angle',
+    angle,
+    isBigger ? 'is bigger than standard' : ' is smaller than standard'
+  );
 }
 
 // function getAngleDifferenceList({ angleList, keypoints }) {
