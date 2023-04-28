@@ -3,7 +3,10 @@ import * as poseDetection from '@mediapipe/pose';
 import * as CameraUtils from '@mediapipe/camera_utils';
 import PositionCanvas from './PositionCanvas';
 import KeypointsCanvas from './KeypointsCanvas';
-import getHeightBaseOnRatio from '../utils/getHeightBaseOnRatio';
+import getSizeBaseOnRatio, {
+  getHeightBaseOnRatio,
+  getWidthBaseOnRatio,
+} from '../utils/getSizeBaseOnRatio';
 import { useResizeDetector } from 'react-resize-detector';
 
 const style = {
@@ -13,7 +16,7 @@ const style = {
 
 function Camera(props) {
   const { showCamera, onResult, showVirtualPose } = props;
-  const { width, ref: wrapperRef } = useResizeDetector();
+  const { width: rWidth, ref: wrapperRef } = useResizeDetector();
   // const width = get(wrapperRef, 'current.offsetWidth');
   const videoRef = useRef();
 
@@ -45,16 +48,28 @@ function Camera(props) {
 
   // init camera
   useEffect(() => {
-    if (!width) return;
+    if (!rWidth) return;
+    const { width, height } = getSizeBaseOnRatio(rWidth);
     const video = videoRef.current;
     const pose = poseRef.current;
-    console.log('width', width);
-    const fixedWidth = Math.floor(width);
-    const height = getHeightBaseOnRatio(fixedWidth);
+    // console.log('width', width);
+    // const fixedWidth = Math.floor(width);
+    // const height = getHeightBaseOnRatio(fixedWidth);
+    // let newHeight = height;
+    // let newWidth = fixedWidth;
+
+    // if (height > window.innerHeight) {
+    //   newHeight = Math.floor(innerHeight);
+    //   newWidth = getWidthBaseOnRatio;
+    // }
+    // setSize({
+    //   height,
+    //   width: fixedWidth,
+    // });
 
     setSize({
       height,
-      width: fixedWidth,
+      width,
     });
 
     if (video && pose) {
@@ -62,13 +77,13 @@ function Camera(props) {
         onFrame: async () => {
           await pose.send({ image: video });
         },
-        width: fixedWidth,
+        width,
         height,
       });
       camera.start();
       cameraRef.current = camera;
     }
-  }, [videoRef, poseRef, width]);
+  }, [videoRef, poseRef, rWidth]);
 
   // start stop camera
   useEffect(() => {
@@ -91,11 +106,11 @@ function Camera(props) {
         const { poseLandmarks: keypoints } = results;
 
         if (keypoints) {
-          onResult({ keypoints, width: Math.floor(width) });
+          onResult({ keypoints, width: size.width });
           setKeypoints(keypoints);
         }
       });
-  }, [onResult, poseRef, width]);
+  }, [onResult, poseRef, size]);
 
   return (
     <div ref={wrapperRef} className='d-flex justify-content-center'>
