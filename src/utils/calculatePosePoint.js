@@ -1,6 +1,7 @@
 import { ANGLE_LIST } from './constant.js';
 import calculateAngle from './calculateAngle.js';
 import getPoint from './getPoint.js';
+import { throttle } from 'lodash';
 
 function calculatePosePoint({ angleList, keypoints }) {
   const posePointSum = Object.entries(ANGLE_LIST).reduce(
@@ -22,4 +23,6 @@ function calculatePosePoint({ angleList, keypoints }) {
   return posePointSum / 10;
 }
 
-export default calculatePosePoint;
+const throttleCalculatePosePoint = throttle(calculatePosePoint, 500);
+
+export default throttleCalculatePosePoint;

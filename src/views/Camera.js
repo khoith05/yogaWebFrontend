@@ -84,7 +84,7 @@ function Camera(props) {
 
   useEffect(() => {
     const pose = poseRef.current;
-    console.log('onresult change here', pose, onResult);
+    console.log('onresult change here');
     pose &&
       pose.onResults((results) => {
         const { poseLandmarks: keypoints } = results;
