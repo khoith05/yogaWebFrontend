@@ -25,7 +25,7 @@ function CameraWrapper() {
         setShouldcheckPosition(false);
         console.log('SKIP POSITION CHECK');
       },
-      time: 1000,
+      time: 10000000,
     });
     const isValidPosition = checkPosition({ width, keypoints });
     if (isValidPosition) {
@@ -75,7 +75,7 @@ function CameraWrapper() {
           angleList: currentPose.angleList,
           keypoints,
         });
-        if (true) {
+        if (isValidPose) {
           // setShouldCheckPose(false);
           console.log('GO TO STAGE TWO');
           setShouldCheckPoseStageTwo(true);
@@ -121,6 +121,7 @@ function CameraWrapper() {
         showVirtualPose={shouldCheckPosition}
         onResult={handlePoseResult}
       />
+
       {currentPose && (
         <YogaVideo
           key={currentPose.index}
