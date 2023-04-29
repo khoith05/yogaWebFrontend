@@ -26,20 +26,19 @@ function CameraWrapper() {
 
   const handleCheckPosition = useCallback(
     ({ width, keypoints }) => {
-      if (isValidPosition) return;
-      setTimeoutWithKey({
-        key: CHECK_POSITION_TIMEOUT_KEY,
-        callback: () => {
-          setShouldcheckPosition(false);
-          console.log('SKIP POSITION CHECK');
-        },
-        time: 2000,
-      });
       const validPosition = checkPosition({ width, keypoints });
+      setIsValidPosition(validPosition);
       if (validPosition) {
-        setIsValidPosition(true);
+        setTimeoutWithKey({
+          key: CHECK_POSITION_TIMEOUT_KEY,
+          callback: () => {
+            setShouldcheckPosition(false);
+            console.log('POSITION CHECK DONE');
+          },
+          time: 5000,
+        });
+      } else {
         stopExcute({ key: CHECK_POSITION_TIMEOUT_KEY });
-        setTimeout(() => setShouldcheckPosition(false), 2000);
       }
     },
     [isValidPosition]

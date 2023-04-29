@@ -2,6 +2,7 @@ import calculateSafePosition from './calculateSafePosition';
 
 export default function drawPose({ canvas, isValidPosition }) {
   const canvasCtx = canvas.getContext('2d');
+  canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 
   const image = new Image();
   image.src = isValidPosition ? '/pose_green.png' : '/pose_red.png';
@@ -15,6 +16,19 @@ export default function drawPose({ canvas, isValidPosition }) {
     canvasCtx.clearRect(x_topLeft, y_topLeft, imgWidth, height);
     canvasCtx.drawImage(image, x_topLeft, y_topLeft, imgWidth, height);
   };
+  //draw around
+  canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+
+  canvasCtx.fillStyle = isValidPosition
+    ? 'rgba(0, 255, 0, 0.4)'
+    : 'rgba(255, 0, 0, 0.4)';
+  canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+  canvasCtx.clearRect(
+    canvas.width * 0.15,
+    canvas.height * 0.05,
+    canvas.width * 0.7,
+    canvas.height * 0.9
+  );
 }
 
 export function drawSafeRect({ canvas }) {
