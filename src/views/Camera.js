@@ -3,11 +3,10 @@ import * as poseDetection from '@mediapipe/pose';
 import * as CameraUtils from '@mediapipe/camera_utils';
 import PositionCanvas from './PositionCanvas';
 import KeypointsCanvas from './KeypointsCanvas';
-import getSizeBaseOnRatio, {
-  getHeightBaseOnRatio,
-  getWidthBaseOnRatio,
-} from '../utils/getSizeBaseOnRatio';
+import getSizeBaseOnRatio from '../utils/getSizeBaseOnRatio';
 import { useResizeDetector } from 'react-resize-detector';
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 const style = {
   position: 'absolute',
@@ -15,7 +14,14 @@ const style = {
 };
 
 function Camera(props) {
-  const { showCamera, onResult, showVirtualPose } = props;
+  const {
+    showCamera,
+    onResult,
+    showVirtualPose,
+    isValidPosition,
+    posePoint,
+    showPoint,
+  } = props;
   const { width: rWidth, ref: wrapperRef } = useResizeDetector();
   // const width = get(wrapperRef, 'current.offsetWidth');
   const videoRef = useRef();
@@ -138,11 +144,28 @@ function Camera(props) {
         />
         <PositionCanvas
           isVisible={showVirtualPose}
-          isValidPosition={!showVirtualPose}
+          isValidPosition={isValidPosition}
           style={style}
           height={size.height}
           width={size.width}
         />
+        {/* TODO : style this maybe */}
+        {showPoint && (
+          <div
+            style={{
+              position: 'absolute',
+              right: 0,
+              bottom: 0,
+              width: size.width * 0.2,
+            }}
+          >
+            <CircularProgressbar
+              value={-posePoint}
+              text={`${Math.floor(posePoint)}%`}
+              strokeWidth={10}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

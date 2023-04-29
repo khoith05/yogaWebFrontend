@@ -1,9 +1,11 @@
 import { ANGLE_LIST } from './constant.js';
 import calculateAngle from './calculateAngle.js';
 import getPoint from './getPoint.js';
-import { throttle, get, sum } from 'lodash';
+import { throttle, get } from 'lodash';
+import store from '../store';
+import { addPoint } from '../store/pose.js';
 
-function calculatePosePoint({ angleList, keypoints }) {
+function calculatePosePoint({ angleList, keypoints, callback }) {
   const posePointSum = Object.entries(ANGLE_LIST).reduce(
     (sumPoint, [key, value]) => {
       const { basePoint, adjacentPoint1, adjacentPoint2 } = value;
@@ -23,7 +25,9 @@ function calculatePosePoint({ angleList, keypoints }) {
     0
   );
 
-  return posePointSum / 10;
+  const point = posePointSum / 10;
+  callback(point);
+  return point;
 }
 
 const throttleCalculatePosePoint = throttle(calculatePosePoint, 500);

@@ -4,35 +4,46 @@ import YogaVideo from './YogaVideo';
 import { poseList } from '../utils/constant';
 import checkPosition from '../utils/checkPosition';
 import checkPose from '../utils/checkPoseAngles';
-import calculatePosePoint from '../utils/calculatePosePoint';
+import throttleCalculatePosePoint from '../utils/calculatePosePoint';
 import {
   CHECK_POSITION_TIMEOUT_KEY,
   CHECK_POSE_STAGE_ONE_TIME_OUT_KEY,
   CHECK_POSE_STAGE_TWO_TIME_OUT_KEY,
 } from '../utils/constant';
 import { setTimeoutWithKey, stopExcute } from '../utils/setTimeoutWithKey';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { addPoint, nextPose, setNumberOfPose } from '../store/pose';
 
 function CameraWrapper() {
+  const dispatch = useDispatch();
   const [shouldCheckPosition, setShouldcheckPosition] = useState(true);
   const [shouldCheckPose, setShouldCheckPose] = useState(false);
   const [currentPose, setCurrentPose] = useState(poseList[0]);
   const [shouldCheckPoseStageTwo, setShouldCheckPoseStageTwo] = useState(false);
+  const [isValidPosition, setIsValidPosition] = useState(false);
+  const [posePoint, setPosePoint] = useState(0);
 
-  const handleCheckPosition = useCallback(({ width, keypoints }) => {
-    setTimeoutWithKey({
-      key: CHECK_POSITION_TIMEOUT_KEY,
-      callback: () => {
-        setShouldcheckPosition(false);
-        console.log('SKIP POSITION CHECK');
-      },
-      time: 10000000,
-    });
-    const isValidPosition = checkPosition({ width, keypoints });
-    if (isValidPosition) {
-      setShouldcheckPosition(false);
-      stopExcute({ key: CHECK_POSITION_TIMEOUT_KEY });
-    }
-  }, []);
+  const handleCheckPosition = useCallback(
+    ({ width, keypoints }) => {
+      if (isValidPosition) return;
+      setTimeoutWithKey({
+        key: CHECK_POSITION_TIMEOUT_KEY,
+        callback: () => {
+          setShouldcheckPosition(false);
+          console.log('SKIP POSITION CHECK');
+        },
+        time: 2000,
+      });
+      const validPosition = checkPosition({ width, keypoints });
+      if (validPosition) {
+        setIsValidPosition(true);
+        stopExcute({ key: CHECK_POSITION_TIMEOUT_KEY });
+        setTimeout(() => setShouldcheckPosition(false), 2000);
+      }
+    },
+    [isValidPosition]
+  );
 
   const handleCheckPose = useCallback(
     ({ keypoints }) => {
@@ -45,14 +56,19 @@ function CameraWrapper() {
           },
           time: 700000000,
         });
-        const point = calculatePosePoint({
+        throttleCalculatePosePoint({
           angleList: currentPose.angleList,
           keypoints,
+          callback: (point) => {
+            dispatch(addPoint({ point }));
+            setPosePoint(point);
+
+            console.log(
+              '🚀 ~ file: CameraWrapper.js:67 ~ CameraWrapper ~ point:',
+              point
+            );
+          },
         });
-        console.log(
-          '🚀 ~ file: CameraWrapper.js:53 ~ handleCheckPose ~ point:',
-          point
-        );
       } else {
         setTimeoutWithKey({
           key: CHECK_POSE_STAGE_ONE_TIME_OUT_KEY,
@@ -75,7 +91,7 @@ function CameraWrapper() {
           angleList: currentPose.angleList,
           keypoints,
         });
-        if (isValidPose) {
+        if (true) {
           // setShouldCheckPose(false);
           console.log('GO TO STAGE TWO');
           setShouldCheckPoseStageTwo(true);
@@ -93,6 +109,7 @@ function CameraWrapper() {
   const handleNextPose = useCallback(() => {
     if (!currentPose) {
       setCurrentPose(poseList[0]);
+      dispatch(nextPose());
       return;
     }
 
@@ -101,12 +118,16 @@ function CameraWrapper() {
       return;
     }
     setCurrentPose(poseList[currentPose.index + 1]);
+    dispatch(nextPose());
   }, [currentPose]);
 
   const handlePoseResult = useCallback(
     shouldCheckPosition ? handleCheckPosition : handleCheckPose,
-    [shouldCheckPosition, handleCheckPose]
+    [shouldCheckPosition, handleCheckPose, handleCheckPosition]
   );
+  useEffect(() => {
+    dispatch(setNumberOfPose(poseList.length));
+  }, []);
 
   useEffect(() => {
     if (!(shouldCheckPose || shouldCheckPosition)) {
@@ -119,7 +140,10 @@ function CameraWrapper() {
       <Camera
         showCamera={shouldCheckPose || shouldCheckPosition}
         showVirtualPose={shouldCheckPosition}
+        isValidPosition={isValidPosition}
         onResult={handlePoseResult}
+        posePoint={posePoint}
+        showPoint={shouldCheckPoseStageTwo}
       />
 
       {currentPose && (

@@ -3,6 +3,8 @@ import drawKeypoints from '../utils/drawKeypoints';
 function KeypointsCanvas(props) {
   const { isVisible, keypoints, style, width, height } = props;
 
+  if (!isVisible) return <></>;
+
   const canvasRef = useRef();
 
   useEffect(() => {
@@ -16,10 +18,7 @@ function KeypointsCanvas(props) {
     drawKeypoints({ canvas, keypoints });
   }, [keypoints]);
 
-  if (isVisible) {
-    return <canvas ref={canvasRef} style={style} />;
-  }
-  return <></>;
+  return <canvas ref={canvasRef} style={style} />;
 }
 
 export default KeypointsCanvas;
