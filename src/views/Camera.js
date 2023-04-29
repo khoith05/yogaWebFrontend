@@ -83,6 +83,7 @@ function Camera(props) {
         onFrame: async () => {
           await pose.send({ image: video });
         },
+        facingMode: 'environment',
         width,
         height,
       });
@@ -130,7 +131,7 @@ function Camera(props) {
       >
         <video
           ref={videoRef}
-          className='Video'
+          className='Video flip'
           height={size.height}
           width={size.width}
           playsInline
@@ -154,14 +155,14 @@ function Camera(props) {
           <div
             style={{
               position: 'absolute',
-              right: 0,
-              bottom: 0,
+              right: '8px',
+              bottom: '16px',
               width: size.width * 0.2,
             }}
           >
             <CircularProgressbar
-              value={-posePoint}
-              text={`${Math.floor(posePoint)}%`}
+              value={posePoint}
+              text={`${posePoint}%`}
               strokeWidth={10}
             />
           </div>
