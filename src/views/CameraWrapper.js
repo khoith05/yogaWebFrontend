@@ -19,10 +19,25 @@ function CameraWrapper() {
   const dispatch = useDispatch();
   const [shouldCheckPosition, setShouldcheckPosition] = useState(true);
   const [shouldCheckPose, setShouldCheckPose] = useState(false);
-  const [currentPose, setCurrentPose] = useState(poseList[0]);
+  const [currentPose, setCurrentPose] = useState(null);
   const [shouldCheckPoseStageTwo, setShouldCheckPoseStageTwo] = useState(false);
   const [isValidPosition, setIsValidPosition] = useState(false);
   const [posePoint, setPosePoint] = useState(0);
+
+  const handleNextPose = useCallback(() => {
+    if (!currentPose) {
+      setCurrentPose(poseList[0]);
+      dispatch(nextPose());
+      return;
+    }
+
+    if (currentPose.index >= poseList.length - 1) {
+      // TODO end exercise
+      return;
+    }
+    setCurrentPose(poseList[currentPose.index + 1]);
+    dispatch(nextPose());
+  }, [currentPose]);
 
   const handleCheckPosition = useCallback(
     ({ width, keypoints }) => {
@@ -33,6 +48,7 @@ function CameraWrapper() {
           key: CHECK_POSITION_TIMEOUT_KEY,
           callback: () => {
             setShouldcheckPosition(false);
+            handleNextPose();
             console.log('POSITION CHECK DONE');
           },
           time: 5000,
@@ -41,7 +57,7 @@ function CameraWrapper() {
         stopExcute({ key: CHECK_POSITION_TIMEOUT_KEY });
       }
     },
-    [isValidPosition]
+    [isValidPosition, handleNextPose]
   );
 
   const handleCheckPose = useCallback(
@@ -51,10 +67,12 @@ function CameraWrapper() {
           key: CHECK_POSE_STAGE_TWO_TIME_OUT_KEY,
           callback: () => {
             setShouldCheckPose(false);
+            handleNextPose();
             console.log('DONE THIS POSE');
           },
           time: 700000000,
         });
+
         throttleCalculatePosePoint({
           angleList: currentPose.angleList,
           keypoints,
@@ -73,6 +91,7 @@ function CameraWrapper() {
           key: CHECK_POSE_STAGE_ONE_TIME_OUT_KEY,
           callback: () => {
             setShouldCheckPose(false);
+            handleNextPose();
             console.log('SKIP THIS POSE');
           },
           time: 10000000,
@@ -98,41 +117,25 @@ function CameraWrapper() {
         }
       }
     },
-    [shouldCheckPoseStageTwo]
+    [shouldCheckPoseStageTwo, currentPose, handleNextPose]
   );
-  const handleVideoEnded = () => {
-    setShouldCheckPose(true);
-    handleNextPose();
-  };
 
-  const handleNextPose = useCallback(() => {
-    if (!currentPose) {
-      setCurrentPose(poseList[0]);
-      dispatch(nextPose());
-      return;
-    }
-
-    if (currentPose.index >= poseList.length - 1) {
-      // TODO end exercise
-      return;
-    }
-    setCurrentPose(poseList[currentPose.index + 1]);
-    dispatch(nextPose());
-  }, [currentPose]);
+  const handleVideoEnded = () => setShouldCheckPose(true);
 
   const handlePoseResult = useCallback(
     shouldCheckPosition ? handleCheckPosition : handleCheckPose,
     [shouldCheckPosition, handleCheckPose, handleCheckPosition]
   );
+
   useEffect(() => {
     dispatch(setNumberOfPose(poseList.length));
   }, []);
 
-  useEffect(() => {
-    if (!(shouldCheckPose || shouldCheckPosition)) {
-      handleNextPose();
-    }
-  }, [shouldCheckPose]);
+  // useEffect(() => {
+  //   if (!(shouldCheckPose || shouldCheckPosition)) {
+  //     handleNextPose();
+  //   }
+  // }, [shouldCheckPose]);
 
   return (
     <>

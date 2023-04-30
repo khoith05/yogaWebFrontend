@@ -96,8 +96,8 @@ export const poseList = [
       F: 93.95660732,
       G: 98.39760698,
       H: 131.0887923,
-      I: 113.0293731,
-      J: 169.7554321,
+      I: 247,
+      J: 190,
     }, // angleList
     url: 'https://res.cloudinary.com/uploaderkhoith/video/upload/v1680939086/Countdown_5_Seconds_HD_theo75.mp4', // video url
   },
