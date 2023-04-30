@@ -93,16 +93,16 @@ function Camera(props) {
   }, [videoRef, poseRef, rWidth]);
 
   // start stop camera
-  // useEffect(() => {
-  //   const camera = cameraRef.current;
-  //   if (camera) {
-  //     if (showCamera) {
-  //       camera.start();
-  //     } else {
-  //       camera.stop();
-  //     }
-  //   }
-  // }, [showCamera, cameraRef]);
+  useEffect(() => {
+    const camera = cameraRef.current;
+    if (camera) {
+      if (showCamera) {
+        camera.start();
+      } else {
+        camera.stop();
+      }
+    }
+  }, [showCamera, cameraRef]);
 
   // change onResult function
   useEffect(() => {
