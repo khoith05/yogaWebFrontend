@@ -90,7 +90,7 @@ function CameraWrapper() {
           angleList: currentPose.angleList,
           keypoints,
         });
-        if (isValidPose) {
+        if (true) {
           // setShouldCheckPose(false);
           console.log('GO TO STAGE TWO');
           setShouldCheckPoseStageTwo(true);

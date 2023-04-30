@@ -6,35 +6,32 @@ import { setTimeoutWithKey } from './setTimeoutWithKey.js';
 const temporarySkipAngles = {};
 
 function checkPoseAngles({ angleList, keypoints }) {
-  const angleValidList = Object.entries(ANGLE_LIST)
-    .filter(([key]) => !temporarySkipAngles[key])
-    .map(([key, value]) => {
-      if (temporarySkipAngles[key]) return;
+  const angleValidList = Object.entries(ANGLE_LIST).map(([key, value]) => {
+    const { basePoint, adjacentPoint1, adjacentPoint2 } = value;
 
-      const { basePoint, adjacentPoint1, adjacentPoint2 } = value;
-
-      const angle = calculateAngle({
-        basePoint: keypoints[basePoint],
-        adjacentPoint1: keypoints[adjacentPoint1],
-        adjacentPoint2: keypoints[adjacentPoint2],
-      });
-
-      const isValid = isValidAngle(angleList[key], angle);
-
-      if (!isValid) {
-        errorNoti({ angle: key, isBigger: !!(angle - angleList[key] > 0) });
-        temporarySkipAngles[key] = key;
-        setTimeoutWithKey({
-          key,
-          callback: () => {
-            temporarySkipAngles[key] = undefined;
-          },
-          time: 5000,
-        });
-      }
+    const angle = calculateAngle({
+      basePoint: keypoints[basePoint],
+      adjacentPoint1: keypoints[adjacentPoint1],
+      adjacentPoint2: keypoints[adjacentPoint2],
     });
 
-  return angleValidList.every(Boolean);
+    const isValid = isValidAngle(angleList[key], angle);
+
+    if (!isValid && !temporarySkipAngles[key]) {
+      errorNoti({ angle: key, isBigger: !!(angle - angleList[key] > 0) });
+      temporarySkipAngles[key] = key;
+      setTimeoutWithKey({
+        key,
+        callback: () => {
+          temporarySkipAngles[key] = undefined;
+        },
+        time: 5000,
+      });
+    }
+    return isValid;
+  });
+
+  return angleList.length && angleValidList.every(Boolean);
 }
 
 function errorNoti({ angle, isBigger }) {
