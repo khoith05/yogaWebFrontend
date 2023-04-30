@@ -3,42 +3,54 @@ export const PUNISHMENT_COEFFICIENT = 1;
 export const MAX_POINT_PER_ANGLE = 10;
 export const ANGLE_LIST = {
   A: {
+    basePoint: 13,
+    adjacentPoint1: 15,
+    adjacentPoint2: 11,
+  },
+  B: {
     basePoint: 14,
     adjacentPoint1: 16,
     adjacentPoint2: 12,
   },
-  B: {
-    basePoint: 13,
-    adjacentPoint1: 11,
-    adjacentPoint2: 15,
-  },
   C: {
-    basePoint: 12,
-    adjacentPoint1: 11,
-    adjacentPoint2: 24,
+    basePoint: 11,
+    adjacentPoint1: 13,
+    adjacentPoint2: 12,
   },
   D: {
-    basePoint: 11,
-    adjacentPoint1: 12,
-    adjacentPoint2: 23,
-  },
-  E: {
     basePoint: 12,
     adjacentPoint1: 14,
-    adjacentPoint2: 24,
+    adjacentPoint2: 11,
   },
-  F: {
+  E: {
     basePoint: 11,
     adjacentPoint1: 13,
     adjacentPoint2: 23,
   },
-  G: { basePoint: 24, adjacentPoint1: 12, adjacentPoint2: 26 },
-  H: { basePoint: 23, adjacentPoint1: 11, adjacentPoint2: 25 },
-  I: { basePoint: 26, adjacentPoint1: 24, adjacentPoint2: 28 },
-  J: {
+  F: {
+    basePoint: 12,
+    adjacentPoint1: 14,
+    adjacentPoint2: 24,
+  },
+  G: {
+    basePoint: 23,
+    adjacentPoint1: 11,
+    adjacentPoint2: 25,
+  },
+  H: {
+    basePoint: 24,
+    adjacentPoint1: 12,
+    adjacentPoint2: 26,
+  },
+  I: {
     basePoint: 25,
     adjacentPoint1: 23,
     adjacentPoint2: 27,
+  },
+  J: {
+    basePoint: 26,
+    adjacentPoint1: 24,
+    adjacentPoint2: 28,
   },
 };
 

@@ -75,7 +75,7 @@ function CameraWrapper() {
             setShouldCheckPose(false);
             console.log('SKIP THIS POSE');
           },
-          time: 10000,
+          time: 10000000,
         });
         // setTimeoutWithKey({
         //   key: CHECK_POSE_TIMEOUT_KEY,
@@ -90,7 +90,7 @@ function CameraWrapper() {
           angleList: currentPose.angleList,
           keypoints,
         });
-        if (true) {
+        if (isValidPose) {
           // setShouldCheckPose(false);
           console.log('GO TO STAGE TWO');
           setShouldCheckPoseStageTwo(true);
