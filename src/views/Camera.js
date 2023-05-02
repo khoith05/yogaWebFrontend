@@ -83,7 +83,7 @@ function Camera(props) {
         onFrame: async () => {
           await pose.send({ image: video });
         },
-        facingMode: 'environment',
+        facingMode: 'user',
         width,
         height,
       });

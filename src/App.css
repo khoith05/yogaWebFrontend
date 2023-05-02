@@ -471,5 +471,6 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
 }
 
 .flip {
-  transform: rotateY(180deg);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
