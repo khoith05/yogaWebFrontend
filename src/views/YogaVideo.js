@@ -1,6 +1,6 @@
 import { memo } from 'react';
 function YogaVideo(props) {
-  const { url, onFinish, className = 'w-100', style, showVideo } = props;
+  const { url, onFinish, style, showVideo } = props;
   const overwriteStyle = {
     ...style,
     display: showVideo ? 'block' : 'none',
@@ -10,7 +10,7 @@ function YogaVideo(props) {
   };
   return (
     <video
-      className={className}
+      className='camera-element'
       src={url}
       style={overwriteStyle}
       autoPlay

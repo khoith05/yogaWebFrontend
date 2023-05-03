@@ -474,3 +474,15 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
 }
+
+.camera-element {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.pose-image {
+  height: auto;
+  transition: width 1.5s ease-in;
+  visibility: hidden;
+}

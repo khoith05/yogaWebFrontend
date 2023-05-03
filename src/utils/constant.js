@@ -100,6 +100,8 @@ export const poseList = [
       J: 190,
     }, // angleList
     url: 'https://res.cloudinary.com/uploaderkhoith/video/upload/v1680939086/Countdown_5_Seconds_HD_theo75.mp4', // video url
+    imageUrl:
+      'https://cdn.lessons.com/assets/images/content/lessons-warrior-ii-yoga-pose.jpeg',
   },
   {
     index: 1, // order
@@ -117,6 +119,8 @@ export const poseList = [
       J: 33.52708996,
     }, // angleList
     url: 'https://res.cloudinary.com/uploaderkhoith/video/upload/v1681028177/Countdown_5_Seconds_HD_tw4chf.mp4', // video url
+    imageUrl:
+      'https://cdn.lessons.com/assets/images/content/lessons-warrior-ii-yoga-pose.jpeg',
   },
   {
     index: 2, // order
@@ -134,6 +138,8 @@ export const poseList = [
       J: 107.4044223,
     }, // angleList
     url: 'https://res.cloudinary.com/uploaderkhoith/video/upload/v1680939086/Countdown_5_Seconds_HD_theo75.mp4', // video url
+    imageUrl:
+      'https://cdn.lessons.com/assets/images/content/lessons-warrior-ii-yoga-pose.jpeg',
   },
   {
     index: 3, // order
@@ -151,6 +157,8 @@ export const poseList = [
       J: 169.7554321,
     }, // angleList
     url: 'https://res.cloudinary.com/uploaderkhoith/video/upload/v1680939086/Countdown_5_Seconds_HD_theo75.mp4', // video url
+    imageUrl:
+      'https://cdn.lessons.com/assets/images/content/lessons-warrior-ii-yoga-pose.jpeg',
   },
   {
     index: 4, // order
@@ -168,6 +176,8 @@ export const poseList = [
       J: 33.52708996,
     }, // angleList
     url: 'https://res.cloudinary.com/uploaderkhoith/video/upload/v1680939086/Countdown_5_Seconds_HD_theo75.mp4', // video url
+    imageUrl:
+      'https://cdn.lessons.com/assets/images/content/lessons-warrior-ii-yoga-pose.jpeg',
   },
   {
     index: 5, // order
@@ -185,5 +195,7 @@ export const poseList = [
       J: 107.4044223,
     }, // angleList
     url: 'https://res.cloudinary.com/uploaderkhoith/video/upload/v1680939086/Countdown_5_Seconds_HD_theo75.mp4', // video url
+    imageUrl:
+      'https://cdn.lessons.com/assets/images/content/lessons-warrior-ii-yoga-pose.jpeg',
   },
 ];

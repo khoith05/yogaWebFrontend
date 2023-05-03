@@ -11,9 +11,13 @@ import {
   CHECK_POSE_STAGE_TWO_TIME_OUT_KEY,
 } from '../utils/constant';
 import { setTimeoutWithKey, stopExcute } from '../utils/setTimeoutWithKey';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { addPoint, nextPose, setNumberOfPose } from '../store/pose';
+
+import getSizeBaseOnRatio from '../utils/getSizeBaseOnRatio';
+import { useResizeDetector } from 'react-resize-detector';
+import AnimatedImage from './AnimatedImage';
 
 function CameraWrapper() {
   const dispatch = useDispatch();
@@ -23,6 +27,18 @@ function CameraWrapper() {
   const [shouldCheckPoseStageTwo, setShouldCheckPoseStageTwo] = useState(false);
   const [isValidPosition, setIsValidPosition] = useState(false);
   const [posePoint, setPosePoint] = useState(0);
+  const [size, setSize] = useState({ height: 0, width: 0 });
+
+  const { width: rWidth, ref: wrapperRef } = useResizeDetector();
+
+  useEffect(() => {
+    if (!rWidth) return;
+    const { width, height } = getSizeBaseOnRatio(rWidth);
+    setSize({
+      height,
+      width,
+    });
+  }, [rWidth]);
 
   const handleNextPose = useCallback(() => {
     if (!currentPose) {
@@ -40,8 +56,11 @@ function CameraWrapper() {
   }, [currentPose]);
 
   const handleCheckPosition = useCallback(
-    ({ width, keypoints }) => {
-      const validPosition = checkPosition({ width, keypoints });
+    ({ keypoints }) => {
+      setShouldcheckPosition(false);
+      handleNextPose();
+
+      const validPosition = checkPosition({ width: size.width, keypoints });
       setIsValidPosition(validPosition);
       if (validPosition) {
         setTimeoutWithKey({
@@ -57,7 +76,7 @@ function CameraWrapper() {
         stopExcute({ key: CHECK_POSITION_TIMEOUT_KEY });
       }
     },
-    [isValidPosition, handleNextPose]
+    [isValidPosition, handleNextPose, size]
   );
 
   const handleCheckPose = useCallback(
@@ -96,14 +115,7 @@ function CameraWrapper() {
           },
           time: 10000000,
         });
-        // setTimeoutWithKey({
-        //   key: CHECK_POSE_TIMEOUT_KEY,
-        //   callback: () => {
-        //     setShouldCheckPose(false);
-        //     console.log('SKIP THIS POSE');
-        //   },
-        //   time: 7000,
-        // });
+
         // check Pose valid and throw pose error
         const isValidPose = checkPose({
           angleList: currentPose.angleList,
@@ -131,32 +143,41 @@ function CameraWrapper() {
     dispatch(setNumberOfPose(poseList.length));
   }, []);
 
-  // useEffect(() => {
-  //   if (!(shouldCheckPose || shouldCheckPosition)) {
-  //     handleNextPose();
-  //   }
-  // }, [shouldCheckPose]);
-
   return (
-    <>
-      <Camera
-        showCamera={shouldCheckPose || shouldCheckPosition}
-        showVirtualPose={shouldCheckPosition}
-        isValidPosition={isValidPosition}
-        onResult={handlePoseResult}
-        posePoint={posePoint}
-        showPoint={shouldCheckPoseStageTwo}
-      />
+    <div ref={wrapperRef} className='d-flex justify-content-center'>
+      <div style={{ position: 'relative', width: 'fit-content' }}>
+        <Camera
+          showCamera={shouldCheckPose || shouldCheckPosition}
+          showVirtualPose={shouldCheckPosition}
+          isValidPosition={isValidPosition}
+          onResult={handlePoseResult}
+          posePoint={posePoint}
+          showPoint={shouldCheckPoseStageTwo}
+          width={size.width}
+          height={size.height}
+        ></Camera>
 
-      {currentPose && (
-        <YogaVideo
-          key={currentPose.index}
-          onFinish={handleVideoEnded}
-          url={currentPose.url}
-          showVideo={!(shouldCheckPose || shouldCheckPosition)}
-        />
-      )}
-    </>
+        {currentPose && (
+          <>
+            <YogaVideo
+              key={currentPose.index}
+              onFinish={handleVideoEnded}
+              url={currentPose.url}
+              showVideo={!(shouldCheckPose || shouldCheckPosition)}
+              style={size}
+            />
+            <AnimatedImage
+              style={{
+                width: size.width,
+              }}
+              shouldShow={shouldCheckPose}
+              width={size.width}
+              src={currentPose.imageUrl}
+            />
+          </>
+        )}
+      </div>
+    </div>
   );
 }
 

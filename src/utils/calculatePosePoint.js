@@ -8,7 +8,9 @@ function calculatePosePoint({ angleList, keypoints, callback }) {
     (sumPoint, [key, value]) => {
       const { basePoint, adjacentPoint1, adjacentPoint2 } = value;
 
-      if (!get(keypoints, `${basePoint}.visibility`)) return sumPoint;
+      const visibility = get(keypoints, `${basePoint}.visibility`, 0);
+
+      if (visibility >= 0.3) return sumPoint;
 
       const angle = calculateAngle({
         basePoint: keypoints[basePoint],
