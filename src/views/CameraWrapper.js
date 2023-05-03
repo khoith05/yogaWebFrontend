@@ -57,9 +57,6 @@ function CameraWrapper() {
 
   const handleCheckPosition = useCallback(
     ({ keypoints }) => {
-      setShouldcheckPosition(false);
-      handleNextPose();
-
       const validPosition = checkPosition({ width: size.width, keypoints });
       setIsValidPosition(validPosition);
       if (validPosition) {
