@@ -1,6 +1,8 @@
 import Home from './views/Home';
 import ExerciseView from './views/ExeciseView';
 import { Route,Routes } from 'react-router-dom';
+import ExercisePage from './views/ExercisePage';
+import PopupVideo from './views/PopupVideo';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Layout from './views/Layout';
@@ -21,8 +23,12 @@ function App() {
           {/* <Route path="dashboard" element={<Dashboard />} />
 
           <Route path="*" element={<NoMatch />} /> */}
-        </Route>
+          <Route path="/exercise" element={<ExercisePage/>} />
+          
+        </Route>        
+        <Route path = "/popup" element = {<PopupVideo/>}/>
       </Routes>
+      
       
     </div>
   );
