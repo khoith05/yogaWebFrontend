@@ -1,23 +1,23 @@
-import { useEffect, useState, useCallback } from 'react';
-import Camera from './Camera';
-import YogaVideo from './YogaVideo';
-import { poseList } from '../utils/constant';
-import checkPosition from '../utils/checkPosition';
-import checkPose from '../utils/checkPoseAngles';
-import throttleCalculatePosePoint from '../utils/calculatePosePoint';
+import { useEffect, useState, useCallback } from "react";
+import Camera from "./Camera";
+import YogaVideo from "./YogaVideo";
+import { poseList } from "../utils/constant";
+import checkPosition from "../utils/checkPosition";
+import checkPose from "../utils/checkPoseAngles";
+import throttleCalculatePosePoint from "../utils/calculatePosePoint";
 import {
   CHECK_POSITION_TIMEOUT_KEY,
   CHECK_POSE_STAGE_ONE_TIME_OUT_KEY,
   CHECK_POSE_STAGE_TWO_TIME_OUT_KEY,
-} from '../utils/constant';
-import { setTimeoutWithKey, stopExcute } from '../utils/setTimeoutWithKey';
-import { useDispatch } from 'react-redux';
+} from "../utils/constant";
+import { setTimeoutWithKey, stopExcute } from "../utils/setTimeoutWithKey";
+import { useDispatch } from "react-redux";
 
-import { addPoint, nextPose, setNumberOfPose } from '../store/pose';
+import { addPoint, nextPose, setNumberOfPose } from "../store/pose";
 
-import getSizeBaseOnRatio from '../utils/getSizeBaseOnRatio';
-import { useResizeDetector } from 'react-resize-detector';
-import AnimatedImage from './AnimatedImage';
+import getSizeBaseOnRatio from "../utils/getSizeBaseOnRatio";
+import { useResizeDetector } from "react-resize-detector";
+import AnimatedImage from "./AnimatedImage";
 
 function CameraWrapper() {
   const dispatch = useDispatch();
@@ -40,6 +40,10 @@ function CameraWrapper() {
     });
   }, [rWidth]);
 
+  useEffect(() => {
+    wrapperRef.current && window.scrollTo(0, wrapperRef.current.offsetTop - 10);
+  }, [wrapperRef]);
+
   const handleNextPose = useCallback(() => {
     if (!currentPose) {
       setCurrentPose(poseList[0]);
@@ -57,6 +61,9 @@ function CameraWrapper() {
 
   const handleCheckPosition = useCallback(
     ({ keypoints }) => {
+      // setShouldcheckPosition(false);
+      // handleNextPose();
+
       const validPosition = checkPosition({ width: size.width, keypoints });
       setIsValidPosition(validPosition);
       if (validPosition) {
@@ -65,7 +72,7 @@ function CameraWrapper() {
           callback: () => {
             setShouldcheckPosition(false);
             handleNextPose();
-            console.log('POSITION CHECK DONE');
+            console.log("POSITION CHECK DONE");
           },
           time: 5000,
         });
@@ -84,9 +91,9 @@ function CameraWrapper() {
           callback: () => {
             setShouldCheckPose(false);
             handleNextPose();
-            console.log('DONE THIS POSE');
+            console.log("DONE THIS POSE");
           },
-          time: 700000000,
+          time: currentPose.duration * 1000,
         });
 
         throttleCalculatePosePoint({
@@ -97,7 +104,7 @@ function CameraWrapper() {
             setPosePoint(point);
 
             console.log(
-              '🚀 ~ file: CameraWrapper.js:67 ~ CameraWrapper ~ point:',
+              "🚀 ~ file: CameraWrapper.js:67 ~ CameraWrapper ~ point:",
               point
             );
           },
@@ -108,9 +115,9 @@ function CameraWrapper() {
           callback: () => {
             setShouldCheckPose(false);
             handleNextPose();
-            console.log('SKIP THIS POSE');
+            console.log("SKIP THIS POSE");
           },
-          time: 10000000,
+          time: 40000,
         });
 
         // check Pose valid and throw pose error
@@ -118,9 +125,9 @@ function CameraWrapper() {
           angleList: currentPose.angleList,
           keypoints,
         });
-        if (true) {
+        if (isValidPose) {
           // setShouldCheckPose(false);
-          console.log('GO TO STAGE TWO');
+          console.log("GO TO STAGE TWO");
           setShouldCheckPoseStageTwo(true);
           stopExcute({ key: CHECK_POSE_STAGE_ONE_TIME_OUT_KEY });
         }
@@ -141,8 +148,8 @@ function CameraWrapper() {
   }, []);
 
   return (
-    <div ref={wrapperRef} className='d-flex justify-content-center'>
-      <div style={{ position: 'relative', width: 'fit-content' }}>
+    <div ref={wrapperRef} className="d-flex justify-content-center mt-4">
+      <div style={{ position: "relative", width: "fit-content" }}>
         <Camera
           showCamera={shouldCheckPose || shouldCheckPosition}
           showVirtualPose={shouldCheckPosition}
