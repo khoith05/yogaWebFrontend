@@ -122,6 +122,7 @@ export const poseList = [
     url: "https://res.cloudinary.com/uploaderkhoith/video/upload/v1681028177/Countdown_5_Seconds_HD_tw4chf.mp4", // video url
     imageUrl:
       "https://cdn.lessons.com/assets/images/content/lessons-warrior-ii-yoga-pose.jpeg",
+    duration: 5,
   },
   {
     index: 2, // order
