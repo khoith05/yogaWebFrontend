@@ -1,13 +1,21 @@
-import * as React from 'react';
-import {Table, Header, HeaderRow, HeaderCell,Body, Row, Cell, img} from '@table-library/react-table-library/table'
+import * as React from "react";
+import {
+  Table,
+  Header,
+  HeaderRow,
+  HeaderCell,
+  Body,
+  Row,
+  Cell,
+} from "@table-library/react-table-library/table";
 import projImg1 from "../assets/img/a.jpg";
 import projImg2 from "../assets/img/b.jpg";
 import projImg3 from "../assets/img/c.jpg";
-import './ExercisePage.css'
+import "./ExercisePage.css";
 
 const list = [
   {
-    id : 1,
+    id: 1,
     title: "Quick Streching Sequence",
     description: "2 minutes",
     imgUrl: projImg1,
@@ -25,83 +33,101 @@ const list = [
     imgUrl: projImg3,
   },
   {
-    id: 3,
+    id: 4,
     title: "Fat Burn",
     description: "10 minutes",
     imgUrl: projImg3,
   },
   {
-    id: 3,
+    id: 5,
     title: "Fat Burn",
     description: "10 minutes",
     imgUrl: projImg3,
   },
   {
-    id: 3,
+    id: 6,
     title: "Fat Burn",
     description: "10 minutes",
     imgUrl: projImg3,
   },
   {
-    id: 3,
+    id: 7,
     title: "Fat Burn",
     description: "10 minutes",
     imgUrl: projImg3,
   },
   {
-    id: 3,
+    id: 8,
     title: "Fat Burn",
     description: "10 minutes",
     imgUrl: projImg3,
   },
   {
-    id: 3,
+    id: 9,
     title: "Fat Burn",
     description: "10 minutes",
     imgUrl: projImg3,
   },
   {
-    id: 3,
+    id: 10,
     title: "Fat Burn",
     description: "10 minutes",
     imgUrl: projImg3,
   },
   {
-    id: 3,
+    id: 11,
     title: "Fat Burn",
     description: "10 minutes",
     imgUrl: projImg3,
   },
 ];
-const ExerciseDetail= () => {
-
-  const data = {nodes: list};
+const ExerciseDetail = () => {
+  const data = { nodes: list };
 
   return (
-  <div style={{height: '400px'}}>
-  <Table data = {data} className = "Table1">{(tableList) => (
-    <>
-    <Header>
-      <HeaderRow style = {{backgroundColor: '#F4DCDC'}}>
-        <HeaderCell>  </HeaderCell>
-        <HeaderCell style = {{marginTop: '15px', marginBottom: '10px'}}> Posture </HeaderCell>
-        <HeaderCell style = {{marginTop: '15px', marginBottom: '10px'}}>Time </HeaderCell>
-      </HeaderRow>
-    </Header>
-    <Body>
-      {tableList.map((item) => (
-        <Row key = {item.id} item = {item} style = {{backgroundColor: '#F4DCDC'}}>           
-          <Cell>
-            <img src  = {item.imgUrl} style={{ width: '150px', height: '60px', marginLeft: '10px', marginBottom: '5px' }}/>
-          </Cell>
-          <Cell>{item.title}</Cell>
-          <Cell>{item.description}</Cell>        
-        </Row>
-      ))}
-    </Body>
-    </>
-  )}</Table>
-  </div>
+    <div style={{ height: "400px" }}>
+      <Table data={data} className="Table1">
+        {(tableList) => (
+          <>
+            <Header>
+              <HeaderRow style={{ backgroundColor: "#F4DCDC" }}>
+                <HeaderCell> </HeaderCell>
+                <HeaderCell style={{ marginTop: "15px", marginBottom: "10px" }}>
+                  {" "}
+                  Posture{" "}
+                </HeaderCell>
+                <HeaderCell style={{ marginTop: "15px", marginBottom: "10px" }}>
+                  Time{" "}
+                </HeaderCell>
+              </HeaderRow>
+            </Header>
+            <Body>
+              {tableList.map((item) => (
+                <Row
+                  key={item.id}
+                  item={item}
+                  style={{ backgroundColor: "#F4DCDC" }}
+                >
+                  <Cell>
+                    <img
+                      src={item.imgUrl}
+                      style={{
+                        width: "150px",
+                        height: "60px",
+                        marginLeft: "10px",
+                        marginBottom: "5px",
+                      }}
+                    />
+                  </Cell>
+                  <Cell>{item.title}</Cell>
+                  <Cell>{item.description}</Cell>
+                </Row>
+              ))}
+            </Body>
+          </>
+        )}
+      </Table>
+    </div>
   );
 };
 

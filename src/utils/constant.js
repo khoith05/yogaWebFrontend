@@ -100,6 +100,9 @@ export const POSE_CONNECTIONS = [
   [25, 27],
   [26, 28],
 ];
+
+export const GET_EXERCISE_DETAIL_LOADING = "GET_EXERCISE_DETAIL_LOADING";
+
 //will be removed
 export const poseList = [
   {

@@ -1,14 +1,14 @@
-import React, { useRef, useEffect, useState, memo } from 'react';
-import * as poseDetection from '@mediapipe/pose';
-import * as CameraUtils from '@mediapipe/camera_utils';
-import PositionCanvas from './PositionCanvas';
-import KeypointsCanvas from './KeypointsCanvas';
+import React, { useRef, useEffect, useState, memo } from "react";
+import * as poseDetection from "@mediapipe/pose";
+import * as CameraUtils from "@mediapipe/camera_utils";
+import PositionCanvas from "./PositionCanvas";
+import KeypointsCanvas from "./KeypointsCanvas";
 
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 const style = {
-  position: 'absolute',
+  position: "absolute",
   left: 0,
 };
 
@@ -42,8 +42,8 @@ function Camera(props) {
   useEffect(() => {
     const pose = new poseDetection.Pose({
       locateFile: (file) => {
-        console.log('file', file);
-        return `${file}`;
+        console.log("file", file);
+        return `${process.env.PUBLIC_URL}/${file}`;
       },
     });
 
@@ -61,7 +61,7 @@ function Camera(props) {
         onFrame: async () => {
           await pose.send({ image: video });
         },
-        facingMode: 'user',
+        facingMode: "user",
         width,
         height,
       });
@@ -85,7 +85,7 @@ function Camera(props) {
   // change onResult function
   useEffect(() => {
     const pose = poseRef.current;
-    console.log('onresult change here');
+    console.log("onresult change here");
     pose &&
       pose.onResults((results) => {
         const { poseLandmarks: keypoints } = results;
@@ -109,7 +109,7 @@ function Camera(props) {
       > */}
       <video
         ref={videoRef}
-        className='flip'
+        className="flip"
         height={height}
         width={width}
         playsInline
@@ -132,9 +132,9 @@ function Camera(props) {
       {showPoint && (
         <div
           style={{
-            position: 'absolute',
-            right: '8px',
-            bottom: '16px',
+            position: "absolute",
+            right: "8px",
+            bottom: "16px",
             width: width * 0.2,
           }}
         >

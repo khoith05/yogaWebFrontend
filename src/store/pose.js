@@ -1,7 +1,7 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const poseSlice = createSlice({
-  name: 'counter',
+  name: "pose",
   initialState: {
     currentPoseListPoint: [],
     currentPoseIndex: -1,

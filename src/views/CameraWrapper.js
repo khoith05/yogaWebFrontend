@@ -18,7 +18,7 @@ import { addPoint, nextPose, setNumberOfPose } from "../store/pose";
 import getSizeBaseOnRatio from "../utils/getSizeBaseOnRatio";
 import { useResizeDetector } from "react-resize-detector";
 
-function CameraWrapper() {
+function CameraWrapper({ poses }) {
   const dispatch = useDispatch();
   const [shouldCheckPosition, setShouldcheckPosition] = useState(true);
   const [shouldCheckPose, setShouldCheckPose] = useState(false);
@@ -45,16 +45,16 @@ function CameraWrapper() {
 
   const handleNextPose = useCallback(() => {
     if (!currentPose) {
-      setCurrentPose(poseList[0]);
+      setCurrentPose(poses[0]);
       dispatch(nextPose());
       return;
     }
 
-    if (currentPose.index >= poseList.length - 1) {
+    if (currentPose.index >= poses.length - 1) {
       // TODO end exercise
       return;
     }
-    setCurrentPose(poseList[currentPose.index + 1]);
+    setCurrentPose(poses[currentPose.index + 1]);
     dispatch(nextPose());
   }, [currentPose]);
 
@@ -143,7 +143,7 @@ function CameraWrapper() {
   );
 
   useEffect(() => {
-    dispatch(setNumberOfPose(poseList.length));
+    dispatch(setNumberOfPose(poses.length));
   }, []);
 
   return (
@@ -164,7 +164,7 @@ function CameraWrapper() {
           <YogaVideo
             key={currentPose.index}
             onFinish={handleVideoEnded}
-            url={currentPose.url}
+            url={currentPose.videoUrl}
             showVideo={!(shouldCheckPose || shouldCheckPosition)}
             size={size}
           />

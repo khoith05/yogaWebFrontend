@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 
 const loadingSlice = createSlice({
-  name: 'counter',
+  name: "loading",
   initialState: {},
   reducers: {
     toggleLoading(state, action) {
@@ -11,6 +11,17 @@ const loadingSlice = createSlice({
   },
 });
 
-export const { incremented, decremented } = loadingSlice.actions;
+const getLoadingState = (state, loadingKeys) => {
+  const loadingState = state.loading;
+
+  return loadingKeys.reduce(
+    (isLoading, key) => isLoading && loadingState[key],
+    true
+  );
+};
+
+export const { toggleLoading } = loadingSlice.actions;
+
+export const selectIsLoading = createSelector(getLoadingState, (a) => a);
 
 export default loadingSlice.reducer;
