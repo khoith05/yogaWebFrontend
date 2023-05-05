@@ -89,6 +89,7 @@ function CameraWrapper({ poses }) {
           key: CHECK_POSE_STAGE_TWO_TIME_OUT_KEY,
           callback: () => {
             setShouldCheckPose(false);
+            setShouldCheckPoseStageTwo(false);
             handleNextPose();
             console.log("DONE THIS POSE");
           },
