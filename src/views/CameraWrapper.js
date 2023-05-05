@@ -17,7 +17,6 @@ import { addPoint, nextPose, setNumberOfPose } from "../store/pose";
 
 import getSizeBaseOnRatio from "../utils/getSizeBaseOnRatio";
 import { useResizeDetector } from "react-resize-detector";
-import AnimatedImage from "./AnimatedImage";
 
 function CameraWrapper() {
   const dispatch = useDispatch();
@@ -162,23 +161,13 @@ function CameraWrapper() {
         ></Camera>
 
         {currentPose && (
-          <>
-            <YogaVideo
-              key={currentPose.index}
-              onFinish={handleVideoEnded}
-              url={currentPose.url}
-              showVideo={!(shouldCheckPose || shouldCheckPosition)}
-              style={size}
-            />
-            <AnimatedImage
-              style={{
-                width: size.width,
-              }}
-              shouldShow={shouldCheckPose}
-              width={size.width}
-              src={currentPose.imageUrl}
-            />
-          </>
+          <YogaVideo
+            key={currentPose.index}
+            onFinish={handleVideoEnded}
+            url={currentPose.url}
+            showVideo={!(shouldCheckPose || shouldCheckPosition)}
+            size={size}
+          />
         )}
       </div>
     </div>

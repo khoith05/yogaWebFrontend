@@ -82,6 +82,24 @@ export const CHECK_POSE_STAGE_ONE_TIME_OUT_KEY =
 
 export const POSE_ERROR_NOTI_INTERVAL = "POSE_ERROR_NOTI_INTERVAL";
 
+export const POSE_LANDMARKS_LEFT = [27, 13, 23, 25, 11, 15];
+
+export const POSE_LANDMARKS_RIGHT = [28, 14, 24, 26, 12, 16];
+
+export const POSE_CONNECTIONS = [
+  [11, 12],
+  [11, 13],
+  [13, 15],
+  [12, 14],
+  [14, 16],
+  [11, 23],
+  [12, 24],
+  [23, 24],
+  [23, 25],
+  [24, 26],
+  [25, 27],
+  [26, 28],
+];
 //will be removed
 export const poseList = [
   {
@@ -99,7 +117,7 @@ export const poseList = [
       I: 247,
       J: 190,
     }, // angleList
-    url: "https://res.cloudinary.com/uploaderkhoith/video/upload/v1680939086/Countdown_5_Seconds_HD_theo75.mp4", // video url
+    url: "https://res.cloudinary.com/djedlqygu/video/upload/v1681293744/YOGA/Mountain%20Pose%20Arms%20Shoulder%20Level%20Left/06_quick_stretching_sequence_mountain_pose_arms_shoulder_level_left_1_zfvnuo.mp4", // video url
     imageUrl:
       "https://cdn.lessons.com/assets/images/content/lessons-warrior-ii-yoga-pose.jpeg",
     duration: 5,
@@ -139,7 +157,7 @@ export const poseList = [
       I: 108.1762357,
       J: 107.4044223,
     }, // angleList
-    url: "https://res.cloudinary.com/uploaderkhoith/video/upload/v1680939086/Countdown_5_Seconds_HD_theo75.mp4", // video url
+    url: "https://res.cloudinary.com/djedlqygu/video/upload/v1681293744/YOGA/Mountain%20Pose%20Arms%20Shoulder%20Level%20Left/06_quick_stretching_sequence_mountain_pose_arms_shoulder_level_left_1_zfvnuo.mp4", // video url
     imageUrl:
       "https://cdn.lessons.com/assets/images/content/lessons-warrior-ii-yoga-pose.jpeg",
     duration: 5,
@@ -159,7 +177,7 @@ export const poseList = [
       I: 113.0293731,
       J: 169.7554321,
     }, // angleList
-    url: "https://res.cloudinary.com/uploaderkhoith/video/upload/v1680939086/Countdown_5_Seconds_HD_theo75.mp4", // video url
+    url: "https://res.cloudinary.com/djedlqygu/video/upload/v1681293744/YOGA/Mountain%20Pose%20Arms%20Shoulder%20Level%20Left/06_quick_stretching_sequence_mountain_pose_arms_shoulder_level_left_1_zfvnuo.mp4", // video url
     imageUrl:
       "https://cdn.lessons.com/assets/images/content/lessons-warrior-ii-yoga-pose.jpeg",
     duration: 5,
@@ -179,7 +197,7 @@ export const poseList = [
       I: 176.3402205,
       J: 33.52708996,
     }, // angleList
-    url: "https://res.cloudinary.com/uploaderkhoith/video/upload/v1680939086/Countdown_5_Seconds_HD_theo75.mp4", // video url
+    url: "https://res.cloudinary.com/djedlqygu/video/upload/v1681293744/YOGA/Mountain%20Pose%20Arms%20Shoulder%20Level%20Left/06_quick_stretching_sequence_mountain_pose_arms_shoulder_level_left_1_zfvnuo.mp4", // video url
     imageUrl:
       "https://cdn.lessons.com/assets/images/content/lessons-warrior-ii-yoga-pose.jpeg",
     duration: 5,
@@ -199,7 +217,7 @@ export const poseList = [
       I: 108.1762357,
       J: 107.4044223,
     }, // angleList
-    url: "https://res.cloudinary.com/uploaderkhoith/video/upload/v1680939086/Countdown_5_Seconds_HD_theo75.mp4", // video url
+    url: "https://res.cloudinary.com/djedlqygu/video/upload/v1681293744/YOGA/Mountain%20Pose%20Arms%20Shoulder%20Level%20Left/06_quick_stretching_sequence_mountain_pose_arms_shoulder_level_left_1_zfvnuo.mp4", // video url
     imageUrl:
       "https://cdn.lessons.com/assets/images/content/lessons-warrior-ii-yoga-pose.jpeg",
     duration: 5,

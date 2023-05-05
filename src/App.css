@@ -482,11 +482,8 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
 }
 
 .pose-image {
-  height: auto;
-  transition: width 1.5s ease-in;
-  visibility: hidden;
+  transition: width 0.5s ease-in, height 0.5s ease-in;
 }
-
 
 /************ Signup ************/
 .signup {
@@ -499,7 +496,6 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 .signup .wrapper {
   /* position: relative; */
@@ -507,10 +503,10 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
   width: 400px;
   height: 550px;
   background: transparent;
-  border: 2px solid rgba(225, 225, 225, .5);
+  border: 2px solid rgba(225, 225, 225, 0.5);
   border-radius: 20px;
   backdrop-filter: blur(20px);
-  box-shadow: 0 0 30px rgba(0,0,0,.5);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -541,14 +537,14 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
   left: 5px;
   transform: translateY(-50%);
   font-size: 1em;
-  color:#012169;
+  color: #012169;
   font-weight: 500;
   pointer-events: none;
-  transition: .5s;
+  transition: 0.5s;
 }
 
-.input-box input:focus~label,
-.input-box input:valid~label {
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
   top: -5px;
 }
 
@@ -562,7 +558,6 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
   color: #012169;
   font-weight: 600;
   padding: 0 35px 0 5px;
-
 }
 
 .input-box .icon {
@@ -600,11 +595,11 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
 }
 
 .login-register {
-  font-size: .9em;
+  font-size: 0.9em;
   color: #012169;
   text-align: center;
   font-weight: 500;
-  margin: 25px 0 10px; 
+  margin: 25px 0 10px;
 }
 
 .login-register p a {
@@ -616,8 +611,6 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
 .login-register p a:hover {
   text-decoration: underline;
 }
-
-
 
 /************ Login ************/
 .login {
@@ -630,7 +623,6 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 .login .wrapper {
   /* position: relative; */
@@ -638,10 +630,10 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
   width: 400px;
   height: 440px;
   background: transparent;
-  border: 2px solid rgba(225, 225, 225, .5);
+  border: 2px solid rgba(225, 225, 225, 0.5);
   border-radius: 20px;
   backdrop-filter: blur(20px);
-  box-shadow: 0 0 30px rgba(0,0,0,.5);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -672,14 +664,14 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
   left: 5px;
   transform: translateY(-50%);
   font-size: 1em;
-  color:#012169;
+  color: #012169;
   font-weight: 500;
   pointer-events: none;
-  transition: .5s;
+  transition: 0.5s;
 }
 
-.input-box input:focus~label,
-.input-box input:valid~label {
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
   top: -5px;
 }
 
@@ -693,7 +685,6 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
   color: #012169;
   font-weight: 600;
   padding: 0 35px 0 5px;
-
 }
 
 .input-box .icon {
@@ -731,11 +722,11 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
 }
 
 .login-register {
-  font-size: .9em;
+  font-size: 0.9em;
   color: #012169;
   text-align: center;
   font-weight: 500;
-  margin: 25px 0 10px; 
+  margin: 25px 0 10px;
 }
 
 .login-register p a {
@@ -747,7 +738,6 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
 .login-register p a:hover {
   text-decoration: underline;
 }
-
 
 /************ History ************/
 .history {
@@ -778,7 +768,6 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
   align-items: flex-start;
 }
 
-
 .content-table {
   border-collapse: collapse;
   margin: 25px 0;
@@ -787,7 +776,7 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
   min-width: 600px;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0,0,0,.15);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   min-width: 600px;
 }
 
@@ -815,4 +804,3 @@ nav.navbar .navbar-toggler[aria-expanded='true'] .navbar-toggler-icon {
 .content-table tbody tr:nth-of-type(even) {
   background-color: #08122b;
 }
-

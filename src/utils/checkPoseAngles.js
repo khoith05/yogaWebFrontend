@@ -1,5 +1,4 @@
 import { ANGLE_LIST, ANGLE_THRESHOLD } from "./constant.js";
-import isValidAngle from "./isValidAngle.js";
 import calculateAngle from "./calculateAngle.js";
 import { setTimeoutWithKey } from "./setTimeoutWithKey.js";
 import getPoint from "./getPoint.js";
