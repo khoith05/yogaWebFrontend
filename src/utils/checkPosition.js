@@ -11,8 +11,8 @@ function checkPosition({ width, keypoints }) {
   if (!isPersonInCenter) {
     toCenterAudio();
   } else {
-    !isNotTooHigh && tooFarAudio();
-    !isNotTooSmall && tooNearAudio();
+    !isNotTooHigh && tooNearAudio();
+    !isNotTooSmall && tooFarAudio();
   }
   const isValidPosition = isPersonInCenter && isNotTooHigh && isNotTooSmall;
   isValidPosition && clearAudioQueue();
