@@ -32,10 +32,10 @@ function Camera(props) {
 
   const options = {
     modelComplexity: 2,
-    enableSegmentation: true,
+    enableSegmentation: false,
     smoothLandmarks: true,
-    minDetectionConfidence: 0.5,
-    minTrackingConfidence: 0.5,
+    minDetectionConfidence: 0.4,
+    minTrackingConfidence: 0.4,
   };
 
   // init Pose detection
