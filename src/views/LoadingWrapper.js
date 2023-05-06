@@ -9,7 +9,7 @@ function LoadingWrapper(props) {
   const isLoading = useSelector((state) => selectIsLoading(state, loadingKeys));
 
   return isLoading ? (
-    <div className="w-100 h-100 bg-light">
+    <div className="loading-wrapper__spinner">
       <MoonLoader color="#36d7b7" />
     </div>
   ) : (
