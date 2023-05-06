@@ -7,6 +7,7 @@ import Layout from './views/Layout';
 import Signup from './views/Signup';
 import Login from './views/Login';
 import History from './views/History';
+import Result from './views/Result';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="signup" element={<Signup />} />
           <Route path="camera" element={<Camera />} />
           <Route path="history" element={<History />} />
+          <Route path="result" element={<Result />} />
           {/* <Route path="dashboard" element={<Dashboard />} />
 
           <Route path="*" element={<NoMatch />} /> */}
