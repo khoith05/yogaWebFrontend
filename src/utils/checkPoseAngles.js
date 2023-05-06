@@ -46,7 +46,7 @@ function checkPoseAngles({ angleList, keypoints }) {
 }
 
 function checkPoseVisible(keypoint) {
-  const isPoseVisible = Object.value(ANGLE_LIST).reduce(
+  const isPoseVisible = Object.values(ANGLE_LIST).reduce(
     (visible, { basePoint }) =>
       visible && get(keypoint, `${basePoint}.visibility`, 0) > 0.5,
     true

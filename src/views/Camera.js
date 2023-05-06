@@ -99,14 +99,6 @@ function Camera(props) {
 
   return (
     <>
-      {/* <div
-        className='PoseEstimation'
-        style={{
-          display: showCamera ? 'block' : 'none',
-          width: 'fit-content',
-          position: 'relative',
-        }}
-      > */}
       <video
         ref={videoRef}
         className="flip"
@@ -145,7 +137,6 @@ function Camera(props) {
           />
         </div>
       )}
-      {/* </div> */}
     </>
   );
 }
