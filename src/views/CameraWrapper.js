@@ -17,6 +17,12 @@ import { addPoint, nextPose, setNumberOfPose } from "../store/pose";
 
 import getSizeBaseOnRatio from "../utils/getSizeBaseOnRatio";
 import { useResizeDetector } from "react-resize-detector";
+import {
+  startAudio,
+  endAudio,
+  keepPoseAudio,
+  nextPoseAudio,
+} from "../utils/positionAudio";
 
 function CameraWrapper({ poses }) {
   const dispatch = useDispatch();
@@ -51,7 +57,7 @@ function CameraWrapper({ poses }) {
     }
 
     if (currentPose.index >= poses.length - 1) {
-      // TODO end exercise
+      endAudio();
       return;
     }
     setCurrentPose(poses[currentPose.index + 1]);
@@ -71,6 +77,7 @@ function CameraWrapper({ poses }) {
           callback: () => {
             setShouldcheckPosition(false);
             handleNextPose();
+            startAudio();
             console.log("POSITION CHECK DONE");
           },
           time: 5000,
@@ -101,7 +108,7 @@ function CameraWrapper({ poses }) {
               setShouldCheckPose(false);
               handleNextPose();
               setCheckPoseStage(0);
-              console.log("SKIP THIS POSE");
+              nextPose();
             },
             time: 60000,
           });
@@ -116,6 +123,7 @@ function CameraWrapper({ poses }) {
             // setShouldCheckPose(false);
             console.log("GO TO STAGE TWO");
             setCheckPoseStage(2);
+            keepPoseAudio();
             stopExcute({ key: CHECK_POSE_STAGE_ONE_TIME_OUT_KEY });
           }
           break;
