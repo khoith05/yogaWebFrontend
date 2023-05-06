@@ -36,7 +36,7 @@ function checkPoseAngles({ angleList, keypoints }) {
         callback: () => {
           temporarySkipAngles[key] = undefined;
         },
-        time: 6000,
+        time: 5000,
       });
     }
     if (point === MAX_POINT_PER_ANGLE) {
@@ -54,7 +54,7 @@ function checkPoseVisible(keypoint) {
       visible && get(keypoint, `${basePoint}.visibility`, 0) > 0.3,
     true
   );
-  !isPoseVisible && backToCameraAudio();
+  backToCameraAudio(isPoseVisible);
   return isPoseVisible;
 }
 

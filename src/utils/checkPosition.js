@@ -3,19 +3,19 @@ import get from "lodash/get";
 import calculateCenterPosition from "./calculateCenterPosition";
 
 import { tooFarAudio, tooNearAudio, toCenterAudio } from "./positionAudio";
-import { clearAudioQueue } from "./audio";
+import { clearAudioQueue, clearAudioWithKey } from "./audio";
 
 function checkPosition({ width, keypoints }) {
   const isPersonInCenter = checkPersonInCenter({ width, keypoints });
   const { isNotTooHigh, isNotTooSmall } = checkPersonSize({ width, keypoints });
-  if (!isPersonInCenter) {
-    toCenterAudio();
-  } else {
-    !isNotTooHigh && tooNearAudio();
-    !isNotTooSmall && tooFarAudio();
-  }
+
+  toCenterAudio(isPersonInCenter);
+
+  tooNearAudio(isNotTooHigh);
+
+  tooFarAudio(isNotTooSmall);
+
   const isValidPosition = isPersonInCenter && isNotTooHigh && isNotTooSmall;
-  isValidPosition && clearAudioQueue();
   return isValidPosition;
 }
 

@@ -23,7 +23,7 @@ const END_AUDIO =
   "https://res.cloudinary.com/djedlqygu/video/upload/v1683211420/Voice/ketthuc_hrqvwg.mp3";
 
 const tooFarAudioThrottle = throttle(
-  () => addToPlayAudiosQueue({ srcOne: TOO_FAR_AUDIO }),
+  () => addToPlayAudiosQueue({ srcOne: TOO_FAR_AUDIO, key: TOO_FAR_AUDIO }),
   6000
 );
 
@@ -31,26 +31,40 @@ const tooNearAudioThrottle = throttle(() => {
   addToPlayAudiosQueue({ srcOne: TOO_NEAR_AUDIO, key: TOO_NEAR_AUDIO });
 }, 6000);
 
-export const tooFarAudio = () => {
-  tooFarAudioThrottle();
-  clearAudioWithKey(TOO_NEAR_AUDIO);
-};
-
-export const tooNearAudio = () => {
-  tooNearAudioThrottle();
-  clearAudioWithKey(TOO_FAR_AUDIO);
-};
-
-export const toCenterAudio = throttle(
-  () => addToPlayAudiosQueue({ srcOne: TO_CENTER_AUDIO }),
+const toCenterAudioThrottle = throttle(
+  () => addToPlayAudiosQueue({ srcOne: TO_CENTER_AUDIO, key: TO_CENTER_AUDIO }),
   6000
 );
 
-export const backToCameraAudio = throttle(
+const backToCameraAudioThrottle = throttle(
   () =>
-    addToPlayAudiosQueue({ srcOne: BACK_TO_CAMERA_AUDIO, clearQueue: true }),
+    addToPlayAudiosQueue({
+      srcOne: BACK_TO_CAMERA_AUDIO,
+      clearQueue: true,
+      key: BACK_TO_CAMERA_AUDIO,
+    }),
   6000
 );
+
+export const tooFarAudio = (isNotTooSmall) => {
+  isNotTooSmall ? clearAudioWithKey(TOO_FAR_AUDIO) : tooFarAudioThrottle();
+};
+
+export const tooNearAudio = (isNotTooHigh) => {
+  isNotTooHigh ? clearAudioWithKey(TOO_NEAR_AUDIO) : tooNearAudioThrottle();
+};
+
+export const toCenterAudio = (isPersonInCenter) => {
+  isPersonInCenter
+    ? clearAudioWithKey(TO_CENTER_AUDIO)
+    : toCenterAudioThrottle();
+};
+
+export const backToCameraAudio = (isPoseVisible) => {
+  isPoseVisible
+    ? clearAudioWithKey(BACK_TO_CAMERA_AUDIO)
+    : backToCameraAudioThrottle();
+};
 
 export const startAudio = () =>
   addToPlayAudiosQueue({ srcOne: START_AUDIO, clearQueue: true });
