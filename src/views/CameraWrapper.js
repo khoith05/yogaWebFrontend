@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import Camera from "./Camera";
 import YogaVideo from "./YogaVideo";
-import { poseList } from "../utils/constant";
 import checkPosition from "../utils/checkPosition";
 import checkPose from "../utils/checkPoseAngles";
 import throttleCalculatePosePoint from "../utils/calculatePosePoint";
@@ -9,6 +8,7 @@ import {
   CHECK_POSITION_TIMEOUT_KEY,
   CHECK_POSE_STAGE_ONE_TIME_OUT_KEY,
   CHECK_POSE_STAGE_TWO_TIME_OUT_KEY,
+  CHECK_POSE_STAGE_ZERO_TIME_OUT_KEY,
 } from "../utils/constant";
 import { setTimeoutWithKey, stopExcute } from "../utils/setTimeoutWithKey";
 import { useDispatch } from "react-redux";
@@ -23,7 +23,7 @@ function CameraWrapper({ poses }) {
   const [shouldCheckPosition, setShouldcheckPosition] = useState(true);
   const [shouldCheckPose, setShouldCheckPose] = useState(false);
   const [currentPose, setCurrentPose] = useState(null);
-  const [shouldCheckPoseStageTwo, setShouldCheckPoseStageTwo] = useState(false);
+  const [checkPoseStage, setCheckPoseStage] = useState(0);
   const [isValidPosition, setIsValidPosition] = useState(false);
   const [posePoint, setPosePoint] = useState(0);
   const [size, setSize] = useState({ height: 0, width: 0 });
@@ -84,56 +84,67 @@ function CameraWrapper({ poses }) {
 
   const handleCheckPose = useCallback(
     ({ keypoints }) => {
-      if (shouldCheckPoseStageTwo) {
-        setTimeoutWithKey({
-          key: CHECK_POSE_STAGE_TWO_TIME_OUT_KEY,
-          callback: () => {
-            setShouldCheckPose(false);
-            setShouldCheckPoseStageTwo(false);
-            handleNextPose();
-            console.log("DONE THIS POSE");
-          },
-          time: currentPose.duration * 1000,
-        });
+      switch (checkPoseStage) {
+        case 0:
+          setTimeoutWithKey({
+            key: CHECK_POSE_STAGE_ZERO_TIME_OUT_KEY,
+            callback: () => {
+              setCheckPoseStage(1);
+            },
+            time: 5000,
+          });
+          break;
+        case 1:
+          setTimeoutWithKey({
+            key: CHECK_POSE_STAGE_ONE_TIME_OUT_KEY,
+            callback: () => {
+              setShouldCheckPose(false);
+              handleNextPose();
+              setCheckPoseStage(0);
+              console.log("SKIP THIS POSE");
+            },
+            time: 60000,
+          });
 
-        throttleCalculatePosePoint({
-          angleList: currentPose.angleList,
-          keypoints,
-          callback: (point) => {
-            dispatch(addPoint({ point }));
-            setPosePoint(point);
+          // check Pose valid and throw pose error
+          if (
+            checkPose({
+              angleList: currentPose.angleList,
+              keypoints,
+            })
+          ) {
+            // setShouldCheckPose(false);
+            console.log("GO TO STAGE TWO");
+            setCheckPoseStage(2);
+            stopExcute({ key: CHECK_POSE_STAGE_ONE_TIME_OUT_KEY });
+          }
+          break;
+        case 2:
+          setTimeoutWithKey({
+            key: CHECK_POSE_STAGE_TWO_TIME_OUT_KEY,
+            callback: () => {
+              setShouldCheckPose(false);
+              setCheckPoseStage(0);
+              handleNextPose();
+              console.log("DONE THIS POSE");
+            },
+            time: currentPose.duration * 1000,
+          });
 
-            console.log(
-              "🚀 ~ file: CameraWrapper.js:67 ~ CameraWrapper ~ point:",
-              point
-            );
-          },
-        });
-      } else {
-        setTimeoutWithKey({
-          key: CHECK_POSE_STAGE_ONE_TIME_OUT_KEY,
-          callback: () => {
-            setShouldCheckPose(false);
-            handleNextPose();
-            console.log("SKIP THIS POSE");
-          },
-          time: 40000,
-        });
-
-        // check Pose valid and throw pose error
-        const isValidPose = checkPose({
-          angleList: currentPose.angleList,
-          keypoints,
-        });
-        if (isValidPose) {
-          // setShouldCheckPose(false);
-          console.log("GO TO STAGE TWO");
-          setShouldCheckPoseStageTwo(true);
-          stopExcute({ key: CHECK_POSE_STAGE_ONE_TIME_OUT_KEY });
-        }
+          throttleCalculatePosePoint({
+            angleList: currentPose.angleList,
+            keypoints,
+            callback: (point) => {
+              dispatch(addPoint({ point }));
+              setPosePoint(point);
+            },
+          });
+          break;
+        default:
+          break;
       }
     },
-    [shouldCheckPoseStageTwo, currentPose, handleNextPose]
+    [checkPoseStage, currentPose, handleNextPose]
   );
 
   const handleVideoEnded = () => setShouldCheckPose(true);
@@ -156,7 +167,7 @@ function CameraWrapper({ poses }) {
           isValidPosition={isValidPosition}
           onResult={handlePoseResult}
           posePoint={posePoint}
-          showPoint={shouldCheckPoseStageTwo}
+          showPoint={checkPoseStage === 2}
           width={size.width}
           height={size.height}
         ></Camera>

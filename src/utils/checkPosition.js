@@ -1,25 +1,13 @@
 /* eslint-disable camelcase */
-import get from 'lodash/get';
-import calculateSafePosition from './calculateSafePosition';
-import calculateCenterPosition from './calculateCenterPosition';
-import { getHeightBaseOnRatio } from './getSizeBaseOnRatio';
+import get from "lodash/get";
+import calculateCenterPosition from "./calculateCenterPosition";
+
+import { tooFarAudio, tooNearAudio, toCenterAudio } from "./positionAudio";
 
 function checkPosition({ width, keypoints }) {
   const isPersonInCenter = checkPersonInCenter({ width, keypoints });
-  isPersonInCenter &&
-    console.log(
-      '🚀 ~ file: checkPosition.js:9 ~ checkPosition ~ isPersonInCenter:',
-      isPersonInCenter
-    );
   const isPersonSizeValid = checkPersonSize({ width, keypoints });
-  isPersonSizeValid &&
-    console.log(
-      '🚀 ~ file: checkPosition.js:11 ~ checkPosition ~ isPersonSizeValid:',
-      isPersonSizeValid
-    );
-  const a = isPersonInCenter && isPersonSizeValid;
-
-  return a;
+  return isPersonInCenter && isPersonSizeValid;
 }
 
 function checkPersonInCenter({ width, keypoints }) {
@@ -34,24 +22,16 @@ function checkPersonInCenter({ width, keypoints }) {
     );
   });
 
-  const a = pointValidList.every(Boolean);
-  return a;
-}
+  const isInCenter = pointValidList.every(Boolean);
 
-function isKeypointInSafePosition({ x, y, width }) {
-  const { x_topLeft, y_topLeft, x_bottomRight, y_bottomRight } =
-    calculateSafePosition(width);
-  const a =
-    x_topLeft <= x &&
-    x_bottomRight >= x &&
-    y_topLeft <= y &&
-    y_bottomRight >= y;
-  return a;
+  !isInCenter && toCenterAudio();
+
+  return isInCenter;
 }
 
 function checkPersonSize({ keypoints }) {
-  const y_leftEye = get(keypoints, '2.y', 0);
-  const y_leftAnkle = get(keypoints, '27.y', 0);
+  const y_leftEye = get(keypoints, "2.y", 0);
+  const y_leftAnkle = get(keypoints, "27.y", 0);
 
   const personHeightTemp = y_leftAnkle - y_leftEye;
 
@@ -59,18 +39,10 @@ function checkPersonSize({ keypoints }) {
 
   const isNotTooSmall = personHeightTemp > 0.5;
 
+  !isNotTooHigh && tooNearAudio();
+
+  !isNotTooSmall && tooFarAudio();
+
   return isNotTooHigh && isNotTooSmall;
 }
-// function checkPersonSizeTooBig({ keypoints }) {
-//   // const { y_bottomRight, y_topLeft, height } = calculateSafePosition(width);
-
-//   // const safeHeight = Math.abs(y_bottomRight - y_topLeft);
-
-//   const y_leftEye = get(keypoints, '2.y', 0);
-//   const y_leftAnkle = get(keypoints, '27.y', 0);
-
-//   const personHeightTemp = y_leftAnkle - y_leftEye;
-
-//   return y_leftEye - personHeightTemp * 0.5 < 0;
-// }
 export default checkPosition;

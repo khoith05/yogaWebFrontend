@@ -1,12 +1,20 @@
-import { ANGLE_LIST, ANGLE_THRESHOLD } from "./constant.js";
+import {
+  ANGLE_LIST,
+  ANGLE_THRESHOLD,
+  ANGLE_AUDIO,
+  POSE_ERROR_AUDIO,
+} from "./constant.js";
 import calculateAngle from "./calculateAngle.js";
 import { setTimeoutWithKey } from "./setTimeoutWithKey.js";
 import getPoint from "./getPoint.js";
-import { sum } from "lodash";
+import { sum, get } from "lodash";
+import addToPlayAudiosQueue from "./audio.js";
+import { backToCameraAudio } from "./positionAudio.js";
 
 const temporarySkipAngles = {};
 
 function checkPoseAngles({ angleList, keypoints }) {
+  if (!checkPoseVisible(keypoints)) return false;
   const anglePointList = Object.entries(ANGLE_LIST).map(([key, value]) => {
     const { basePoint, adjacentPoint1, adjacentPoint2 } = value;
 
@@ -21,14 +29,14 @@ function checkPoseAngles({ angleList, keypoints }) {
     const point = getPoint(diffAngle);
 
     if (point !== ANGLE_THRESHOLD && !temporarySkipAngles[key]) {
-      errorNoti({ angle: key, isBigger: !!(angle - angleList[key] > 0) });
+      errorNoti({ angle: key, diff: angle - angleList[key] });
       temporarySkipAngles[key] = key;
       setTimeoutWithKey({
         key,
         callback: () => {
           temporarySkipAngles[key] = undefined;
         },
-        time: 5000,
+        time: 6000,
       });
     }
     return point;
@@ -37,12 +45,28 @@ function checkPoseAngles({ angleList, keypoints }) {
   return sum(anglePointList) >= 70;
 }
 
-function errorNoti({ angle, isBigger }) {
-  console.log(
-    "error here ~ angle",
-    angle,
-    isBigger ? "is bigger than standard" : " is smaller than standard"
+function checkPoseVisible(keypoint) {
+  const isPoseVisible = Object.value(ANGLE_LIST).reduce(
+    (visible, { basePoint }) =>
+      visible && get(keypoint, `${basePoint}.visibility`, 0) > 0.5,
+    true
   );
+  !isPoseVisible && backToCameraAudio();
+  return isPoseVisible;
+}
+
+function errorNoti({ angle, diff }) {
+  const isBigger = diff > 0;
+  const roundedDiff = Math.ceil(Math.abs(diff) / 10) * 10;
+  console.log(
+    "ANGLE_AUDIO[roundedDiff]",
+    ANGLE_AUDIO[roundedDiff],
+    roundedDiff
+  );
+  addToPlayAudiosQueue({
+    srcOne: POSE_ERROR_AUDIO[angle][+isBigger],
+    srcTwo: ANGLE_AUDIO[roundedDiff] || ANGLE_AUDIO[90],
+  });
 }
 
 // function getAngleDifferenceList({ angleList, keypoints }) {
