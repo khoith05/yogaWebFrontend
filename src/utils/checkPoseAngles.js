@@ -29,7 +29,7 @@ function checkPoseAngles({ angleList, keypoints }) {
     const point = getPoint(diffAngle);
 
     if (point !== ANGLE_THRESHOLD && !temporarySkipAngles[key]) {
-      errorNoti({ angle: key, diff: angle - angleList[key] });
+      errorNoti({ key, diff: angle - angleList[key] });
       temporarySkipAngles[key] = key;
       setTimeoutWithKey({
         key,
@@ -55,7 +55,7 @@ function checkPoseVisible(keypoint) {
   return isPoseVisible;
 }
 
-function errorNoti({ angle, diff }) {
+function errorNoti({ key, diff }) {
   const isBigger = diff > 0;
   const roundedDiff = Math.ceil(Math.abs(diff) / 10) * 10;
   console.log(
@@ -64,7 +64,8 @@ function errorNoti({ angle, diff }) {
     roundedDiff
   );
   addToPlayAudiosQueue({
-    srcOne: POSE_ERROR_AUDIO[angle][+isBigger],
+    key,
+    srcOne: POSE_ERROR_AUDIO[key][+isBigger],
     srcTwo: ANGLE_AUDIO[roundedDiff] || ANGLE_AUDIO[90],
   });
 }

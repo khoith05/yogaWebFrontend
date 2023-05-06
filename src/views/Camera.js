@@ -31,11 +31,11 @@ function Camera(props) {
   const cameraRef = useRef();
 
   const options = {
-    modelComplexity: 2,
+    modelComplexity: 1,
     enableSegmentation: false,
     smoothLandmarks: true,
-    minDetectionConfidence: 0.4,
-    minTrackingConfidence: 0.4,
+    minDetectionConfidence: 0.5,
+    minTrackingConfidence: 0.5,
   };
 
   // init Pose detection

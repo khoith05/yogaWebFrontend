@@ -3,7 +3,7 @@ import * as asyncUtil from "async";
 let playingAudio = undefined;
 let resolve = undefined;
 
-const audioQueue = asyncUtil.queue(async (task, cb) => {
+const audioQueue = asyncUtil.queue(async ({ task }, cb) => {
   await task();
   await new Promise((res) => setTimeout(res, 1000));
   cb();
@@ -15,7 +15,7 @@ export async function playAudios(srcOne, srcTwo = "") {
     const audioTwo = new Audio(srcTwo);
     audioTwo.preload = true;
     await playAudio(audioOne);
-    if (audioOne.paused) return;
+    if (audioOne.forcestop) return;
     await playAudio(audioTwo);
     return;
   }
@@ -41,19 +41,38 @@ export function clearAudioQueue() {
   });
   if (playingAudio && resolve) {
     playingAudio.pause();
+    playAudio.forcestop = true;
     resolve();
     playingAudio = undefined;
     resolve = undefined;
   }
 }
 
+function clearAudioWithKey(keyToClear) {
+  audioQueue.remove(({ key }) => {
+    return key === keyToClear;
+  });
+}
+
 export default function addToPlayAudiosQueue({
+  key = "",
   srcOne,
   srcTwo = "",
   cb = () => {},
   clearQueue = false,
 }) {
   clearQueue && clearAudioQueue();
-  audioQueue.push(() => playAudios(srcOne, srcTwo), cb);
+  if (clearQueue) {
+    clearAudioQueue();
+  } else if (key) {
+    clearAudioWithKey(key);
+  }
+  audioQueue.push(
+    {
+      task: () => playAudios(srcOne, srcTwo),
+      key,
+    },
+    cb
+  );
   !audioQueue.started && audioQueue.drain();
 }

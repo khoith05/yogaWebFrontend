@@ -38,7 +38,8 @@ export const toCenterAudio = throttle(
 );
 
 export const backToCameraAudio = throttle(
-  () => addToPlayAudiosQueue({ srcOne: BACK_TO_CAMERA_AUDIO }),
+  () =>
+    addToPlayAudiosQueue({ srcOne: BACK_TO_CAMERA_AUDIO, clearQueue: true }),
   10000
 );
 
