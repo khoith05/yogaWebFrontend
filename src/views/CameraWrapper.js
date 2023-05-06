@@ -108,7 +108,7 @@ function CameraWrapper({ poses }) {
               setShouldCheckPose(false);
               handleNextPose();
               setCheckPoseStage(0);
-              nextPose();
+              nextPoseAudio();
             },
             time: 60000,
           });
@@ -134,6 +134,7 @@ function CameraWrapper({ poses }) {
               setShouldCheckPose(false);
               setCheckPoseStage(0);
               handleNextPose();
+              nextPoseAudio();
               console.log("DONE THIS POSE");
             },
             time: currentPose.duration * 1000,
