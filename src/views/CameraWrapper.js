@@ -110,7 +110,7 @@ function CameraWrapper({ poses }) {
               setCheckPoseStage(0);
               nextPoseAudio();
             },
-            time: 60000,
+            time: 120000,
           });
 
           // check Pose valid and throw pose error
@@ -137,7 +137,7 @@ function CameraWrapper({ poses }) {
               nextPoseAudio();
               console.log("DONE THIS POSE");
             },
-            time: currentPose.duration * 1000,
+            time: 120000,
           });
 
           throttleCalculatePosePoint({
