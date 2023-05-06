@@ -7,8 +7,14 @@ import { clearAudioQueue } from "./audio";
 
 function checkPosition({ width, keypoints }) {
   const isPersonInCenter = checkPersonInCenter({ width, keypoints });
-  const isPersonSizeValid = checkPersonSize({ width, keypoints });
-  const isValidPosition = isPersonInCenter && isPersonSizeValid;
+  const { isNotTooHigh, isNotTooSmall } = checkPersonSize({ width, keypoints });
+  if (!isPersonInCenter) {
+    toCenterAudio();
+  } else {
+    !isNotTooHigh && tooFarAudio();
+    !isNotTooSmall && tooNearAudio();
+  }
+  const isValidPosition = isPersonInCenter && isNotTooHigh && isNotTooSmall;
   isValidPosition && clearAudioQueue();
   return isValidPosition;
 }
@@ -27,8 +33,6 @@ function checkPersonInCenter({ width, keypoints }) {
 
   const isInCenter = pointValidList.every(Boolean);
 
-  !isInCenter && toCenterAudio();
-
   return isInCenter;
 }
 
@@ -42,10 +46,6 @@ function checkPersonSize({ keypoints }) {
 
   const isNotTooSmall = personHeightTemp > 0.5;
 
-  !isNotTooHigh && tooNearAudio();
-
-  !isNotTooSmall && tooFarAudio();
-
-  return isNotTooHigh && isNotTooSmall;
+  return { isNotTooHigh, isNotTooSmall };
 }
 export default checkPosition;
