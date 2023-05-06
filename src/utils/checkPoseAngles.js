@@ -11,7 +11,7 @@ import { sum, get } from "lodash";
 import addToPlayAudiosQueue, { clearAudioWithKey } from "./audio.js";
 import { backToCameraAudio } from "./positionAudio.js";
 
-const temporarySkipAngles = {};
+const temporarySkipAngles = { C: true, D: true };
 
 function checkPoseAngles({ angleList, keypoints }) {
   if (!checkPoseVisible(keypoints)) return false;
