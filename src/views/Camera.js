@@ -31,7 +31,7 @@ function Camera(props) {
   const cameraRef = useRef();
 
   const options = {
-    modelComplexity: 1,
+    modelComplexity: 2,
     enableSegmentation: true,
     smoothLandmarks: true,
     minDetectionConfidence: 0.5,

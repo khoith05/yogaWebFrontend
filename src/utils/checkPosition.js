@@ -19,7 +19,7 @@ function checkPersonInCenter({ width, keypoints }) {
   const [centerWidthStart, centerWidthEnd] = calculateCenterPosition(width);
   const pointValidList = keypoints.map(({ visibility, x }) => {
     return (
-      visibility >= 0.5 &&
+      visibility >= 0.3 &&
       x * width > centerWidthStart &&
       x * width < centerWidthEnd
     );

@@ -12,7 +12,7 @@ export default function drawKeypoints({ canvas, keypoints }) {
   canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 
   drawingUtils.drawConnectors(canvasCtx, keypoints, POSE_CONNECTIONS, {
-    visibilityMin: 0.5,
+    visibilityMin: 0.3,
     color: "white",
     lineWidth: 2,
   });
@@ -20,7 +20,7 @@ export default function drawKeypoints({ canvas, keypoints }) {
     canvasCtx,
     POSE_LANDMARKS_LEFT.map((index) => keypoints[index]),
     {
-      visibilityMin: 0.5,
+      visibilityMin: 0.3,
       color: "white",
       fillColor: "rgb(255,138,0)",
       lineWidth: 0,
@@ -31,7 +31,7 @@ export default function drawKeypoints({ canvas, keypoints }) {
     canvasCtx,
     POSE_LANDMARKS_RIGHT.map((index) => keypoints[index]),
     {
-      visibilityMin: 0.5,
+      visibilityMin: 0.3,
       color: "white",
       fillColor: "rgb(0,217,231)",
       lineWidth: 0,
