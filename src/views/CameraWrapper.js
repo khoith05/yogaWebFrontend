@@ -137,7 +137,7 @@ function CameraWrapper({ poses }) {
               nextPoseAudio();
               console.log("DONE THIS POSE");
             },
-            time: 120000,
+            time: 30000,
           });
 
           throttleCalculatePosePoint({

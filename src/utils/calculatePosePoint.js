@@ -20,9 +20,6 @@ function calculatePosePoint({ angleList, keypoints, callback }) {
 
       const diffAngle = Math.abs(angleList[key] - angle);
 
-      key === "B" &&
-        console.log(key, ":", angleList[key], angle, getPoint(diffAngle));
-
       return sumPoint + getPoint(diffAngle);
     },
     0
