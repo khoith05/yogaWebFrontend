@@ -5,7 +5,6 @@ let resolve = undefined;
 
 const audioQueue = asyncUtil.queue(async ({ task }, cb) => {
   await task();
-  await new Promise((res) => setTimeout(res, 1000));
   cb();
 });
 
@@ -48,7 +47,7 @@ export function clearAudioQueue() {
   }
 }
 
-function clearAudioWithKey(keyToClear) {
+export function clearAudioWithKey(keyToClear) {
   audioQueue.remove(({ key }) => {
     return key === keyToClear;
   });
@@ -60,11 +59,12 @@ export default function addToPlayAudiosQueue({
   srcTwo = "",
   cb = () => {},
   clearQueue = false,
+  clearSameKey = false,
 }) {
   clearQueue && clearAudioQueue();
   if (clearQueue) {
     clearAudioQueue();
-  } else if (key) {
+  } else if (clearSameKey && key) {
     clearAudioWithKey(key);
   }
   audioQueue.push(

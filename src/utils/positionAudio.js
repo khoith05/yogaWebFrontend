@@ -1,4 +1,4 @@
-import addToPlayAudiosQueue from "./audio";
+import addToPlayAudiosQueue, { clearAudioWithKey } from "./audio";
 import { throttle } from "lodash";
 
 const TOO_FAR_AUDIO =
@@ -22,25 +22,34 @@ const NEXT_POSE_AUDIO =
 const END_AUDIO =
   "https://res.cloudinary.com/djedlqygu/video/upload/v1683211420/Voice/ketthuc_hrqvwg.mp3";
 
-export const tooFarAudio = throttle(
+const tooFarAudioThrottle = throttle(
   () => addToPlayAudiosQueue({ srcOne: TOO_FAR_AUDIO }),
-  10000
+  6000
 );
 
-export const tooNearAudio = throttle(
-  () => addToPlayAudiosQueue({ srcOne: TOO_NEAR_AUDIO }),
-  10000
-);
+const tooNearAudioThrottle = throttle(() => {
+  addToPlayAudiosQueue({ srcOne: TOO_NEAR_AUDIO, key: TOO_NEAR_AUDIO });
+}, 6000);
+
+export const tooFarAudio = () => {
+  tooFarAudioThrottle();
+  clearAudioWithKey(TOO_NEAR_AUDIO);
+};
+
+export const tooNearAudio = () => {
+  tooNearAudioThrottle();
+  clearAudioWithKey(TOO_FAR_AUDIO);
+};
 
 export const toCenterAudio = throttle(
   () => addToPlayAudiosQueue({ srcOne: TO_CENTER_AUDIO }),
-  10000
+  6000
 );
 
 export const backToCameraAudio = throttle(
   () =>
     addToPlayAudiosQueue({ srcOne: BACK_TO_CAMERA_AUDIO, clearQueue: true }),
-  10000
+  6000
 );
 
 export const startAudio = () =>

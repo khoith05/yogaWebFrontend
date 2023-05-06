@@ -13,10 +13,6 @@ function checkPosition({ width, keypoints }) {
   } else {
     !isNotTooHigh && tooNearAudio();
     !isNotTooSmall && tooFarAudio();
-    console.log(
-      "🚀 ~ file: checkPosition.js:17 ~ checkPosition ~ isNotTooHigh:",
-      isNotTooHigh
-    );
   }
   const isValidPosition = isPersonInCenter && isNotTooHigh && isNotTooSmall;
   isValidPosition && clearAudioQueue();

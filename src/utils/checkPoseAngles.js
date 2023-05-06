@@ -1,6 +1,6 @@
 import {
   ANGLE_LIST,
-  ANGLE_THRESHOLD,
+  MAX_POINT_PER_ANGLE,
   ANGLE_AUDIO,
   POSE_ERROR_AUDIO,
 } from "./constant.js";
@@ -8,7 +8,7 @@ import calculateAngle from "./calculateAngle.js";
 import { setTimeoutWithKey } from "./setTimeoutWithKey.js";
 import getPoint from "./getPoint.js";
 import { sum, get } from "lodash";
-import addToPlayAudiosQueue from "./audio.js";
+import addToPlayAudiosQueue, { clearAudioWithKey } from "./audio.js";
 import { backToCameraAudio } from "./positionAudio.js";
 
 const temporarySkipAngles = {};
@@ -28,7 +28,7 @@ function checkPoseAngles({ angleList, keypoints }) {
 
     const point = getPoint(diffAngle);
 
-    if (point !== ANGLE_THRESHOLD && !temporarySkipAngles[key]) {
+    if (point !== MAX_POINT_PER_ANGLE && !temporarySkipAngles[key]) {
       errorNoti({ key, diff: angle - angleList[key] });
       temporarySkipAngles[key] = key;
       setTimeoutWithKey({
@@ -38,6 +38,9 @@ function checkPoseAngles({ angleList, keypoints }) {
         },
         time: 6000,
       });
+    }
+    if (point === MAX_POINT_PER_ANGLE) {
+      clearAudioWithKey(key);
     }
     return point;
   });
@@ -65,6 +68,7 @@ function errorNoti({ key, diff }) {
   );
   addToPlayAudiosQueue({
     key,
+    clearSameKey: true,
     srcOne: POSE_ERROR_AUDIO[key][+isBigger],
     srcTwo: ANGLE_AUDIO[roundedDiff] || ANGLE_AUDIO[90],
   });
