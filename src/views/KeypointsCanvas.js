@@ -18,13 +18,7 @@ function KeypointsCanvas(props) {
     drawKeypoints({ canvas, keypoints });
   }, [keypoints]);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      style={style}
-      //  className='flip'
-    />
-  );
+  return <canvas ref={canvasRef} style={style} className="flip" />;
 }
 
 export default KeypointsCanvas;
