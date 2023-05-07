@@ -101,7 +101,7 @@ function Camera(props) {
     <>
       <video
         ref={videoRef}
-        className="flip"
+        // className="flip"
         height={height}
         width={width}
         playsInline
