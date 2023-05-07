@@ -3,22 +3,22 @@ export const PUNISHMENT_COEFFICIENT = 1;
 export const MAX_POINT_PER_ANGLE = 10;
 //* A is right, B is left
 export const ANGLE_LIST = {
-  A: {
+  B: {
     basePoint: 14,
     adjacentPoint1: 12,
     adjacentPoint2: 16,
   },
-  B: {
+  A: {
     basePoint: 13,
     adjacentPoint1: 15,
     adjacentPoint2: 11,
   },
-  C: {
+  D: {
     basePoint: 12,
     adjacentPoint1: 14,
     adjacentPoint2: 11,
   },
-  D: {
+  C: {
     basePoint: 11,
     adjacentPoint1: 12,
     adjacentPoint2: 13,
@@ -33,22 +33,22 @@ export const ANGLE_LIST = {
     adjacentPoint1: 23,
     adjacentPoint2: 13,
   },
-  G: {
+  H: {
     basePoint: 24,
     adjacentPoint1: 12,
     adjacentPoint2: 26,
   },
-  H: {
+  G: {
     basePoint: 23,
     adjacentPoint1: 25,
     adjacentPoint2: 11,
   },
-  I: {
+  J: {
     basePoint: 26,
     adjacentPoint1: 24,
     adjacentPoint2: 28,
   },
-  J: {
+  I: {
     basePoint: 25,
     adjacentPoint1: 27,
     adjacentPoint2: 23,
