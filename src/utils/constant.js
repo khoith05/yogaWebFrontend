@@ -1,7 +1,7 @@
 export const ANGLE_THRESHOLD = 15;
 export const PUNISHMENT_COEFFICIENT = 1;
 export const MAX_POINT_PER_ANGLE = 10;
-//* A is right, B is left
+//* A is left, B is right
 export const ANGLE_LIST = {
   B: {
     basePoint: 14,
@@ -119,43 +119,43 @@ export const ANGLE_AUDIO = {
 };
 //* [smallerAudio, biggerAudio]
 export const POSE_ERROR_AUDIO = {
-  A: [
+  B: [
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211416/Voice/mokhuyatayphairathem_hmrgqi.mp3",
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211416/Voice/mokhuyatayphairathem_hmrgqi.mp3",
   ],
-  B: [
+  A: [
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211416/Voice/mokhuyataytrairathem_bh7kff.mp3",
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211415/Voice/khepkhuitaytraithem_cwfzin.mp3",
   ],
-  C: [
+  D: [
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211416/Voice/mocanhtayphaisovoithannguoithem_yvqlch.mp3",
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211415/Voice/khepcanhtayphaisovoithannguoithem_ho9btn.mp3",
   ],
-  D: [
+  C: [
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211416/Voice/mocanhtaytraisovoithannguoithem_vztceh.mp3",
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211416/Voice/khepcanhtaytraisovoithannguoithem_yam4ed.mp3",
-  ],
-  E: [
-    "https://res.cloudinary.com/djedlqygu/video/upload/v1683211416/Voice/mocanhtayphaisovoithannguoithem_yvqlch.mp3",
-    "https://res.cloudinary.com/djedlqygu/video/upload/v1683211415/Voice/khepcanhtayphaisovoithannguoithem_ho9btn.mp3",
   ],
   F: [
+    "https://res.cloudinary.com/djedlqygu/video/upload/v1683211416/Voice/mocanhtayphaisovoithannguoithem_yvqlch.mp3",
+    "https://res.cloudinary.com/djedlqygu/video/upload/v1683211415/Voice/khepcanhtayphaisovoithannguoithem_ho9btn.mp3",
+  ],
+  E: [
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211416/Voice/mocanhtaytraisovoithannguoithem_vztceh.mp3",
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211416/Voice/khepcanhtaytraisovoithannguoithem_yam4ed.mp3",
   ],
-  G: [
+  H: [
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211416/Voice/morongbapduiphaivathannguoithem_js6ru6.mp3",
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211417/Voice/thunhoduiphaivathannguoithem_b3cke9.mp3",
   ],
-  H: [
+  G: [
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211416/Voice/morongbapduitraivathannguoithem_kcrmpu.mp3																							",
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211417/Voice/thunhoduitraivathannguoithem_c18ooe.mp3",
   ],
-  I: [
+  J: [
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211417/Voice/thunhobapduivabapchanphaithem_vdy9uf.mp3",
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211417/Voice/morongbapduivabapchanphaithem_urodi2.mp3",
   ],
-  J: [
+  I: [
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211417/Voice/thunhobapduivabapchantraithem_djg1or.mp3",
     "https://res.cloudinary.com/djedlqygu/video/upload/v1683211417/Voice/morongbapduivabapchantraithem_tx1s0x.mp3",
   ],
