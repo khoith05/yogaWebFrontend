@@ -49,10 +49,10 @@ function checkPoseAngles({ angleList, keypoints }) {
 }
 
 function checkPoseVisible(keypoint) {
-  const isPoseVisible = Object.values(ANGLE_LIST).reduce(
+  const isPoseVisible = Object.values(ANGLE_LIST).map(
     (visible, { basePoint }) =>
-      visible && get(keypoint, `${basePoint}.visibility`, 0) > 0.3,
-    true
+      visible || get(keypoint, `${basePoint}.visibility`, 0) > 0.3,
+    false
   );
   backToCameraAudio(isPoseVisible);
   return isPoseVisible;
