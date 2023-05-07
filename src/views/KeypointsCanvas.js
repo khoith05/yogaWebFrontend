@@ -1,5 +1,5 @@
-import { useRef, useEffect } from 'react';
-import drawKeypoints from '../utils/drawKeypoints';
+import { useRef, useEffect } from "react";
+import drawKeypoints from "../utils/drawKeypoints";
 function KeypointsCanvas(props) {
   const { isVisible, keypoints, style, width, height } = props;
 
@@ -18,7 +18,13 @@ function KeypointsCanvas(props) {
     drawKeypoints({ canvas, keypoints });
   }, [keypoints]);
 
-  return <canvas ref={canvasRef} style={style} className='flip' />;
+  return (
+    <canvas
+      ref={canvasRef}
+      style={style}
+      //  className='flip'
+    />
+  );
 }
 
 export default KeypointsCanvas;
