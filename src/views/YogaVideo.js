@@ -17,6 +17,7 @@ function YogaVideo(props) {
   return (
     <video
       className="camera-element pose-image"
+      key={url}
       src={url}
       style={style}
       autoPlay
