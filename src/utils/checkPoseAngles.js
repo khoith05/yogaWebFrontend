@@ -70,7 +70,7 @@ function errorNoti({ key, diff }) {
     key,
     clearSameKey: true,
     srcOne: POSE_ERROR_AUDIO[key][+isBigger],
-    srcTwo: ANGLE_AUDIO[roundedDiff] || ANGLE_AUDIO[90],
+    srcTwo: ANGLE_AUDIO[roundedDiff],
   });
 }
 
