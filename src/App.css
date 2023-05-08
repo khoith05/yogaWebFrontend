@@ -1120,3 +1120,112 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   margin-right: 50px;
   width: 210px;
 }
+
+/*-------------------------- Exercise Details--------------------------------- */
+
+.my-button {
+  background-color: #0a2147;
+  border: none;
+  border-radius: 4px;
+  margin-left: 20px;
+  margin-bottom: 1px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+  font-family: "Centra";
+}
+
+.my-button1 {
+  background-color: #0a2147;
+  border: none;
+  border-radius: 4px;
+  margin-top: 15px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+  border-radius: 12px;
+}
+.my-button-close {
+  background-color: #8c1a11;
+  border: none;
+  border-radius: 4px;
+  margin-top: 15px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+  border-radius: 12px;
+}
+h10 {
+  font-family: Centra;
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  font-family: "Centra";
+}
+h9 {
+  font-family: Centra;
+  font-size: 15px;
+  color: #000000;
+}
+
+.Table1 {
+  border-radius: 10px;
+  width: 800px;
+  height: 100%;
+  color: white;
+  font-family: Centra;
+  /* background-color: #F4DCDC; */
+  padding: 0.4em;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  margin-bottom: 5px;
+  background: transparent;
+  border: 2px solid rgba(225, 225, 225, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.pose-name {
+  text-transform: uppercase;
+  font-size: 1em;
+  font-weight: 600;
+  color: white;
+  white-space: normal;
+  /* padding: 10px 7px 0;
+  margin-right: 50px;
+  width: 210px; */
+}
+
+.time {
+  font-size: 1em;
+  font-weight: 100;
+  color: white;
+  margin-left: 100px;
+  padding-left: 100px;
+}
+
+.Row_css {
+  box-sizing: border-box;
+  border-bottom: 20 px solid #f4dcdc;
+  border-radius: 30px;
+  border-spacing: 50 px;
+  box-sizing: border-box;
+}
+
+.player-wrapper {
+  color: #651d1d;
+}
+.react-player {
+  color: #8c1a11;
+}

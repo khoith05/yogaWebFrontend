@@ -81,6 +81,7 @@ const list = [
     imgUrl: projImg3,
   },
 ];
+
 const ExerciseDetail = () => {
   const data = { nodes: list };
 
@@ -89,14 +90,12 @@ const ExerciseDetail = () => {
       <Table data={data} className="Table1">
         {(tableList) => (
           <>
-            <Header>
-              <HeaderRow style={{ backgroundColor: "#F4DCDC" }}>
-                <HeaderCell> </HeaderCell>
-                <HeaderCell style={{ marginTop: "15px", marginBottom: "10px" }}>
+            <Header style={{ backgroundColor: "#012169" }}>
+              <HeaderRow style={{ backgroundColor: "#012169" }}>
+                <HeaderCell style={{ height: "50px" }}> </HeaderCell>
+                <HeaderCell style={{ height: "50px" }}> Posture </HeaderCell>
+                <HeaderCell style={{ height: "50px", paddingLeft: "90px" }}>
                   {" "}
-                  Posture{" "}
-                </HeaderCell>
-                <HeaderCell style={{ marginTop: "15px", marginBottom: "10px" }}>
                   Time{" "}
                 </HeaderCell>
               </HeaderRow>
@@ -106,21 +105,26 @@ const ExerciseDetail = () => {
                 <Row
                   key={item.id}
                   item={item}
-                  style={{ backgroundColor: "#F4DCDC" }}
+                  style={{ backgroundColor: "transparent" }}
                 >
                   <Cell>
                     <img
                       src={item.imgUrl}
                       style={{
                         width: "150px",
-                        height: "60px",
+                        height: "100px",
                         marginLeft: "10px",
-                        marginBottom: "5px",
+                        marginBottom: "10px",
+                        marginTop: "15px",
                       }}
                     />
                   </Cell>
-                  <Cell>{item.title}</Cell>
-                  <Cell>{item.description}</Cell>
+                  <Cell>
+                    <div className="pose-name">{item.title}</div>
+                  </Cell>
+                  <Cell className="time" style={{ paddingLeft: "100px" }}>
+                    {item.description}
+                  </Cell>
                 </Row>
               ))}
             </Body>

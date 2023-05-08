@@ -4,8 +4,6 @@ import ExerciseDetail from "./ExerciseDetail";
 import Modal from "react-bootstrap/Modal";
 import ReactPlayer from "react-player";
 
-import "./ExercisePage.css";
-
 const MyVerticallyCenteredModal = (props) => {
   return (
     <Modal
@@ -17,16 +15,16 @@ const MyVerticallyCenteredModal = (props) => {
       <Modal.Header closeButton>
         <Modal.Title
           id="contained-modal-title-vcenter"
-          style={{ color: "#651D1D", textAlign: "center", margin: "auto" }}
+          style={{ color: "#0a2147", fontWeight: "800" }}
         >
-          Instructions for placing the camera
+          How to place your camera
         </Modal.Title>
       </Modal.Header>
       <Modal.Body
         style={{
           height: "400px",
           maxHeight: "550px",
-          width: "500px",
+          width: "5100px",
           maxWidth: "800px",
         }}
       >
@@ -52,7 +50,7 @@ const MyVerticallyCenteredModal = (props) => {
       <Modal.Footer
         style={{ color: "#651D1D", textAlign: "center", margin: "auto" }}
       >
-        <button className="my-button-close" onClick={props.onHide}>
+        <button className="my-button" onClick={props.onHide}>
           Close
         </button>
       </Modal.Footer>
@@ -66,38 +64,30 @@ const ExercisePage = (props) => {
   const [modalShow, setModalShow] = React.useState(false);
 
   return (
-    <div className="banner1">
-      <Container>
-        <Row>
-          <p className="h10">Restore & Rejuvenate</p>
-          <p className="h9">
-            30 mins
-            <button className="my-button" onClick={() => setModalShow(true)}>
-              <span>Instructions for placing the camera</span>
-            </button>
-          </p>
-          <MyVerticallyCenteredModal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-          />
-        </Row>
-      </Container>
-      <Container>
-        <ExerciseDetail></ExerciseDetail>
-      </Container>
-      <Container>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <button className="my-button1" onClick={onStartClick}>
-            Start
-          </button>
+    <div className="flex-wrapper">
+      <div className="overral">
+        <div>
+          <h1>Juvenile Restoration</h1>
+          <p>Total Time: 10:50</p>
         </div>
-      </Container>
+        <button className="my-button" onClick={() => setModalShow(true)}>
+          Camera Placing
+        </button>
+        <MyVerticallyCenteredModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
+      </div>
+      <ExerciseDetail></ExerciseDetail>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <button className="my-button1">Start</button>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import ReactModal from 'react-modal';
-import './ExercisePage.css'
 
 const Modal = (props) => {
     return (
