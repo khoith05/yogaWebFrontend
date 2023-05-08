@@ -46,7 +46,7 @@ function CameraWrapper({ poses }) {
   }, [rWidth]);
 
   useEffect(() => {
-    wrapperRef.current && window.scrollTo(0, wrapperRef.current.offsetTop - 10);
+    wrapperRef.current && window.scrollTo(0, wrapperRef.current.offsetTop);
   }, [wrapperRef]);
 
   const handleNextPose = useCallback(() => {
@@ -168,7 +168,7 @@ function CameraWrapper({ poses }) {
   }, []);
 
   return (
-    <div ref={wrapperRef} className="d-flex justify-content-center mt-4">
+    <div ref={wrapperRef} className="d-flex justify-content-center pt-4">
       <div style={{ position: "relative", width: "fit-content" }}>
         <Camera
           showCamera={shouldCheckPose || shouldCheckPosition}

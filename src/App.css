@@ -815,7 +815,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   flex-flow: column nowrap;
   margin-top: 0px;
   padding: 130px 0 120px 0;
-  background-image: url("./assets/img/banner-bg.png");
+  /* background-image: url("./assets/img/banner-bg.png"); */
   background-position: top center;
   background-size: cover;
   background-repeat: no-repeat;

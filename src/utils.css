@@ -7,3 +7,12 @@
 .navbar-bg {
   background-color: #012169;
 }
+
+.main-bg {
+  background: url("./assets/img/banner-bg.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-height: 100vh;
+}

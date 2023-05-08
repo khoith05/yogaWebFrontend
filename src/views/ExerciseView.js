@@ -8,13 +8,12 @@ import getExerciseDetail from "../service/getExerciseDetail";
 import ExercisePage from "./ExercisePage";
 
 const style = {
-  container: {
-    minHeight: "1000px",
-  },
+  height: "100vh",
 };
 
 function ExerciseView() {
   const [start, setStart] = useState(false);
+  const mainRef = useRef(null);
 
   const [exercise, setExercise] = useState({});
   const params = useParams();
@@ -22,19 +21,22 @@ function ExerciseView() {
   const onStartClick = () => setStart(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     getExerciseDetail(params.excerciseId).then((data) => setExercise(data));
   }, []);
 
   return (
-    <LoadingWrapper loadingKeys={[GET_EXERCISE_DETAIL_LOADING]}>
-      {start ? (
-        <Container fluid style={style.container}>
-          <CameraWrapper poses={poses.current} />
-        </Container>
-      ) : (
-        <ExercisePage onStartClick={onStartClick} exercise={exercise} />
-      )}
-    </LoadingWrapper>
+    <div ref={mainRef} className="main-bg">
+      <LoadingWrapper loadingKeys={[GET_EXERCISE_DETAIL_LOADING]} style={style}>
+        {start ? (
+          <Container fluid>
+            <CameraWrapper poses={exercise.poses} />
+          </Container>
+        ) : (
+          <ExercisePage onStartClick={onStartClick} exercise={exercise} />
+        )}
+      </LoadingWrapper>
+    </div>
   );
 }
 

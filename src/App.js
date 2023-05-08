@@ -1,7 +1,6 @@
 import Home from "./views/Home";
-import ExerciseView from "./views/ExeciseView";
+import ExerciseView from "./views/ExerciseView";
 import { Route, Routes } from "react-router-dom";
-import ExercisePage from "./views/ExercisePage";
 import PopupVideo from "./views/PopupVideo";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
