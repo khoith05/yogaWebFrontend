@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Container, Row } from "react-bootstrap";
 import ExerciseDetail from "./ExerciseDetail";
 import Modal from "react-bootstrap/Modal";
 import ReactPlayer from "react-player";
@@ -58,15 +57,18 @@ const MyVerticallyCenteredModal = (props) => {
   );
 };
 
-const ExercisePage = ({ onStartClick }) => {
+const ExercisePage = ({ onStartClick, exercise }) => {
   const [modalShow, setModalShow] = React.useState(false);
+
+  const { duration, name, poses = [] } = exercise;
+  console.log("🚀 ~ file: ExercisePage.js:64 ~ ExercisePage ~ poses:", poses);
 
   return (
     <div className="flex-wrapper">
       <div className="overral">
         <div>
-          <h1>Juvenile Restoration</h1>
-          <p>Total Time: 10:50</p>
+          <h1>{name}</h1>
+          <p>{`${duration} minutes`}</p>
         </div>
         <button className="my-button" onClick={() => setModalShow(true)}>
           Camera Placing
@@ -76,7 +78,7 @@ const ExercisePage = ({ onStartClick }) => {
           onHide={() => setModalShow(false)}
         />
       </div>
-      <ExerciseDetail />
+      <ExerciseDetail poses={poses} />
       <div
         style={{
           display: "flex",

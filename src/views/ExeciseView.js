@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import CameraWrapper from "./CameraWrapper";
 import { Container } from "react-bootstrap";
-import ExerciseDetail from "./ExerciseDetail";
 import LoadingWrapper from "./LoadingWrapper";
 import { GET_EXERCISE_DETAIL_LOADING } from "../utils/constant";
 import { useParams } from "react-router-dom";
@@ -16,16 +15,15 @@ const style = {
 
 function ExerciseView() {
   const [start, setStart] = useState(false);
-  const poses = useRef();
+
+  const [exercise, setExercise] = useState({});
   const params = useParams();
 
   const onStartClick = () => setStart(true);
 
   useEffect(() => {
-    getExerciseDetail(params.excerciseId).then(
-      (data) => (poses.current = data.poses)
-    );
-  });
+    getExerciseDetail(params.excerciseId).then((data) => setExercise(data));
+  }, []);
 
   return (
     <LoadingWrapper loadingKeys={[GET_EXERCISE_DETAIL_LOADING]}>
@@ -34,7 +32,7 @@ function ExerciseView() {
           <CameraWrapper poses={poses.current} />
         </Container>
       ) : (
-        <ExercisePage onStartClick={onStartClick} />
+        <ExercisePage onStartClick={onStartClick} exercise={exercise} />
       )}
     </LoadingWrapper>
   );

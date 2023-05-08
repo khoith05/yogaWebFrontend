@@ -1053,17 +1053,6 @@ h9 {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #555;
 }
-/* 
-.pose-table__header-left {
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  margin-left: 10px;
-}
-
-.pose-table__header-right {
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-} */
 
 .pose-name {
   text-transform: uppercase;

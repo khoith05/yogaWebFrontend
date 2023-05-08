@@ -81,8 +81,8 @@ const list = [
   },
 ];
 
-const ExerciseDetail = () => {
-  const data = { nodes: list };
+const ExerciseDetail = ({ poses }) => {
+  const data = { nodes: poses };
 
   return (
     <div style={{ height: "400px" }} className="pose-table-wrapper">
@@ -113,13 +113,13 @@ const ExerciseDetail = () => {
             <Body>
               {tableList.map((item) => (
                 <Row
-                  key={item.id}
-                  item={item}
+                  key={item.index}
+                  // item={item}
                   style={{ backgroundColor: "transparent" }}
                 >
                   <Cell>
                     <img
-                      src={item.imgUrl}
+                      src={item.imageUrl}
                       style={{
                         width: "150px",
                         height: "100px",
@@ -130,10 +130,10 @@ const ExerciseDetail = () => {
                     />
                   </Cell>
                   <Cell>
-                    <div className="pose-name">{item.title}</div>
+                    <div className="pose-name">{item.name}</div>
                   </Cell>
                   <Cell className="time" style={{ paddingLeft: "100px" }}>
-                    {item.description}
+                    {`${item.duration} sec`}
                   </Cell>
                 </Row>
               ))}
