@@ -1,7 +1,7 @@
-import { ANGLE_LIST } from './constant.js';
-import calculateAngle from './calculateAngle.js';
-import getPoint from './getPoint.js';
-import { throttle, get } from 'lodash';
+import { ANGLE_LIST } from "./constant.js";
+import calculateAngle from "./calculateAngle.js";
+import getPoint from "./getPoint.js";
+import { throttle, get } from "lodash";
 
 function calculatePosePoint({ angleList, keypoints, callback }) {
   const posePointSum = Object.entries(ANGLE_LIST).reduce(
@@ -10,7 +10,7 @@ function calculatePosePoint({ angleList, keypoints, callback }) {
 
       const visibility = get(keypoints, `${basePoint}.visibility`, 0);
 
-      if (visibility < 0.3) return sumPoint;
+      if (visibility < 0.5) return sumPoint;
 
       const angle = calculateAngle({
         basePoint: keypoints[basePoint],
@@ -20,8 +20,8 @@ function calculatePosePoint({ angleList, keypoints, callback }) {
 
       const diffAngle = Math.abs(angleList[key] - angle);
 
-      key === 'B' &&
-        console.log(key, ':', angleList[key], angle, getPoint(diffAngle));
+      key === "B" &&
+        console.log(key, ":", angleList[key], angle, getPoint(diffAngle));
 
       return sumPoint + getPoint(diffAngle);
     },
