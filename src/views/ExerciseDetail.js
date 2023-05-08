@@ -85,15 +85,26 @@ const ExerciseDetail = () => {
   const data = { nodes: list };
 
   return (
-    <div style={{ height: "400px" }}>
-      <Table data={data} className="Table1">
+    <div style={{ height: "400px" }} className="pose-table-wrapper">
+      <Table data={data} className="pose-table">
         {(tableList) => (
           <>
-            <Header style={{ backgroundColor: "#012169" }}>
+            <Header
+              style={{ backgroundColor: "#012169" }}
+              className="pose-table-header"
+            >
               <HeaderRow style={{ backgroundColor: "#012169" }}>
-                <HeaderCell style={{ height: "50px" }}> </HeaderCell>
+                <HeaderCell
+                  style={{ height: "50px" }}
+                  className="pose-table__header-left"
+                >
+                  {" "}
+                </HeaderCell>
                 <HeaderCell style={{ height: "50px" }}> Posture </HeaderCell>
-                <HeaderCell style={{ height: "50px", paddingLeft: "90px" }}>
+                <HeaderCell
+                  style={{ height: "50px", paddingLeft: "90px" }}
+                  className="pose-table__header-right"
+                >
                   {" "}
                   Time{" "}
                 </HeaderCell>

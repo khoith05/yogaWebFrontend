@@ -58,9 +58,7 @@ const MyVerticallyCenteredModal = (props) => {
   );
 };
 
-const ExercisePage = (props) => {
-  const { onStartClick } = props;
-
+const ExercisePage = ({ onStartClick }) => {
   const [modalShow, setModalShow] = React.useState(false);
 
   return (
@@ -78,7 +76,7 @@ const ExercisePage = (props) => {
           onHide={() => setModalShow(false)}
         />
       </div>
-      <ExerciseDetail></ExerciseDetail>
+      <ExerciseDetail />
       <div
         style={{
           display: "flex",
@@ -86,7 +84,9 @@ const ExercisePage = (props) => {
           alignItems: "center",
         }}
       >
-        <button className="my-button1">Start</button>
+        <button className="my-button1" onClick={onStartClick}>
+          Start
+        </button>
       </div>
     </div>
   );

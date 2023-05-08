@@ -4,8 +4,6 @@ import logo from "../assets/img/fitty.png";
 import { HashLink } from "react-router-hash-link";
 import { useLocation } from "react-router-dom";
 
-const onTopNav = (path) => (path === "/" ? "position-fixed" : "");
-
 export const NavBar = () => {
   const [activeLink, setActiveLink] = useState("home");
   const [scrolled, setScrolled] = useState(false);
@@ -29,13 +27,15 @@ export const NavBar = () => {
     setActiveLink(value);
   };
 
+  const isHome = location.pathname === "/";
+
   return (
     <div>
       <Navbar
         expand="md"
-        className={`${scrolled ? "scrolled" : ""} ${onTopNav(
-          location.pathname
-        )} `}
+        className={
+          isHome ? `${scrolled ? "scrolled" : ""} position-fixed` : "navbar-bg"
+        }
       >
         <Container>
           <Navbar.Brand href="/">

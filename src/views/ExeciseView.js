@@ -28,15 +28,15 @@ function ExerciseView() {
   });
 
   return (
-    <Container fluid style={style.container}>
-      <LoadingWrapper loadingKeys={[GET_EXERCISE_DETAIL_LOADING]}>
-        {start ? (
+    <LoadingWrapper loadingKeys={[GET_EXERCISE_DETAIL_LOADING]}>
+      {start ? (
+        <Container fluid style={style.container}>
           <CameraWrapper poses={poses.current} />
-        ) : (
-          <ExercisePage onStartClick={onStartClick} />
-        )}
-      </LoadingWrapper>
-    </Container>
+        </Container>
+      ) : (
+        <ExercisePage onStartClick={onStartClick} />
+      )}
+    </LoadingWrapper>
   );
 }
 
