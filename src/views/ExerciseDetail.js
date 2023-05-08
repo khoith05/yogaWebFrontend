@@ -11,7 +11,6 @@ import {
 import projImg1 from "../assets/img/a.jpg";
 import projImg2 from "../assets/img/b.jpg";
 import projImg3 from "../assets/img/c.jpg";
-import "./ExercisePage.css";
 
 const list = [
   {
