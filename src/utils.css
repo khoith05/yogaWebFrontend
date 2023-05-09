@@ -16,3 +16,7 @@
   background-size: cover;
   min-height: 100vh;
 }
+
+.logo {
+  width: 100px;
+}

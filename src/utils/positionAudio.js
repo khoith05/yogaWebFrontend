@@ -47,16 +47,17 @@ const toCenterAudioThrottle = () =>
     time: 6000,
   });
 
-const backToCameraAudioThrottle = throttleWithKey({
-  key: BACK_TO_CAMERA_AUDIO,
-  callback: () =>
-    addToPlayAudiosQueue({
-      srcOne: BACK_TO_CAMERA_AUDIO,
-      clearQueue: true,
-      key: BACK_TO_CAMERA_AUDIO,
-    }),
-  time: 6000,
-});
+const backToCameraAudioThrottle = () =>
+  throttleWithKey({
+    key: BACK_TO_CAMERA_AUDIO,
+    callback: () =>
+      addToPlayAudiosQueue({
+        srcOne: BACK_TO_CAMERA_AUDIO,
+        clearQueue: true,
+        key: BACK_TO_CAMERA_AUDIO,
+      }),
+    time: 6000,
+  });
 
 export const tooFarAudio = (isNotTooSmall) => {
   isNotTooSmall ? clearAudioWithKey(TOO_FAR_AUDIO) : tooFarAudioThrottle();
