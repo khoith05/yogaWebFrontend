@@ -163,7 +163,6 @@ function CameraWrapper({ poses, setEndExercise }) {
               setShouldCheckPose(false);
               setCheckPoseStage(0);
               handleNextPose();
-              nextPoseAudio();
               console.log("DONE THIS POSE");
             },
             time: currentPose.duration * 1000,
