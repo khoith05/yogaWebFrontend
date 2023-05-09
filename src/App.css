@@ -814,7 +814,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   display: flex;
   flex-flow: column nowrap;
   margin-top: 0px;
-  padding: 130px 0 120px 0;
+  padding: 50px 0 120px 0;
   /* background-image: url("./assets/img/banner-bg.png"); */
   background-position: top center;
   background-size: cover;
@@ -1052,6 +1052,17 @@ h9 {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #555;
+}
+
+.pose-table__vritual-header {
+  width: 796px;
+  height: 60px;
+  background: #012169;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  position: absolute;
 }
 
 .pose-name {

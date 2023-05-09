@@ -70,26 +70,20 @@ const ExercisePage = ({ onStartClick, exercise }) => {
           <h1>{name}</h1>
           <p>{`${duration} minutes`}</p>
         </div>
-        <button className="my-button" onClick={() => setModalShow(true)}>
-          Camera Placing
-        </button>
+        <div className="d-flex flex-column">
+          <button className="my-button1" onClick={() => setModalShow(true)}>
+            Camera Placing
+          </button>
+          <button className="my-button1" onClick={onStartClick}>
+            Start
+          </button>
+        </div>
         <MyVerticallyCenteredModal
           show={modalShow}
           onHide={() => setModalShow(false)}
         />
       </div>
       <ExerciseDetail poses={poses} />
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <button className="my-button1" onClick={onStartClick}>
-          Start
-        </button>
-      </div>
     </div>
   );
 };
