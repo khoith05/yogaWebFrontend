@@ -86,35 +86,35 @@ function CameraWrapper({ poses, setEndExercise }) {
 
   const handleCheckPosition = useCallback(
     ({ keypoints }) => {
-      setTimeoutWithKey({
-        key: CHECK_POSITION_TIMEOUT_KEY,
-        callback: () => {
-          setShouldcheckPosition(false);
-          handleNextPose();
-          console.log("POSITION CHECK DONE");
-        },
+      // setTimeoutWithKey({
+      //   key: CHECK_POSITION_TIMEOUT_KEY,
+      //   callback: () => {
+      //     setShouldcheckPosition(false);
+      //     handleNextPose();
+      //     console.log("POSITION CHECK DONE");
+      //   },
 
-        time: 3000,
-      });
+      //   time: 3000,
+      // });
 
-      checkPosition({ width: size.width, keypoints });
+      // checkPosition({ width: size.width, keypoints });
 
-      // const validPosition = checkPosition({ width: size.width, keypoints });
-      // setIsValidPosition(validPosition);
-      // if (validPosition) {
-      //   setTimeoutWithKey({
-      //     key: CHECK_POSITION_TIMEOUT_KEY,
-      //     callback: () => {
-      //       setShouldcheckPosition(false);
-      //       handleNextPose();
+      const validPosition = checkPosition({ width: size.width, keypoints });
+      setIsValidPosition(validPosition);
+      if (validPosition) {
+        setTimeoutWithKey({
+          key: CHECK_POSITION_TIMEOUT_KEY,
+          callback: () => {
+            setShouldcheckPosition(false);
+            handleNextPose();
 
-      //       console.log("POSITION CHECK DONE");
-      //     },
-      //     time: 5000,
-      //   });
-      // } else {
-      //   stopExcute({ key: CHECK_POSITION_TIMEOUT_KEY });
-      // }
+            console.log("POSITION CHECK DONE");
+          },
+          time: 5000,
+        });
+      } else {
+        stopExcute({ key: CHECK_POSITION_TIMEOUT_KEY });
+      }
     },
     [size, handleNextPose]
   );
@@ -128,7 +128,7 @@ function CameraWrapper({ poses, setEndExercise }) {
             callback: () => {
               setCheckPoseStage(1);
             },
-            time: 0,
+            time: 5000,
           });
           break;
         case 1:
@@ -139,7 +139,7 @@ function CameraWrapper({ poses, setEndExercise }) {
               handleNextPose();
               setCheckPoseStage(0);
             },
-            time: 10000,
+            time: 60000,
           });
 
           // check Pose valid and throw pose error
@@ -166,7 +166,7 @@ function CameraWrapper({ poses, setEndExercise }) {
               nextPoseAudio();
               console.log("DONE THIS POSE");
             },
-            time: 1000,
+            time: currentPose.duration * 1000,
           });
 
           throttleCalculatePosePoint({
