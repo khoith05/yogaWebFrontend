@@ -9,11 +9,12 @@ import {
   CHECK_POSE_STAGE_ONE_TIME_OUT_KEY,
   CHECK_POSE_STAGE_TWO_TIME_OUT_KEY,
   CHECK_POSE_STAGE_ZERO_TIME_OUT_KEY,
+  HANDLE_NEXT_POSE_THROTTLE_KEY,
 } from "../utils/constant";
 import { setTimeoutWithKey, stopExcute } from "../utils/setTimeoutWithKey";
 import { useDispatch } from "react-redux";
 
-import { addPoint, nextPose, setNumberOfPose } from "../store/pose";
+import { addPoint, nextPose, startExercise, endExercise } from "../store/pose";
 
 import getSizeBaseOnRatio from "../utils/getSizeBaseOnRatio";
 import { useResizeDetector } from "react-resize-detector";
@@ -23,8 +24,10 @@ import {
   keepPoseAudio,
   nextPoseAudio,
 } from "../utils/positionAudio";
+import throttleWithKey from "../utils/throttleWithKey";
+import { clearAudioQueue } from "../utils/audio";
 
-function CameraWrapper({ poses }) {
+function CameraWrapper({ poses, setEndExercise }) {
   const dispatch = useDispatch();
   const [shouldCheckPosition, setShouldcheckPosition] = useState(true);
   const [shouldCheckPose, setShouldCheckPose] = useState(false);
@@ -35,6 +38,11 @@ function CameraWrapper({ poses }) {
   const [size, setSize] = useState({ height: 0, width: 0 });
 
   const { width: rWidth, ref: wrapperRef } = useResizeDetector();
+  useEffect(() => {
+    return () => {
+      clearAudioQueue();
+    };
+  }, []);
 
   useEffect(() => {
     if (!rWidth) return;
@@ -49,44 +57,66 @@ function CameraWrapper({ poses }) {
     wrapperRef.current && window.scrollTo(0, wrapperRef.current.offsetTop);
   }, [wrapperRef]);
 
-  const handleNextPose = useCallback(() => {
-    if (!currentPose) {
-      setCurrentPose(poses[0]);
-      dispatch(nextPose());
-      return;
-    }
+  const handleNextPose = useCallback(
+    () =>
+      throttleWithKey({
+        key: HANDLE_NEXT_POSE_THROTTLE_KEY,
+        callback: () => {
+          if (!currentPose) {
+            setCurrentPose(poses[0]);
+            dispatch(startExercise(poses));
+            startAudio();
+            return;
+          }
 
-    if (currentPose.index >= poses.length - 1) {
-      endAudio();
-      return;
-    }
-    setCurrentPose(poses[currentPose.index + 1]);
-    dispatch(nextPose());
-  }, [currentPose]);
+          if (currentPose.index >= poses.length - 1) {
+            dispatch(endExercise());
+            endAudio();
+            setEndExercise();
+            return;
+          }
+          setCurrentPose(poses[currentPose.index + 1]);
+          dispatch(nextPose());
+          nextPoseAudio();
+        },
+        time: 200,
+      }),
+    [currentPose, poses]
+  );
 
   const handleCheckPosition = useCallback(
     ({ keypoints }) => {
-      // setShouldcheckPosition(false);
-      // handleNextPose();
+      setTimeoutWithKey({
+        key: CHECK_POSITION_TIMEOUT_KEY,
+        callback: () => {
+          setShouldcheckPosition(false);
+          handleNextPose();
+          console.log("POSITION CHECK DONE");
+        },
 
-      const validPosition = checkPosition({ width: size.width, keypoints });
-      setIsValidPosition(validPosition);
-      if (validPosition) {
-        setTimeoutWithKey({
-          key: CHECK_POSITION_TIMEOUT_KEY,
-          callback: () => {
-            setShouldcheckPosition(false);
-            handleNextPose();
-            startAudio();
-            console.log("POSITION CHECK DONE");
-          },
-          time: 5000,
-        });
-      } else {
-        stopExcute({ key: CHECK_POSITION_TIMEOUT_KEY });
-      }
+        time: 3000,
+      });
+
+      checkPosition({ width: size.width, keypoints });
+
+      // const validPosition = checkPosition({ width: size.width, keypoints });
+      // setIsValidPosition(validPosition);
+      // if (validPosition) {
+      //   setTimeoutWithKey({
+      //     key: CHECK_POSITION_TIMEOUT_KEY,
+      //     callback: () => {
+      //       setShouldcheckPosition(false);
+      //       handleNextPose();
+
+      //       console.log("POSITION CHECK DONE");
+      //     },
+      //     time: 5000,
+      //   });
+      // } else {
+      //   stopExcute({ key: CHECK_POSITION_TIMEOUT_KEY });
+      // }
     },
-    [isValidPosition, handleNextPose, size]
+    [size, handleNextPose]
   );
 
   const handleCheckPose = useCallback(
@@ -98,7 +128,7 @@ function CameraWrapper({ poses }) {
             callback: () => {
               setCheckPoseStage(1);
             },
-            time: 5000,
+            time: 0,
           });
           break;
         case 1:
@@ -108,9 +138,8 @@ function CameraWrapper({ poses }) {
               setShouldCheckPose(false);
               handleNextPose();
               setCheckPoseStage(0);
-              nextPoseAudio();
             },
-            time: 120000,
+            time: 10000,
           });
 
           // check Pose valid and throw pose error
@@ -137,7 +166,7 @@ function CameraWrapper({ poses }) {
               nextPoseAudio();
               console.log("DONE THIS POSE");
             },
-            time: 30000,
+            time: 1000,
           });
 
           throttleCalculatePosePoint({
@@ -159,13 +188,15 @@ function CameraWrapper({ poses }) {
   const handleVideoEnded = () => setShouldCheckPose(true);
 
   const handlePoseResult = useCallback(
-    shouldCheckPosition ? handleCheckPosition : handleCheckPose,
-    [shouldCheckPosition, handleCheckPose, handleCheckPosition]
-  );
+    ({ keypoints }) => {
+      if (!size.width) return;
 
-  useEffect(() => {
-    dispatch(setNumberOfPose(poses.length));
-  }, []);
+      return shouldCheckPosition
+        ? handleCheckPosition({ keypoints })
+        : handleCheckPose({ keypoints });
+    },
+    [shouldCheckPosition, size, handleCheckPosition, handleCheckPose]
+  );
 
   return (
     <div ref={wrapperRef} className="d-flex justify-content-center pt-4">

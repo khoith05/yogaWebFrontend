@@ -1,5 +1,5 @@
 import addToPlayAudiosQueue, { clearAudioWithKey } from "./audio";
-import { throttle } from "lodash";
+import throttleWithKey from "./throttleWithKey";
 
 const TOO_FAR_AUDIO =
   "https://res.cloudinary.com/djedlqygu/video/upload/v1683211419/Voice/bandungquagancamerahaytienlaiganhon_dmenbg.mp3";
@@ -22,29 +22,41 @@ const NEXT_POSE_AUDIO =
 const END_AUDIO =
   "https://res.cloudinary.com/djedlqygu/video/upload/v1683211420/Voice/ketthuc_hrqvwg.mp3";
 
-const tooFarAudioThrottle = throttle(
-  () => addToPlayAudiosQueue({ srcOne: TOO_FAR_AUDIO, key: TOO_FAR_AUDIO }),
-  6000
-);
+const tooFarAudioThrottle = () =>
+  throttleWithKey({
+    key: TOO_FAR_AUDIO,
+    callback: () =>
+      addToPlayAudiosQueue({ srcOne: TOO_FAR_AUDIO, key: TOO_FAR_AUDIO }),
+    time: 6000,
+  });
 
-const tooNearAudioThrottle = throttle(() => {
-  addToPlayAudiosQueue({ srcOne: TOO_NEAR_AUDIO, key: TOO_NEAR_AUDIO });
-}, 6000);
+const tooNearAudioThrottle = () =>
+  throttleWithKey({
+    key: TOO_NEAR_AUDIO,
+    callback: () => {
+      addToPlayAudiosQueue({ srcOne: TOO_NEAR_AUDIO, key: TOO_NEAR_AUDIO });
+    },
+    time: 6000,
+  });
 
-const toCenterAudioThrottle = throttle(
-  () => addToPlayAudiosQueue({ srcOne: TO_CENTER_AUDIO, key: TO_CENTER_AUDIO }),
-  6000
-);
+const toCenterAudioThrottle = () =>
+  throttleWithKey({
+    key: TO_CENTER_AUDIO,
+    callback: () =>
+      addToPlayAudiosQueue({ srcOne: TO_CENTER_AUDIO, key: TO_CENTER_AUDIO }),
+    time: 6000,
+  });
 
-const backToCameraAudioThrottle = throttle(
-  () =>
+const backToCameraAudioThrottle = throttleWithKey({
+  key: BACK_TO_CAMERA_AUDIO,
+  callback: () =>
     addToPlayAudiosQueue({
       srcOne: BACK_TO_CAMERA_AUDIO,
       clearQueue: true,
       key: BACK_TO_CAMERA_AUDIO,
     }),
-  6000
-);
+  time: 6000,
+});
 
 export const tooFarAudio = (isNotTooSmall) => {
   isNotTooSmall ? clearAudioWithKey(TOO_FAR_AUDIO) : tooFarAudioThrottle();

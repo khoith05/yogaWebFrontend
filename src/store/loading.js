@@ -22,6 +22,9 @@ const getLoadingState = (state, loadingKeys) => {
 
 export const { toggleLoading } = loadingSlice.actions;
 
-export const selectIsLoading = createSelector(getLoadingState, (a) => a);
+export const selectIsLoading = createSelector(
+  getLoadingState,
+  (loading) => loading
+);
 
 export default loadingSlice.reducer;

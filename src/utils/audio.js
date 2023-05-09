@@ -2,6 +2,7 @@ import * as asyncUtil from "async";
 
 let playingAudio = undefined;
 let resolve = undefined;
+let forceStop = false;
 
 const audioQueue = asyncUtil.queue(async ({ task }, cb) => {
   await task();
@@ -12,13 +13,21 @@ export async function playAudios(srcOne, srcTwo = "") {
   const audioOne = new Audio(srcOne);
   if (srcTwo) {
     const audioTwo = new Audio(srcTwo);
-    audioTwo.preload = true;
     await playAudio(audioOne);
-    if (audioOne.forcestop) return;
+    if (forceStop) {
+      forceStop = false;
+      return;
+    }
     await playAudio(audioTwo);
+    if (forceStop) {
+      forceStop = false;
+    }
     return;
   }
   await playAudio(audioOne);
+  if (forceStop) {
+    forceStop = false;
+  }
 }
 
 function playAudio(audio) {
@@ -40,9 +49,9 @@ export function clearAudioQueue() {
   });
   if (playingAudio && resolve) {
     playingAudio.pause();
-    playAudio.forcestop = true;
-    resolve();
+    forceStop = true;
     playingAudio = undefined;
+    resolve();
     resolve = undefined;
   }
 }

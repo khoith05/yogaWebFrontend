@@ -9,9 +9,5 @@ export default async function getExercises() {
   });
 
   if (!response) return [];
-  console.log(
-    "🚀 ~ file: getExercises.js:14 ~ getExercises ~ response:",
-    response
-  );
   return response.data;
 }

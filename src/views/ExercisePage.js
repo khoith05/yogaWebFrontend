@@ -61,7 +61,6 @@ const ExercisePage = ({ onStartClick, exercise }) => {
   const [modalShow, setModalShow] = React.useState(false);
 
   const { duration, name, poses = [] } = exercise;
-  console.log("🚀 ~ file: ExercisePage.js:64 ~ ExercisePage ~ poses:", poses);
 
   return (
     <div className="flex-wrapper">

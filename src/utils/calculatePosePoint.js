@@ -1,7 +1,8 @@
-import { ANGLE_LIST } from "./constant.js";
+import { ANGLE_LIST, CALCULATE_POSE_POINt_THROTTLE_KEY } from "./constant.js";
 import calculateAngle from "./calculateAngle.js";
 import getPoint from "./getPoint.js";
-import { throttle, get } from "lodash";
+import { get } from "lodash";
+import throttleWithKey from "./throttleWithKey.js";
 
 function calculatePosePoint({ angleList, keypoints, callback }) {
   const posePointSum = Object.entries(ANGLE_LIST).reduce(
@@ -30,6 +31,11 @@ function calculatePosePoint({ angleList, keypoints, callback }) {
   return point;
 }
 
-const throttleCalculatePosePoint = throttle(calculatePosePoint, 500);
+const throttleCalculatePosePoint = () =>
+  throttleWithKey({
+    key: CALCULATE_POSE_POINt_THROTTLE_KEY,
+    callback: calculatePosePoint,
+    time: 100,
+  });
 
 export default throttleCalculatePosePoint;
