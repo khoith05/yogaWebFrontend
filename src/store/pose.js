@@ -1,5 +1,5 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
-import { mean } from "lodash";
+import { mean, get } from "lodash";
 
 const poseSlice = createSlice({
   name: "pose",
@@ -8,13 +8,13 @@ const poseSlice = createSlice({
     endTime: null,
     currentPoseListPoint: [],
     currentPoseIndex: 0,
-    numberOfPose: 0,
-    poses: [],
+    exercise: {},
   },
   reducers: {
     nextPose: (state) => {
-      const { poses, currentPoseIndex } = state;
-      if (currentPoseIndex + 1 < poses.length) {
+      const { exercise, currentPoseIndex } = state;
+      const length = get(exercise, "poses.length", 0);
+      if (currentPoseIndex + 1 < length) {
         state.currentPoseIndex++;
       }
     },
@@ -22,14 +22,17 @@ const poseSlice = createSlice({
       const { point } = action.payload;
       state.currentPoseListPoint[state.currentPoseIndex].push(point);
     },
-    startExercise(state, action) {
+    startExercise(state) {
+      const length = get(state.exercise, "poses.length", 0);
       state.startTime = +new Date();
-      state.poses = action.payload;
-      state.currentPoseListPoint = Array(state.poses.length).fill([]);
+      state.currentPoseListPoint = Array(length).fill([]);
       state.currentPoseIndex = 0;
     },
     endExercise(state) {
       state.endTime = +new Date();
+    },
+    setExercise(state, action) {
+      state.exercise = action.payload;
     },
   },
 });
@@ -37,7 +40,7 @@ const poseSlice = createSlice({
 const getExerciseResult = (state) => {
   const { startTime, endTime, currentPoseListPoint } = state.pose;
   const points = currentPoseListPoint.map((pointList) => mean(pointList));
-  const time = Math.round((startTime - endTime) / 1000);
+  const time = endTime - startTime;
   return {
     time,
     points,
@@ -55,6 +58,7 @@ export const {
   setNumberOfPose,
   startExercise,
   endExercise,
+  setExercise,
 } = poseSlice.actions;
 
 export default poseSlice.reducer;

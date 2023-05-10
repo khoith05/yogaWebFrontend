@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import getExerciseDetail from "../service/getExerciseDetail";
 import ExercisePage from "./ExercisePage";
 import Result from "./Result";
+import { setExercise as setExerciseToStore } from "../store/pose";
 
 const style = {
   height: "100vh",
@@ -14,7 +15,7 @@ const style = {
 
 function ExerciseView() {
   const [start, setStart] = useState(false);
-  const [end, setEnd] = useState(false);
+  const [end, setEnd] = useState(true);
   const mainRef = useRef(null);
 
   const [exercise, setExercise] = useState({});
@@ -26,7 +27,10 @@ function ExerciseView() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    getExerciseDetail(params.excerciseId).then((data) => setExercise(data));
+    getExerciseDetail(params.excerciseId).then((data) => {
+      setExercise(data);
+      setExerciseToStore(data);
+    });
   }, []);
 
   const content = () => {

@@ -68,7 +68,7 @@ function CameraWrapper({ poses, setEndExercise }) {
       callback: () => {
         if (!currentPose) {
           setCurrentPose(poses[0]);
-          dispatch(startExercise(poses));
+          dispatch(startExercise());
           startAudio();
           return;
         }
