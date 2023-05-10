@@ -3,6 +3,7 @@ import {
   MAX_POINT_PER_ANGLE,
   ANGLE_AUDIO,
   POSE_ERROR_AUDIO,
+  LIMIT_ANGLE_LIST,
 } from "./constant.js";
 import { calculateAngle, calculateAngleLimit } from "./calculateAngle.js";
 import { setTimeoutWithKey } from "./setTimeoutWithKey.js";
@@ -18,13 +19,15 @@ function checkPoseAngles({ angleList, keypoints }) {
   const anglePointList = Object.entries(ANGLE_LIST).map(([key, value]) => {
     const { basePoint, adjacentPoint1, adjacentPoint2 } = value;
 
-    const angle = calculateAngle({
+    const getAngleFunc = LIMIT_ANGLE_LIST[key]
+      ? calculateAngleLimit
+      : calculateAngle;
+
+    const angle = getAngleFunc({
       basePoint: keypoints[basePoint],
       adjacentPoint1: keypoints[adjacentPoint1],
       adjacentPoint2: keypoints[adjacentPoint2],
     });
-
-    key === "E" && console.log(key, ":", angle);
 
     const diffAngle = Math.abs(angleList[key] - angle);
 

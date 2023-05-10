@@ -61,12 +61,29 @@ export function calculateAngleLimit({
   const rad =
     Math.atan2(adjacentPoint1.y - basePoint.y, adjacentPoint1.x - basePoint.x) -
     Math.atan2(adjacentPoint2.y - basePoint.y, adjacentPoint2.x - basePoint.x);
-  const degree = rad * (180 / Math.PI);
-  return Math.abs(degree);
+  const degree = Math.abs(rad * (180 / Math.PI));
+  return degree > 180 ? 360 - degree : degree;
 }
 
-function calculateAngle1(x1, y1, x2, y2, x3, y3) {
-  const rad = Math.atan2(y1 - y2, x1 - x2) - Math.atan2(y3 - y2, x3 - x2);
-  const degree = rad * (180 / Math.PI);
-  return degree < 0 ? 360 + degree : degree;
-}
+// function calculateAngle1(x1, y1, x2, y2, x3, y3) {
+//   const rad = Math.atan2(y1 - y2, x1 - x2) - Math.atan2(y3 - y2, x3 - x2);
+//   const degree = rad * (180 / Math.PI);
+//   return degree < 0 ? 360 + degree : degree;
+// }
+
+// function calculateAngle2({ basepoint, adjacentpoint1, adjacentpoint2 }) {
+//   const a = Math.sqrt(
+//     Math.pow(basepoint.x - adjacentpoint1.x, 2) +
+//       Math.pow(basepoint.y - adjacentpoint1.y, 2)
+//   );
+//   const b = Math.sqrt(
+//     Math.pow(basepoint.x - adjacentpoint2.x, 2) +
+//       Math.pow(basepoint.y - adjacentpoint2.y, 2)
+//   );
+//   const c = Math.sqrt(
+//     Math.pow(adjacentpoint2.x - adjacentpoint1.x, 2) +
+//       Math.pow(adjacentpoint2.y - adjacentpoint1.y, 2)
+//   );
+//   const angle = Math.acos((a * a + b * b - c * c) / (2 * a * b));
+//   return (angle * 180) / Math.PI;
+// }

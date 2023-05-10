@@ -1,4 +1,8 @@
-import { ANGLE_LIST, CALCULATE_POSE_POINt_THROTTLE_KEY } from "./constant.js";
+import {
+  ANGLE_LIST,
+  CALCULATE_POSE_POINt_THROTTLE_KEY,
+  LIMIT_ANGLE_LIST,
+} from "./constant.js";
 import { calculateAngle, calculateAngleLimit } from "./calculateAngle.js";
 import getPoint from "./getPoint.js";
 import { get } from "lodash";
@@ -13,7 +17,11 @@ function calculatePosePoint({ angleList, keypoints, callback }) {
 
       if (visibility < 0.3) return sumPoint;
 
-      const angle = calculateAngle({
+      const getAngleFunc = LIMIT_ANGLE_LIST[key]
+        ? calculateAngleLimit
+        : calculateAngle;
+
+      const angle = getAngleFunc({
         basePoint: keypoints[basePoint],
         adjacentPoint1: keypoints[adjacentPoint1],
         adjacentPoint2: keypoints[adjacentPoint2],

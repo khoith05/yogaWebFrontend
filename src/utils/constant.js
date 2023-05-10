@@ -67,6 +67,14 @@ export const ANGLE_LABEL = {
   I: "I",
   J: "J",
 };
+
+export const LIMIT_ANGLE_LIST = {
+  A: true,
+  B: true,
+  I: true,
+  J: true,
+};
+
 export const VIEW_RATIO = 16 / 9; //* width / height
 
 export const SAFE_HEIGHT_PERCENT = 0.6;
