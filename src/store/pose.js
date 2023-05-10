@@ -14,6 +14,9 @@ const poseSlice = createSlice({
     nextPose: (state) => {
       const { exercise, currentPoseIndex } = state;
       const length = get(exercise, "poses.length", 0);
+      if (state.currentPoseListPoint[state.currentPoseIndex].length === 0) {
+        state.currentPoseListPoint[state.currentPoseIndex] = [0];
+      }
       if (currentPoseIndex + 1 < length) {
         state.currentPoseIndex++;
       }
