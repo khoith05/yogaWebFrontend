@@ -122,6 +122,10 @@ export const GET_EXERCISE_DETAIL_LOADING = "GET_EXERCISE_DETAIL_LOADING";
 
 export const GET_EXERCISES_LOADING = "GET_EXERCISES_LOADING";
 
+export const SIGNIN_LOADING = "LOGIN_LOADING";
+
+export const SIGNUP_LOADING = "SIGNUP_LOADING";
+
 export const ANGLE_AUDIO = {
   [10]: "https://res.cloudinary.com/djedlqygu/video/upload/v1683211417/Voice/10do_u9jtth.mp3",
   [20]: "https://res.cloudinary.com/djedlqygu/video/upload/v1683211418/Voice/20do_gkmgfi.mp3",
