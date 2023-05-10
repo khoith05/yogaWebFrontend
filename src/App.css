@@ -674,7 +674,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .input-box input:focus ~ label,
-.input-box input:valid ~ label {
+.input-box input:not([value=""]) ~ label {
   top: -5px;
 }
 

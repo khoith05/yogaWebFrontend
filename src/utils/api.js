@@ -9,21 +9,12 @@ const cache = new LRU({
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_ENDPOINT,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-function getHeaders(auth) {
-  const token =
-    auth && localStorage.getItem("access-token")
-      ? `Bearer ${localStorage.getItem("access-token")}`
-      : undefined;
-
-  return {
-    Authorization: token,
-    "Content-Type": "application/json",
-  };
-}
-
-async function get({ url, auth = true, useCache = true, key }) {
+async function get({ url, useCache = true, key }) {
   const cacheKey = `get${url}`;
   if (useCache) {
     const cachedResponse = cache.get(cacheKey);
@@ -32,30 +23,38 @@ async function get({ url, auth = true, useCache = true, key }) {
       return JSON.parse(cachedResponse);
     }
   }
+  try {
+    toggleLoading({ key, loading: true });
 
-  toggleLoading({ key, loading: true });
+    const response = await axiosInstance.get(url);
 
-  const headers = getHeaders(auth);
+    toggleLoading({ key, loading: false });
+    if (response.status === 200 && useCache) {
+      cache.set(cacheKey, JSON.stringify(response.data));
+    }
 
-  const response = await axiosInstance.get(url, headers);
-
-  toggleLoading({ key, loading: false });
-
-  if (response.status === 200 && useCache) {
-    cache.set(cacheKey, JSON.stringify(response.data));
+    return response.data;
+  } catch (err) {
+    toggleLoading({ key, loading: false });
+    return err.response;
   }
-
-  return response.data;
 }
 
-async function post({ url, auth = true, key, data }) {
-  toggleLoading({ key, loading: true });
-  const headers = getHeaders(auth);
+async function post({ url, key, data }) {
+  try {
+    toggleLoading({ key, loading: true });
+    const response = await axiosInstance.post(url, data, {
+      "Access-Control-Allow-Origin": process.env.REACT_APP_API_ENDPOINT,
+      "Access-Control-Allow-Credentials": "true",
+      withCredentials: true,
+    });
+    toggleLoading({ key, loading: false });
 
-  const response = await axiosInstance.post(url, data, headers);
-  toggleLoading({ key, loading: true });
-
-  return response.data;
+    return response;
+  } catch (err) {
+    toggleLoading({ key, loading: false });
+    return err.response;
+  }
 }
 
 const Api = { get, post };
