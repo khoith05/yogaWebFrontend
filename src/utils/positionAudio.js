@@ -22,42 +22,38 @@ const NEXT_POSE_AUDIO =
 const END_AUDIO =
   "https://res.cloudinary.com/djedlqygu/video/upload/v1683211420/Voice/ketthuc_hrqvwg.mp3";
 
-const tooFarAudioThrottle = () =>
-  throttleWithKey({
-    key: TOO_FAR_AUDIO,
-    callback: () =>
-      addToPlayAudiosQueue({ srcOne: TOO_FAR_AUDIO, key: TOO_FAR_AUDIO }),
-    time: 6000,
-  });
+const tooFarAudioThrottle = throttleWithKey({
+  key: TOO_FAR_AUDIO,
+  callback: () =>
+    addToPlayAudiosQueue({ src: [TOO_FAR_AUDIO], key: TOO_FAR_AUDIO }),
+  time: 6000,
+});
 
-const tooNearAudioThrottle = () =>
-  throttleWithKey({
-    key: TOO_NEAR_AUDIO,
-    callback: () => {
-      addToPlayAudiosQueue({ srcOne: TOO_NEAR_AUDIO, key: TOO_NEAR_AUDIO });
-    },
-    time: 6000,
-  });
+const tooNearAudioThrottle = throttleWithKey({
+  key: TOO_NEAR_AUDIO,
+  callback: () => {
+    addToPlayAudiosQueue({ src: [TOO_NEAR_AUDIO], key: TOO_NEAR_AUDIO });
+  },
+  time: 6000,
+});
 
-const toCenterAudioThrottle = () =>
-  throttleWithKey({
-    key: TO_CENTER_AUDIO,
-    callback: () =>
-      addToPlayAudiosQueue({ srcOne: TO_CENTER_AUDIO, key: TO_CENTER_AUDIO }),
-    time: 6000,
-  });
+const toCenterAudioThrottle = throttleWithKey({
+  key: TO_CENTER_AUDIO,
+  callback: () =>
+    addToPlayAudiosQueue({ src: [TO_CENTER_AUDIO], key: TO_CENTER_AUDIO }),
+  time: 6000,
+});
 
-const backToCameraAudioThrottle = () =>
-  throttleWithKey({
-    key: BACK_TO_CAMERA_AUDIO,
-    callback: () =>
-      addToPlayAudiosQueue({
-        srcOne: BACK_TO_CAMERA_AUDIO,
-        clearQueue: true,
-        key: BACK_TO_CAMERA_AUDIO,
-      }),
-    time: 6000,
-  });
+const backToCameraAudioThrottle = throttleWithKey({
+  key: BACK_TO_CAMERA_AUDIO,
+  callback: () =>
+    addToPlayAudiosQueue({
+      src: [BACK_TO_CAMERA_AUDIO],
+      clearQueue: true,
+      key: BACK_TO_CAMERA_AUDIO,
+    }),
+  time: 6000,
+});
 
 export const tooFarAudio = (isNotTooSmall) => {
   isNotTooSmall ? clearAudioWithKey(TOO_FAR_AUDIO) : tooFarAudioThrottle();
@@ -80,13 +76,13 @@ export const backToCameraAudio = (isPoseVisible) => {
 };
 
 export const startAudio = () =>
-  addToPlayAudiosQueue({ srcOne: START_AUDIO, clearQueue: true });
+  addToPlayAudiosQueue({ src: [START_AUDIO], clearQueue: true });
 
 export const endAudio = () =>
-  addToPlayAudiosQueue({ srcOne: END_AUDIO, clearQueue: true });
+  addToPlayAudiosQueue({ src: [END_AUDIO], clearQueue: true });
 
 export const nextPoseAudio = () =>
-  addToPlayAudiosQueue({ srcOne: NEXT_POSE_AUDIO, clearQueue: true });
+  addToPlayAudiosQueue({ src: [NEXT_POSE_AUDIO], clearQueue: true });
 
 export const keepPoseAudio = () =>
-  addToPlayAudiosQueue({ srcOne: KEEP_POSE_AUDIO, clearQueue: true });
+  addToPlayAudiosQueue({ src: [KEEP_POSE_AUDIO], clearQueue: true });

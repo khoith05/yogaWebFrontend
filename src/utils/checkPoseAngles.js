@@ -69,8 +69,7 @@ function errorNoti({ key, diff }) {
   addToPlayAudiosQueue({
     key,
     clearSameKey: true,
-    srcOne: POSE_ERROR_AUDIO[key][+isBigger],
-    srcTwo: ANGLE_AUDIO[roundedDiff],
+    src: [POSE_ERROR_AUDIO[key][+isBigger], ANGLE_AUDIO[roundedDiff]],
   });
 }
 

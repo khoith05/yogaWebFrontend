@@ -31,11 +31,10 @@ function calculatePosePoint({ angleList, keypoints, callback }) {
   return point;
 }
 
-const throttleCalculatePosePoint = () =>
-  throttleWithKey({
-    key: CALCULATE_POSE_POINt_THROTTLE_KEY,
-    callback: calculatePosePoint,
-    time: 100,
-  });
+const throttleCalculatePosePoint = throttleWithKey({
+  key: CALCULATE_POSE_POINt_THROTTLE_KEY,
+  callback: (param) => calculatePosePoint(param),
+  time: 100,
+});
 
 export default throttleCalculatePosePoint;

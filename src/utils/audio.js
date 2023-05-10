@@ -1,58 +1,83 @@
 import * as asyncUtil from "async";
+import { Howl } from "howler";
 
 let playingAudio = undefined;
-let resolve = undefined;
-let forceStop = false;
 
-const audioQueue = asyncUtil.queue(async ({ task }, cb) => {
+const audioQueue = asyncUtil.queue(async ({ task, key }, cb) => {
+  console.log("🚀 ~ file: audio.js:10 ~ audioQueue ~ task():", key);
+
   await task();
   cb();
 });
 
-export async function playAudios(srcOne, srcTwo = "") {
-  const audioOne = new Audio(srcOne);
-  if (srcTwo) {
-    const audioTwo = new Audio(srcTwo);
-    await playAudio(audioOne);
-    if (forceStop) {
-      forceStop = false;
-      return;
-    }
-    await playAudio(audioTwo);
-    if (forceStop) {
-      forceStop = false;
-    }
-    return;
+export function getPlayAudiosCallback(src = []) {
+  if (src.length === 2) {
+    return playTwoAudio(src);
   }
-  await playAudio(audioOne);
-  if (forceStop) {
-    forceStop = false;
-  }
+
+  return playOneAudio(src);
+  // if (srcTwo) {
+  //   const audioTwo = new Audio(srcTwo);
+  //   await playAudio(audioOne);
+  //   if (forceStop) {
+  //     forceStop = false;
+  //     return;
+  //   }
+  //   await playAudio(audioTwo);
+  //   if (forceStop) {
+  //     forceStop = false;
+  //   }
+  //   return;
+  // }
+  // await playAudio(audioOne);
+  // if (forceStop) {
+  //   forceStop = false;
+  // }
 }
 
-function playAudio(audio) {
-  return new Promise((res) => {
-    playingAudio = audio;
-    resolve = res;
-    audio.play();
-    audio.onended = () => {
-      playingAudio = undefined;
-      resolve = undefined;
-      res();
-    };
-  });
+function playOneAudio(src) {
+  const audio = new Howl({ src, preload: true });
+  return async () =>
+    await new Promise((res) => {
+      const stopPlaying = () => {
+        playingAudio = undefined;
+        res();
+      };
+      audio.once("end", stopPlaying);
+      audio.once("stop", stopPlaying);
+      playingAudio = audio;
+      audio.play();
+    });
+}
+
+function playTwoAudio([src1, src2]) {
+  const audio1 = new Howl({ src: src1, preload: true });
+  const audio2 = new Howl({ src: src2, preload: true });
+  return async () =>
+    await new Promise((res) => {
+      const stopPlaying = () => {
+        playingAudio = undefined;
+        res();
+      };
+      playingAudio = audio1;
+      audio1.play();
+      audio1.once("end", () => {
+        playingAudio = audio2;
+        audio2.play();
+      });
+      audio1.once("stop", stopPlaying);
+
+      audio2.once("end", stopPlaying);
+      audio2.once("stop", stopPlaying);
+    });
 }
 
 export function clearAudioQueue() {
   audioQueue.remove(() => {
     return true;
   });
-  if (playingAudio && resolve) {
-    playingAudio.pause();
-    forceStop = true;
-    playingAudio = undefined;
-    resolve();
-    resolve = undefined;
+  if (playingAudio) {
+    playingAudio.stop();
   }
 }
 
@@ -64,8 +89,7 @@ export function clearAudioWithKey(keyToClear) {
 
 export default function addToPlayAudiosQueue({
   key = "",
-  srcOne,
-  srcTwo = "",
+  src,
   cb = () => {},
   clearQueue = false,
   clearSameKey = false,
@@ -76,9 +100,10 @@ export default function addToPlayAudiosQueue({
   } else if (clearSameKey && key) {
     clearAudioWithKey(key);
   }
+
   audioQueue.push(
     {
-      task: () => playAudios(srcOne, srcTwo),
+      task: getPlayAudiosCallback(src),
       key,
     },
     cb

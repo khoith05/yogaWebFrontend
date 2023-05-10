@@ -58,29 +58,28 @@ function CameraWrapper({ poses, setEndExercise }) {
   }, [wrapperRef]);
 
   const handleNextPose = useCallback(
-    () =>
-      throttleWithKey({
-        key: HANDLE_NEXT_POSE_THROTTLE_KEY,
-        callback: () => {
-          if (!currentPose) {
-            setCurrentPose(poses[0]);
-            dispatch(startExercise(poses));
-            startAudio();
-            return;
-          }
+    throttleWithKey({
+      key: HANDLE_NEXT_POSE_THROTTLE_KEY,
+      callback: () => {
+        if (!currentPose) {
+          setCurrentPose(poses[0]);
+          dispatch(startExercise(poses));
+          startAudio();
+          return;
+        }
 
-          if (currentPose.index >= poses.length - 1) {
-            dispatch(endExercise());
-            endAudio();
-            setEndExercise();
-            return;
-          }
-          setCurrentPose(poses[currentPose.index + 1]);
-          dispatch(nextPose());
-          nextPoseAudio();
-        },
-        time: 200,
-      }),
+        if (currentPose.index >= poses.length - 1) {
+          dispatch(endExercise());
+          endAudio();
+          setEndExercise();
+          return;
+        }
+        setCurrentPose(poses[currentPose.index + 1]);
+        dispatch(nextPose());
+        nextPoseAudio();
+      },
+      time: 200,
+    }),
     [currentPose, poses]
   );
 
@@ -93,12 +92,9 @@ function CameraWrapper({ poses, setEndExercise }) {
       //     handleNextPose();
       //     console.log("POSITION CHECK DONE");
       //   },
-
-      //   time: 3000,
+      //   time: 30000,
       // });
-
       // checkPosition({ width: size.width, keypoints });
-
       const validPosition = checkPosition({ width: size.width, keypoints });
       setIsValidPosition(validPosition);
       if (validPosition) {
@@ -107,7 +103,6 @@ function CameraWrapper({ poses, setEndExercise }) {
           callback: () => {
             setShouldcheckPosition(false);
             handleNextPose();
-
             console.log("POSITION CHECK DONE");
           },
           time: 5000,
