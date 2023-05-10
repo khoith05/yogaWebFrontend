@@ -15,4 +15,9 @@ const store = configureStore({
   reducer,
 });
 
+store.subscribe(() => {
+  const state = store.getState();
+  localStorage.setItem("user", JSON.stringify(state.user));
+});
+
 export default store;

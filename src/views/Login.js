@@ -5,6 +5,7 @@ import { selectIsLoading } from "../store/loading";
 import { useSelector, useDispatch } from "react-redux";
 import { SIGNIN_LOADING } from "../utils/constant";
 import { setUser } from "../store/user";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -17,12 +18,15 @@ function Login() {
   );
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     signIn(formData).then(({ message, username, email }) => {
       setError(message || "");
       if (username && email) {
         dispatch(setUser({ username, email }));
+        navigate("/");
       }
     });
   };

@@ -1,13 +1,20 @@
 import { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import logo from "../assets/img/fitty.png";
-import { HashLink } from "react-router-hash-link";
 import { useLocation, Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { toSvg } from "jdenticon";
+import { initState, signOut } from "../store/user";
+import signOutService from "../service/signOut";
 
 export const NavBar = () => {
   const [activeLink, setActiveLink] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const isLogin = useSelector((state) => state.user.isLogin);
+  const username = useSelector((state) => state.user.username);
+  const [src, setSrc] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const onScroll = () => {
@@ -20,11 +27,27 @@ export const NavBar = () => {
 
     window.addEventListener("scroll", onScroll);
 
+    const savedState = localStorage.getItem("user");
+    if (savedState) {
+      dispatch(initState(JSON.parse(savedState)));
+    }
+
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (isLogin) {
+      setSrc(toSvg(username, 50));
+    }
+  }, [isLogin, username]);
+
   const onUpdateActiveLink = (value) => {
     setActiveLink(value);
+  };
+
+  const logOut = () => {
+    dispatch(signOut());
+    signOutService();
   };
 
   const isHome = location.pathname === "/";
@@ -80,16 +103,32 @@ export const NavBar = () => {
               </Nav.Link>
             </Nav>
             <span className="navbar-text">
-              <HashLink to="signup">
-                <button className="vvd">
-                  <span>Sign up</span>
-                </button>
-              </HashLink>
-              <HashLink to="login">
-                <button className="vvd">
-                  <span>Login</span>
-                </button>
-              </HashLink>
+              {isLogin ? (
+                <>
+                  <div>
+                    <div dangerouslySetInnerHTML={{ __html: src }}></div>
+                  </div>
+                  <div>
+                    <p className="fs-5 m-1 text-white">{username}</p>
+                  </div>
+                  <button className="vvd" onClick={logOut}>
+                    <span>Logout</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/signup">
+                    <button className="vvd">
+                      <span>Sign up</span>
+                    </button>
+                  </Link>
+                  <Link to="/login">
+                    <button className="vvd">
+                      <span>Login</span>
+                    </button>
+                  </Link>
+                </>
+              )}
             </span>
           </Navbar.Collapse>
         </Container>
