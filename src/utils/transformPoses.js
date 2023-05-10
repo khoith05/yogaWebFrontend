@@ -10,13 +10,14 @@ export default function transformPoses(poses) {
       {}
     );
 
-    const { videoUrl, duration, name } = pose;
+    const { videoUrl, duration, name, imageUrl } = pose;
     return {
       angleList,
       index,
       videoUrl,
       duration,
       name,
+      imageUrl,
     };
   });
 }
