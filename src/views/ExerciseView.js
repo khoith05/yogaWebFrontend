@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import CameraWrapper from "./CameraWrapper";
 import { Container } from "react-bootstrap";
 import LoadingWrapper from "./LoadingWrapper";
@@ -8,6 +8,7 @@ import getExerciseDetail from "../service/getExerciseDetail";
 import ExercisePage from "./ExercisePage";
 import Result from "./Result";
 import { setExercise as setExerciseToStore } from "../store/pose";
+import { useDispatch } from "react-redux";
 
 const style = {
   height: "100vh",
@@ -16,7 +17,7 @@ const style = {
 function ExerciseView() {
   const [start, setStart] = useState(false);
   const [end, setEnd] = useState(false);
-  const mainRef = useRef(null);
+  const dispatch = useDispatch();
 
   const [exercise, setExercise] = useState({});
   const params = useParams();
@@ -29,7 +30,7 @@ function ExerciseView() {
     window.scrollTo(0, 0);
     getExerciseDetail(params.excerciseId).then((data) => {
       setExercise(data);
-      setExerciseToStore(data);
+      dispatch(setExerciseToStore(data));
     });
   }, []);
 
@@ -48,7 +49,7 @@ function ExerciseView() {
   };
 
   return (
-    <div ref={mainRef} className="main-bg">
+    <div className="main-bg">
       <LoadingWrapper loadingKeys={[GET_EXERCISE_DETAIL_LOADING]} style={style}>
         {content()}
       </LoadingWrapper>
