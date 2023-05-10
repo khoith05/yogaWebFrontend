@@ -11,7 +11,11 @@ import {
   CHECK_POSE_STAGE_ZERO_TIME_OUT_KEY,
   HANDLE_NEXT_POSE_THROTTLE_KEY,
 } from "../utils/constant";
-import { setTimeoutWithKey, stopExcute } from "../utils/setTimeoutWithKey";
+import {
+  setTimeoutWithKey,
+  stopExcute,
+  clearAllTimeout,
+} from "../utils/setTimeoutWithKey";
 import { useDispatch } from "react-redux";
 
 import { addPoint, nextPose, startExercise, endExercise } from "../store/pose";
@@ -41,6 +45,7 @@ function CameraWrapper({ poses, setEndExercise }) {
   useEffect(() => {
     return () => {
       clearAudioQueue();
+      clearAllTimeout();
     };
   }, []);
 
@@ -204,7 +209,7 @@ function CameraWrapper({ poses, setEndExercise }) {
           showPoint={checkPoseStage === 2}
           width={size.width}
           height={size.height}
-        ></Camera>
+        />
 
         {currentPose && (
           <YogaVideo

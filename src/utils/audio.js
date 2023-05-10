@@ -3,9 +3,7 @@ import { Howl } from "howler";
 
 let playingAudio = undefined;
 
-const audioQueue = asyncUtil.queue(async ({ task, key }, cb) => {
-  console.log("🚀 ~ file: audio.js:10 ~ audioQueue ~ task():", key);
-
+const audioQueue = asyncUtil.queue(async ({ task }, cb) => {
   await task();
   cb();
 });
@@ -16,23 +14,6 @@ export function getPlayAudiosCallback(src = []) {
   }
 
   return playOneAudio(src);
-  // if (srcTwo) {
-  //   const audioTwo = new Audio(srcTwo);
-  //   await playAudio(audioOne);
-  //   if (forceStop) {
-  //     forceStop = false;
-  //     return;
-  //   }
-  //   await playAudio(audioTwo);
-  //   if (forceStop) {
-  //     forceStop = false;
-  //   }
-  //   return;
-  // }
-  // await playAudio(audioOne);
-  // if (forceStop) {
-  //   forceStop = false;
-  // }
 }
 
 function playOneAudio(src) {

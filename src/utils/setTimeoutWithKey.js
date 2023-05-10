@@ -1,4 +1,4 @@
-const timeoutTracking = {};
+let timeoutTracking = {};
 export function setTimeoutWithKey({ key, callback, time }) {
   if (timeoutTracking[key] || !callback) return;
 
@@ -20,4 +20,8 @@ export function isExcute({ key }) {
 
 export function stopExcute({ key }) {
   timeoutTracking[key] = undefined;
+}
+
+export function clearAllTimeout() {
+  timeoutTracking = {};
 }

@@ -2,10 +2,10 @@ const throttleTracking = {};
 // [key]: Boolean
 
 export default function throttleWithKey({ key, callback, time }) {
-  return () => {
+  return (param) => {
     if (!callback || throttleTracking[key]) return;
 
-    callback();
+    callback(param);
     throttleTracking[key] = true;
     setTimeout(() => {
       throttleTracking[key] = undefined;

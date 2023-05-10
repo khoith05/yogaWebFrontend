@@ -45,7 +45,15 @@ function toDegrees(angle) {
   return angle * (180 / Math.PI);
 }
 
-export default function calculateAngle({
+export function calculateAngle({ basePoint, adjacentPoint1, adjacentPoint2 }) {
+  const rad =
+    Math.atan2(adjacentPoint1.y - basePoint.y, adjacentPoint1.x - basePoint.x) -
+    Math.atan2(adjacentPoint2.y - basePoint.y, adjacentPoint2.x - basePoint.x);
+  const degree = rad * (180 / Math.PI);
+  return degree < 0 ? 360 + degree : degree;
+}
+
+export function calculateAngleLimit({
   basePoint,
   adjacentPoint1,
   adjacentPoint2,
@@ -54,7 +62,7 @@ export default function calculateAngle({
     Math.atan2(adjacentPoint1.y - basePoint.y, adjacentPoint1.x - basePoint.x) -
     Math.atan2(adjacentPoint2.y - basePoint.y, adjacentPoint2.x - basePoint.x);
   const degree = rad * (180 / Math.PI);
-  return degree < 0 ? 360 + degree : degree;
+  return Math.abs(degree);
 }
 
 function calculateAngle1(x1, y1, x2, y2, x3, y3) {

@@ -4,7 +4,7 @@ import {
   ANGLE_AUDIO,
   POSE_ERROR_AUDIO,
 } from "./constant.js";
-import calculateAngle from "./calculateAngle.js";
+import { calculateAngle, calculateAngleLimit } from "./calculateAngle.js";
 import { setTimeoutWithKey } from "./setTimeoutWithKey.js";
 import getPoint from "./getPoint.js";
 import { sum, get } from "lodash";
@@ -24,11 +24,13 @@ function checkPoseAngles({ angleList, keypoints }) {
       adjacentPoint2: keypoints[adjacentPoint2],
     });
 
+    key === "E" && console.log(key, ":", angle);
+
     const diffAngle = Math.abs(angleList[key] - angle);
 
     const point = getPoint(diffAngle);
 
-    if (point !== MAX_POINT_PER_ANGLE && !temporarySkipAngles[key]) {
+    if (point === 0 && !temporarySkipAngles[key]) {
       errorNoti({ key, diff: angle - angleList[key] });
       temporarySkipAngles[key] = key;
       setTimeoutWithKey({
@@ -61,11 +63,7 @@ function checkPoseVisible(keypoint) {
 function errorNoti({ key, diff }) {
   const isBigger = diff > 0;
   const roundedDiff = Math.ceil(Math.abs(diff) / 10) * 10;
-  console.log(
-    "ANGLE_AUDIO[roundedDiff]",
-    ANGLE_AUDIO[roundedDiff],
-    roundedDiff
-  );
+
   addToPlayAudiosQueue({
     key,
     clearSameKey: true,

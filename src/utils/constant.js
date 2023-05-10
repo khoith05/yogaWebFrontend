@@ -23,12 +23,12 @@ export const ANGLE_LIST = {
     adjacentPoint1: 12,
     adjacentPoint2: 13,
   },
-  E: {
+  F: {
     basePoint: 12,
     adjacentPoint1: 14,
     adjacentPoint2: 24,
   },
-  F: {
+  E: {
     basePoint: 11,
     adjacentPoint1: 23,
     adjacentPoint2: 13,
