@@ -15,7 +15,7 @@ const style = {
 
 function ExerciseView() {
   const [start, setStart] = useState(false);
-  const [end, setEnd] = useState(true);
+  const [end, setEnd] = useState(false);
   const mainRef = useRef(null);
 
   const [exercise, setExercise] = useState({});
