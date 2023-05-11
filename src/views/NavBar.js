@@ -55,7 +55,7 @@ export const NavBar = () => {
 
   const logOut = () => {
     dispatch(signOut());
-    signOutService();
+    localStorage.setItem("token", "");
   };
 
   const isHome = location.pathname === "/";

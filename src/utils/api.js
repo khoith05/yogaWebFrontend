@@ -17,14 +17,14 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  timeout: 10000,
 });
 
 const getHeaders = (auth) => {
   return auth
     ? {
-        "Access-Control-Allow-Origin": process.env.REACT_APP_API_ENDPOINT,
-        "Access-Control-Allow-Credentials": "true",
-        withCredentials: true,
+        "Access-Control-Allow-Origin": baseUrl,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       }
     : {};
 };
@@ -42,10 +42,9 @@ async function get({ url, useCache = true, key, auth = false, params = {} }) {
     toggleLoading({ key, loading: true });
 
     const headers = getHeaders(auth);
-    console.log("🚀 ~ file: api.js:40 ~ get ~ headers:", headers);
 
     const response = await axiosInstance.get(url, {
-      ...headers,
+      headers,
       params,
     });
 

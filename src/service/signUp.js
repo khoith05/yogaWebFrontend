@@ -1,8 +1,9 @@
 import Api from "../utils/api";
 import { SIGNUP_LOADING } from "../utils/constant";
+import { get } from "lodash";
 
 export default async function signUp({ username, email, password }) {
-  const { status, data } = await Api.post({
+  const response = await Api.post({
     url: `/api/auth/signup`,
     key: SIGNUP_LOADING,
     data: {
@@ -12,9 +13,13 @@ export default async function signUp({ username, email, password }) {
     },
   });
 
-  if (status !== 200) {
-    return { message: String(data.message) };
+  if (!response || response.status !== 200) {
+    return { message: String(get(response, "data.data.message", "Error")) };
   }
 
-  return data.data;
+  const token = get(response, "data.data.token", "");
+
+  localStorage.setItem("token", token);
+
+  return get(response, "data.data");
 }
