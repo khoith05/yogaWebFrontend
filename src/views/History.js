@@ -4,6 +4,8 @@ import getResults from "../service/getResults";
 import { useNavigate } from "react-router-dom";
 import millisToMinutesAndSeconds from "../utils/millisToMinutesAndSeconds";
 import formatDate from "../utils/fortmatDate";
+import { GET_RESULTS_LOADING } from "../utils/constant";
+import LoadingWrapper from "./LoadingWrapper";
 
 function History() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,7 +47,11 @@ function History() {
         <div className="wrapper">
           <h1 className="align-self-center">Your effort</h1>
           {records.length === 0 ? (
-            <p className="align-self-center">You have never practiced before</p>
+            <div className="align-self-center mt-5">
+              <LoadingWrapper loadingKeys={[GET_RESULTS_LOADING]}>
+                <p>You have never practiced before</p>
+              </LoadingWrapper>
+            </div>
           ) : (
             <>
               <div className="table-box align-self-center">
