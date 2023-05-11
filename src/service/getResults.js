@@ -10,8 +10,14 @@ export default async function getResults({ page = 1 }) {
       limit: 10,
     },
     key: GET_RESULT_LOADING,
+    useCache: false,
   });
 
-  if (!response) return [];
+  if (!response || !response.current) {
+    return {
+      current: [],
+      numberOfPages: 0,
+    };
+  }
   return response;
 }

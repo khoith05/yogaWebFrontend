@@ -1,6 +1,7 @@
 import Api from "../utils/api";
+import { debounce } from "lodash";
 
-export default async function saveResult({ exerciseId, point, time, poses }) {
+async function saveResult({ exerciseId, point, time, poses }) {
   const { status, data } = await Api.post({
     url: `/api/result/add`,
     key: "SAVE_RESULT",
@@ -18,3 +19,5 @@ export default async function saveResult({ exerciseId, point, time, poses }) {
 
   return data.data;
 }
+
+export default debounce(saveResult, 500);

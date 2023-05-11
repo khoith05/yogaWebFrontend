@@ -754,8 +754,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .history .wrapper {
-  padding: 0 0 0 90px;
-  height: 440px;
+  min-height: 440px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -764,17 +763,9 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 .content-table {
   border-collapse: collapse;
   margin: 25px 0;
-  padding: 1000px 0;
   font-size: 1.1em;
-  min-width: 600px;
   border-radius: 5px 5px 0 0;
-  overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  min-width: 600px;
-}
-
-.table-box {
-  min-height: 350px;
 }
 
 .content-table thead tr {

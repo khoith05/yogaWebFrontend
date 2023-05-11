@@ -4,6 +4,7 @@ export default function formatDate(dateString) {
   const time = date.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
   });
   const day = date.toLocaleDateString([], {
     day: "numeric",

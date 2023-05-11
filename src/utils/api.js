@@ -14,7 +14,7 @@ const axiosInstance = axios.create({
   },
 });
 
-const headers = (auth) => {
+const getHeaders = (auth) => {
   return auth
     ? {
         "Access-Control-Allow-Origin": process.env.REACT_APP_API_ENDPOINT,
@@ -36,9 +36,12 @@ async function get({ url, useCache = true, key, auth = false, params = {} }) {
   try {
     toggleLoading({ key, loading: true });
 
+    const headers = getHeaders(auth);
+    console.log("🚀 ~ file: api.js:40 ~ get ~ headers:", headers);
+
     const response = await axiosInstance.get(url, {
-      ...params,
-      ...headers(auth),
+      ...headers,
+      params,
     });
 
     toggleLoading({ key, loading: false });
@@ -56,7 +59,8 @@ async function get({ url, useCache = true, key, auth = false, params = {} }) {
 async function post({ url, key, data }) {
   try {
     toggleLoading({ key, loading: true });
-    const response = await axiosInstance.post(url, data, headers(true));
+    const headers = getHeaders(true);
+    const response = await axiosInstance.post(url, data, { headers });
     toggleLoading({ key, loading: false });
 
     return response;
