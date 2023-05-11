@@ -46,7 +46,7 @@ function History() {
     <div className="history">
       <div className="d-flex justify-content-center flex-row">
         <div className="wrapper">
-          <h1>Your effort</h1>
+          <h1 className="align-self-center">Your effort</h1>
           {records.length === 0 ? (
             <p>You have never practiced before</p>
           ) : (
