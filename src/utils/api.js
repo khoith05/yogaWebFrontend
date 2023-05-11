@@ -2,13 +2,18 @@ import axios from "axios";
 import LRU from "lru-cache";
 import toggleLoading from "./toggleLoading";
 
+const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? process.env.REACT_APP_API_ENDPOINT_PRODUCTION
+    : process.env.REACT_APP_API_ENDPOINT;
+
 const cache = new LRU({
   max: 50,
   maxAge: 24 * 60 * 60 * 1000, // 24h
 });
 
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_ENDPOINT,
+  baseURL: baseUrl,
   headers: {
     "Content-Type": "application/json",
   },
