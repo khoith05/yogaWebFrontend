@@ -1,5 +1,4 @@
 import { createSelector } from "@reduxjs/toolkit";
-import millisToMinutesAndSeconds from "./millisToMinutesAndSeconds";
 import { get, mean } from "lodash";
 
 const getExerciseResult = (state) => {
@@ -13,7 +12,7 @@ const getExerciseResult = (state) => {
       point: mean(currentPoseListPoint[index]),
     };
   });
-  const time = millisToMinutesAndSeconds(endTime - startTime);
+  const time = endTime - startTime;
   return {
     time,
     poses: posesWithPoint,

@@ -1,11 +1,8 @@
 import React from "react";
-import { mean } from "lodash";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-function Result({ time, name, poses }) {
-  const totalPoint = Math.round(mean(poses.map(({ point }) => point)));
-
+function Result({ time, name, poses, point }) {
   return (
     <div className="flex-wrapper">
       <div className="overral">
@@ -15,8 +12,8 @@ function Result({ time, name, poses }) {
         </div>
         <div className="single-chart">
           <CircularProgressbar
-            value={totalPoint}
-            text={`${totalPoint}%`}
+            value={point}
+            text={`${point}%`}
             strokeWidth={10}
           />
         </div>

@@ -14,7 +14,17 @@ const axiosInstance = axios.create({
   },
 });
 
-async function get({ url, useCache = true, key }) {
+const headers = (auth) => {
+  return auth
+    ? {
+        "Access-Control-Allow-Origin": process.env.REACT_APP_API_ENDPOINT,
+        "Access-Control-Allow-Credentials": "true",
+        withCredentials: true,
+      }
+    : {};
+};
+
+async function get({ url, useCache = true, key, auth = false }) {
   const cacheKey = `get${url}`;
   if (useCache) {
     const cachedResponse = cache.get(cacheKey);
@@ -26,7 +36,7 @@ async function get({ url, useCache = true, key }) {
   try {
     toggleLoading({ key, loading: true });
 
-    const response = await axiosInstance.get(url);
+    const response = await axiosInstance.get(url, headers(auth));
 
     toggleLoading({ key, loading: false });
     if (response.status === 200 && useCache) {
@@ -43,11 +53,7 @@ async function get({ url, useCache = true, key }) {
 async function post({ url, key, data }) {
   try {
     toggleLoading({ key, loading: true });
-    const response = await axiosInstance.post(url, data, {
-      "Access-Control-Allow-Origin": process.env.REACT_APP_API_ENDPOINT,
-      "Access-Control-Allow-Credentials": "true",
-      withCredentials: true,
-    });
+    const response = await axiosInstance.post(url, data, headers(true));
     toggleLoading({ key, loading: false });
 
     return response;
