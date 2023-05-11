@@ -1,7 +1,8 @@
+import { throttle } from "lodash";
 import Api from "../utils/api";
-import { GET_RESULT_LOADING } from "../utils/constant";
+import { GET_RESULTS_LOADING } from "../utils/constant";
 
-export default async function getResults({ page = 1 }) {
+async function getResults({ page = 1 }) {
   const response = await Api.get({
     url: `/api/result/all`,
     auth: true,
@@ -9,7 +10,7 @@ export default async function getResults({ page = 1 }) {
       page,
       limit: 10,
     },
-    key: GET_RESULT_LOADING,
+    key: GET_RESULTS_LOADING,
     useCache: false,
   });
 
@@ -21,3 +22,4 @@ export default async function getResults({ page = 1 }) {
   }
   return response;
 }
+export default throttle(getResults, 100);

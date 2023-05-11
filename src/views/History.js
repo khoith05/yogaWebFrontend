@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import getResults from "../service/getResults";
-import LoadingWrapper from "./LoadingWrapper";
-import { GET_RESULT_LOADING } from "./../utils/constant";
+import { useNavigate } from "react-router-dom";
 import millisToMinutesAndSeconds from "../utils/millisToMinutesAndSeconds";
 import formatDate from "../utils/fortmatDate";
 
@@ -10,6 +9,7 @@ function History() {
   const [currentPage, setCurrentPage] = useState(1);
   const [records, setRecords] = useState([]);
   const [numbers, setNumbers] = useState(0);
+  const navigate = useNavigate();
 
   const prePage = () => {
     if (currentPage !== 1) {
@@ -61,8 +61,12 @@ function History() {
                   </thead>
 
                   <tbody>
-                    {records.map(({ name, time, created, point }, i) => (
-                      <tr key={i}>
+                    {records.map(({ name, time, created, point, id }, i) => (
+                      <tr
+                        key={i}
+                        onClick={() => navigate(`/history/${id}`)}
+                        className="cursor-pointer"
+                      >
                         <td>{i + 1 + (currentPage - 1) * 10}</td>
                         <td>{name}</td>
                         <td>{millisToMinutesAndSeconds(time)}</td>
