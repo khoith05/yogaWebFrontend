@@ -842,7 +842,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .single-chart {
-  width: 33%;
+  width: 150px;
   justify-content: space-around;
 }
 
@@ -945,11 +945,16 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .card-image {
-  background-color: rgb(236, 236, 236);
+  background-color: transparent;
   width: 150px;
   height: 100%;
   margin-right: 10px;
   border-radius: 6px 6px 0 0;
+}
+
+.card-image img {
+  object-fit: cover;
+  height: 100%;
 }
 
 .card-image:hover {

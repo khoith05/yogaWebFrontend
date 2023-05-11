@@ -6,9 +6,9 @@ import { GET_EXERCISE_DETAIL_LOADING } from "../utils/constant";
 import { useParams } from "react-router-dom";
 import getExerciseDetail from "../service/getExerciseDetail";
 import ExercisePage from "./ExercisePage";
-import Result from "./Result";
 import { setExercise as setExerciseToStore } from "../store/pose";
 import { useDispatch } from "react-redux";
+import ResultWrapper from "./ResultWrapper";
 
 const style = {
   height: "100vh",
@@ -36,7 +36,7 @@ function ExerciseView() {
 
   const content = () => {
     if (end) {
-      return <Result />;
+      return <ResultWrapper />;
     } else if (start) {
       return (
         <Container fluid>

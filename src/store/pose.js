@@ -1,5 +1,5 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
-import { mean, get } from "lodash";
+import { createSlice } from "@reduxjs/toolkit";
+import { get } from "lodash";
 
 const poseSlice = createSlice({
   name: "pose",
@@ -42,21 +42,6 @@ const poseSlice = createSlice({
     },
   },
 });
-
-const getExerciseResult = (state) => {
-  const { startTime, endTime, currentPoseListPoint } = state.pose;
-  const points = currentPoseListPoint.map((pointList) => mean(pointList));
-  const time = endTime - startTime;
-  return {
-    time,
-    points,
-  };
-};
-
-export const selectResult = createSelector(
-  getExerciseResult,
-  (loading) => loading
-);
 
 export const {
   addPoint,
