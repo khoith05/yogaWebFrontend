@@ -139,7 +139,7 @@ function CameraWrapper({ poses, setEndExercise }) {
               handleNextPose();
               setCheckPoseStage(0);
             },
-            time: 6000,
+            time: 60000,
           });
 
           // check Pose valid and throw pose error
