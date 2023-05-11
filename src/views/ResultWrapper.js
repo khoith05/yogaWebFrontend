@@ -14,7 +14,9 @@ function ResultWrapper() {
   const totalPoint = Math.round(mean(poses.map(({ point }) => point)));
 
   useEffect(() => {
-    saveResult({ exerciseId: id, point: totalPoint, time, poses });
+    if (isLogin) {
+      saveResult({ exerciseId: id, point: totalPoint, time, poses });
+    }
   }, [isLogin]);
 
   return (

@@ -42,7 +42,7 @@ export const NavBar = () => {
   }, [isLogin, username]);
 
   useEffect(() => {
-    if (location.pathname === "/" && activeLink === "exercise") {
+    if (location.pathname === "/" && activeLink === "sequence") {
       document
         .getElementById("sequence")
         .scrollIntoView({ behavior: "smooth" });
@@ -91,13 +91,13 @@ export const NavBar = () => {
                 as={Link}
                 to="/"
                 className={
-                  activeLink === "exercise"
+                  activeLink === "sequence"
                     ? "active navbar-link"
                     : "navbar-link"
                 }
-                onClick={() => onUpdateActiveLink("exercise")}
+                onClick={() => onUpdateActiveLink("sequence")}
               >
-                Exercise
+                Sequence
               </Nav.Link>
               {isLogin && (
                 <Nav.Link

@@ -5,8 +5,9 @@ const getExerciseResult = (state) => {
   const { startTime, endTime, currentPoseListPoint, exercise } = state.pose;
 
   const poses = get(exercise, "poses", []);
-  const posesWithPoint = poses.map(({ name, imageUrl }, index) => {
+  const posesWithPoint = poses.map(({ name, imageUrl, poseId }, index) => {
     return {
+      poseId,
       name,
       imageUrl,
       point: mean(currentPoseListPoint[index]),

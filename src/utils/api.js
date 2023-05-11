@@ -24,7 +24,7 @@ const headers = (auth) => {
     : {};
 };
 
-async function get({ url, useCache = true, key, auth = false }) {
+async function get({ url, useCache = true, key, auth = false, params = {} }) {
   const cacheKey = `get${url}`;
   if (useCache) {
     const cachedResponse = cache.get(cacheKey);
@@ -36,7 +36,10 @@ async function get({ url, useCache = true, key, auth = false }) {
   try {
     toggleLoading({ key, loading: true });
 
-    const response = await axiosInstance.get(url, headers(auth));
+    const response = await axiosInstance.get(url, {
+      ...params,
+      ...headers(auth),
+    });
 
     toggleLoading({ key, loading: false });
     if (response.status === 200 && useCache) {
