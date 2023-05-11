@@ -64,8 +64,8 @@ function Banner() {
                   }
                 >
                   <span className="tagline">Welcome to Fitty</span>
-                  <h1>
-                    {`Hi! We're here to help you`}{" "}
+                  <h1 style={{ height: "300px" }}>
+                    {`Hi! We're here to help you `}
                     <span className="txt-rotate">
                       <span className="wrap">{text}</span>
                     </span>

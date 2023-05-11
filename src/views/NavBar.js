@@ -41,6 +41,14 @@ export const NavBar = () => {
     }
   }, [isLogin, username]);
 
+  useEffect(() => {
+    if (location.pathname === "/" && activeLink === "exercise") {
+      document
+        .getElementById("sequence")
+        .scrollIntoView({ behavior: "smooth" });
+    }
+  }, [location, activeLink]);
+
   const onUpdateActiveLink = (value) => {
     setActiveLink(value);
   };
@@ -71,7 +79,7 @@ export const NavBar = () => {
             <Nav className="ms-auto">
               <Nav.Link
                 as={Link}
-                to="#home"
+                to="/"
                 className={
                   activeLink === "home" ? "active navbar-link" : "navbar-link"
                 }
@@ -81,26 +89,30 @@ export const NavBar = () => {
               </Nav.Link>
               <Nav.Link
                 as={Link}
-                to="/about"
+                to="/"
                 className={
-                  activeLink === "about" ? "active navbar-link" : "navbar-link"
-                }
-                onClick={() => onUpdateActiveLink("about")}
-              >
-                About us
-              </Nav.Link>
-              <Nav.Link
-                as={Link}
-                to="#sequence"
-                className={
-                  activeLink === "projects"
+                  activeLink === "exercise"
                     ? "active navbar-link"
                     : "navbar-link"
                 }
-                onClick={() => onUpdateActiveLink("sequence")}
+                onClick={() => onUpdateActiveLink("exercise")}
               >
                 Exercise
               </Nav.Link>
+              {isLogin && (
+                <Nav.Link
+                  as={Link}
+                  to="/history"
+                  className={
+                    activeLink === "history"
+                      ? "active navbar-link"
+                      : "navbar-link"
+                  }
+                  onClick={() => onUpdateActiveLink("history")}
+                >
+                  History
+                </Nav.Link>
+              )}
             </Nav>
             <span className="navbar-text">
               {isLogin ? (
