@@ -90,31 +90,31 @@ function CameraWrapper({ poses, setEndExercise }) {
 
   const handleCheckPosition = useCallback(
     ({ keypoints }) => {
-      setTimeoutWithKey({
-        key: CHECK_POSITION_TIMEOUT_KEY,
-        callback: () => {
-          setShouldcheckPosition(false);
-          handleNextPose();
-          console.log("POSITION CHECK DONE");
-        },
-        time: 1000,
-      });
-      checkPosition({ width: size.width, keypoints });
-      // const validPosition = checkPosition({ width: size.width, keypoints });
-      // setIsValidPosition(validPosition);
-      // if (validPosition) {
-      //   setTimeoutWithKey({
-      //     key: CHECK_POSITION_TIMEOUT_KEY,
-      //     callback: () => {
-      //       setShouldcheckPosition(false);
-      //       handleNextPose();
-      //       console.log("POSITION CHECK DONE");
-      //     },
-      //     time: 5000,
-      //   });
-      // } else {
-      //   stopExcute({ key: CHECK_POSITION_TIMEOUT_KEY });
-      // }
+      // setTimeoutWithKey({
+      //   key: CHECK_POSITION_TIMEOUT_KEY,
+      //   callback: () => {
+      //     setShouldcheckPosition(false);
+      //     handleNextPose();
+      //     console.log("POSITION CHECK DONE");
+      //   },
+      //   time: 1000,
+      // });
+      // checkPosition({ width: size.width, keypoints });
+      const validPosition = checkPosition({ width: size.width, keypoints });
+      setIsValidPosition(validPosition);
+      if (validPosition) {
+        setTimeoutWithKey({
+          key: CHECK_POSITION_TIMEOUT_KEY,
+          callback: () => {
+            setShouldcheckPosition(false);
+            handleNextPose();
+            console.log("POSITION CHECK DONE");
+          },
+          time: 5000,
+        });
+      } else {
+        stopExcute({ key: CHECK_POSITION_TIMEOUT_KEY });
+      }
     },
     [size, handleNextPose]
   );
@@ -139,7 +139,7 @@ function CameraWrapper({ poses, setEndExercise }) {
               handleNextPose();
               setCheckPoseStage(0);
             },
-            time: 1000,
+            time: 6000,
           });
 
           // check Pose valid and throw pose error
