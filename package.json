@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
     "@mediapipe/camera_utils": "^0.3.1675466862",
     "@mediapipe/drawing_utils": "^0.3.1675466124",
     "@mediapipe/pose": "^0.5.1675469404",
@@ -18,9 +16,6 @@
     "async": "^3.2.4",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-only-warn": "^1.1.0",
-    "eslint-plugin-prettier": "^4.2.1",
     "howler": "^2.2.3",
     "jdenticon": "^3.2.0",
     "lodash": "^4.17.21",
@@ -76,6 +71,8 @@
     "eslint-plugin-only-warn": "^1.1.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "^2.8.7"
+    "prettier": "^2.8.7",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1"
   }
 }
