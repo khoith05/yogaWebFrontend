@@ -44,7 +44,6 @@ function CameraWrapper({ poses, setEndExercise }) {
   const { width: rWidth, ref: wrapperRef } = useResizeDetector();
   useEffect(() => {
     return () => {
-      clearAudioQueue();
       clearAllTimeout();
     };
   }, []);
