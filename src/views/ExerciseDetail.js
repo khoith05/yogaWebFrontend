@@ -13,7 +13,7 @@ const ExerciseDetail = ({ poses }) => {
   const data = { nodes: poses };
 
   return (
-    <div style={{ height: "400px" }} className="pose-table-wrapper">
+    <div className="pose-table-wrapper">
       <div className="pose-table__vritual-header "></div>
       <Table data={data} className="pose-table">
         {(tableList) => (

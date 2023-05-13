@@ -69,7 +69,7 @@ const ExercisePage = ({ onStartClick, exercise }) => {
           <h1>{name}</h1>
           <p>{`${duration} minutes`}</p>
         </div>
-        <div className="d-flex flex-column">
+        <div className="d-flex flex-column mx-auto">
           <button className="my-button1" onClick={() => setModalShow(true)}>
             Camera Placing
           </button>
