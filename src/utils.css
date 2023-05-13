@@ -24,3 +24,32 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+.pose-image {
+  max-width: 150px;
+  width: 100%;
+  max-height: 100px;
+  height: auto;
+  margin: 5px 0;
+  object-fit: cover;
+}
+
+.pose-table__header-right {
+  height: 50px;
+}
+
+@media screen and (max-width: 450px) {
+  .table-align-right {
+    text-align: right;
+    visibility: hidden;
+  }
+  .table-align-right > div {
+    text-align: right;
+    visibility: hidden;
+  }
+  .table-overflow > div {
+    overflow: visible !important;
+    white-space: nowrap !important;
+    margin-left: 5px !important;
+  }
+}

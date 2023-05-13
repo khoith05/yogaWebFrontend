@@ -31,10 +31,7 @@ const ExerciseDetail = ({ poses }) => {
                   {" "}
                 </HeaderCell>
                 <HeaderCell style={{ height: "50px" }}> Posture </HeaderCell>
-                <HeaderCell
-                  style={{ height: "50px", paddingLeft: "90px" }}
-                  className="pose-table__header-right"
-                >
+                <HeaderCell className="pose-table__header-right table-align-right">
                   {" "}
                   Time{" "}
                 </HeaderCell>
@@ -48,23 +45,13 @@ const ExerciseDetail = ({ poses }) => {
                   style={{ backgroundColor: "transparent" }}
                 >
                   <Cell>
-                    <img
-                      src={item.imageUrl}
-                      style={{
-                        width: "150px",
-                        height: "100px",
-                        marginLeft: "10px",
-                        marginBottom: "10px",
-                        marginTop: "15px",
-                      }}
-                    />
+                    <img src={item.imageUrl} className="pose-image" />
                   </Cell>
-                  <Cell>
-                    <div className="pose-name">{item.name}</div>
+                  <Cell className="table-overflow">
+                    {item.name}
+                    {/* <div className="pose-name"></div> */}
                   </Cell>
-                  <Cell className="time" style={{ paddingLeft: "100px" }}>
-                    {`${item.duration} sec`}
-                  </Cell>
+                  <Cell className="time table-align-right">{`${item.duration} sec`}</Cell>
                 </Row>
               ))}
             </Body>
