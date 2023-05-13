@@ -49,6 +49,10 @@ function Camera(props) {
 
     pose.setOptions(options);
     poseRef.current = pose;
+
+    return () => {
+      pose.close();
+    };
   }, []);
 
   // init camera

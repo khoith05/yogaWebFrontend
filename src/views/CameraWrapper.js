@@ -74,8 +74,8 @@ function CameraWrapper({ poses, setEndExercise }) {
         }
 
         if (currentPose.index >= poses.length - 1) {
-          dispatch(endExercise());
           endAudio();
+          dispatch(endExercise());
           setEndExercise();
           return;
         }
