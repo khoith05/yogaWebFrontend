@@ -14,7 +14,7 @@ export default async function signUp({ username, email, password }) {
   });
 
   if (!response || response.status !== 200) {
-    return { message: String(get(response, "data.data.message", "Error")) };
+    return { message: String(get(response, "data.message", "Error")) };
   }
 
   const token = get(response, "data.data.token", "");
