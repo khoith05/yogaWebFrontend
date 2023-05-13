@@ -6,6 +6,7 @@ import millisToMinutesAndSeconds from "../utils/millisToMinutesAndSeconds";
 import formatDate from "../utils/fortmatDate";
 import { GET_RESULTS_LOADING } from "../utils/constant";
 import LoadingWrapper from "./LoadingWrapper";
+import ReactPaginate from "react-paginate";
 
 function History() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -13,20 +14,8 @@ function History() {
   const [numbers, setNumbers] = useState(0);
   const navigate = useNavigate();
 
-  const prePage = () => {
-    if (currentPage !== 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const changeCPage = (id) => {
-    setCurrentPage(id);
-  };
-
-  const nextPage = () => {
-    if (currentPage <= numbers) {
-      setCurrentPage(currentPage + 1);
-    }
+  const changeCPage = ({ selected }) => {
+    setCurrentPage(selected + 1);
   };
 
   useEffect(() => {
@@ -54,7 +43,7 @@ function History() {
             </div>
           ) : (
             <>
-              <div className="table-box align-self-center">
+              <div className="table-box align-self-center responsive-table-wrapper">
                 <table className="content-table">
                   <thead>
                     <tr>
@@ -84,37 +73,28 @@ function History() {
                 </table>
               </div>
 
-              <section>
-                <ul className="pagination">
-                  <li className="page-item">
-                    <button className="page-link" onClick={prePage}>
-                      Prev
-                    </button>
-                  </li>
-                  {Array.from({ length: numbers }, (_, i) => i + 1).map(
-                    (n, i) => (
-                      <li
-                        className={`page-item ${
-                          currentPage === n ? "active" : ""
-                        }`}
-                        key={i}
-                      >
-                        <button
-                          className="page-link"
-                          onClick={() => changeCPage(n)}
-                        >
-                          {n}
-                        </button>
-                      </li>
-                    )
-                  )}
-                  <li className="page-item">
-                    <button className="page-link" onClick={nextPage}>
-                      Next
-                    </button>
-                  </li>
-                </ul>
-              </section>
+              <div className="mt-4">
+                <ReactPaginate
+                  breakLabel="..."
+                  nextLabel=">>"
+                  onPageChange={changeCPage}
+                  pageRangeDisplayed={3}
+                  pageCount={numbers}
+                  previousLabel="<<"
+                  renderOnZeroPageCount={null}
+                  breakClassName="page-item"
+                  breakLinkClassName="page-link"
+                  containerClassName="pagination"
+                  pageClassName="page-item"
+                  pageLinkClassName="page-link"
+                  activeClassName="active"
+                  disabledClassName="disabled"
+                  previousClassName="page-item"
+                  nextClassName="page-item"
+                  previousLinkClassName="page-link"
+                  nextLinkClassName="page-link"
+                />
+              </div>
             </>
           )}
         </div>

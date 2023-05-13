@@ -53,3 +53,9 @@
     margin-left: 5px !important;
   }
 }
+
+/* default table styles */
+.responsive-table-wrapper {
+  overflow-x: scroll;
+  max-width: 100%;
+}
