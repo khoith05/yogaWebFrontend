@@ -872,12 +872,31 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   flex-direction: row; */
 }
 
+.skill-point {
+  display: none;
+  font-size: 20px;
+  color: rgb(13, 16, 96);
+  font-weight: 700;
+  text-align: center;
+}
+
 .skill-box .skill-bar {
   overflow: hidden;
-  width: 350px;
+  max-width: 350px;
+  min-width: 200px;
+  width: auto;
   height: 35px;
   border-radius: 5px;
   background-color: rgb(168, 187, 209);
+}
+
+@media screen and (max-width: 600px) {
+  .skill-bar {
+    display: none;
+  }
+  .skill-point {
+    display: block;
+  }
 }
 
 @keyframes progress {
@@ -918,7 +937,8 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .pose-card {
-  width: 800px;
+  max-width: 800px;
+  width: 100%;
   height: 150px;
   background: rgb(192, 223, 240);
   padding: 0.4em;
@@ -929,13 +949,14 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   align-items: center;
   margin-bottom: 5px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
 }
 
 .card-image {
   background-color: transparent;
-  width: 150px;
+  width: auto;
+  max-width: 150px;
   height: 100%;
-  margin-right: 10px;
   border-radius: 6px 6px 0 0;
 }
 
@@ -954,8 +975,8 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   font-weight: 600;
   color: rgb(63, 121, 230);
   padding: 10px 7px 0;
-  margin-right: 50px;
-  width: 210px;
+  /* max-width: 210px; */
+  width: 100%;
 }
 
 /*-------------------------- Exercise Details--------------------------------- */

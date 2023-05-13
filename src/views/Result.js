@@ -10,7 +10,7 @@ function Result({ time, name, poses, point }) {
           <h1>{name}</h1>
           <p>{`Total Time: ${time}`}</p>
         </div>
-        <div className="single-chart">
+        <div className="single-chart mx-auto">
           <CircularProgressbar
             value={point}
             text={`${point}%`}
@@ -21,25 +21,28 @@ function Result({ time, name, poses, point }) {
       {poses.map(({ name, imageUrl, point }, index) => {
         return (
           <div className="pose-card" key={index}>
-            <div className="card-image">
+            <div className="card-image col-4">
               <img src={imageUrl} />
             </div>
-            <div className="category"> {name} </div>
-            <div className="skill-box">
-              <div className="skill-bar">
-                <div
-                  style={{
-                    position: "relative",
-                    display: "block",
-                    height: "100%",
-                    width: `${point}%`,
-                    borderRadius: "6px",
-                    background: "#012169",
-                    animation: "progress 1s ease-in-out forwards",
-                    opacity: "0",
-                  }}
-                ></div>
+            <div className="category col-sm-4 col-6"> {name} </div>
+            <div className="col-sm-4 col-2 mx-auto">
+              <div className="skill-box ">
+                <div className="skill-bar">
+                  <div
+                    style={{
+                      position: "relative",
+                      display: "block",
+                      height: "100%",
+                      width: `${point}%`,
+                      borderRadius: "6px",
+                      background: "#012169",
+                      animation: "progress 1s ease-in-out forwards",
+                      opacity: "0",
+                    }}
+                  ></div>
+                </div>
               </div>
+              <p className="skill-point">{`${point}%`}</p>
             </div>
           </div>
         );
