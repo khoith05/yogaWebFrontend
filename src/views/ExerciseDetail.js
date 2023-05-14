@@ -45,7 +45,9 @@ const ExerciseDetail = ({ poses }) => {
                   style={{ backgroundColor: "transparent" }}
                 >
                   <Cell>
-                    <img src={item.imageUrl} className="pose-image" />
+                    <div className="d-flex justify-content-center">
+                      <img src={item.imageUrl} className="pose-image" />
+                    </div>
                   </Cell>
                   <Cell className="table-overflow">
                     {item.name}

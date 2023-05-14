@@ -38,6 +38,13 @@
   height: 50px;
 }
 
+.table-overflow > div {
+  /* overflow: visible !important;
+  white-space: nowrap !important; */
+  /* margin-left: 5px !important; */
+  white-space: normal !important;
+}
+
 @media screen and (max-width: 450px) {
   .table-align-right {
     text-align: right;
