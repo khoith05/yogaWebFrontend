@@ -483,10 +483,6 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   top: 0;
 }
 
-.pose-image {
-  transition: width 0.5s ease-in, height 0.5s ease-in;
-}
-
 /************ Signup ************/
 .signup {
   margin-top: 0px;

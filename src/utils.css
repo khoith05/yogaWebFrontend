@@ -66,3 +66,7 @@
   overflow-x: scroll;
   max-width: 100%;
 }
+
+.pose-video {
+  transition: width 0.5s ease-in, height 0.5s ease-in;
+}

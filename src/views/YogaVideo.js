@@ -16,7 +16,7 @@ function YogaVideo(props) {
 
   return (
     <video
-      className="camera-element pose-image"
+      className="camera-element pose-video"
       key={url}
       src={url}
       style={style}
