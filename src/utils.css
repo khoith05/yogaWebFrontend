@@ -70,3 +70,18 @@
 .pose-video {
   transition: width 0.5s ease-in, height 0.5s ease-in;
 }
+
+@media screen and (max-width: 767px) {
+  .navbar__responsive {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: start;
+  }
+
+  .navbar__responsive > * {
+    display: flex !important;
+    flex-direction: row !important;
+    margin-left: 0 !important;
+  }
+}

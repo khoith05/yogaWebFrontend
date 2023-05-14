@@ -75,8 +75,8 @@ export const NavBar = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav">
             <span className="navbar-toggler-icon"></span>
           </Navbar.Toggle>
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
+          <Navbar.Collapse id="basic-navbar-nav" className="navbar__responsive">
+            <Nav className="ms-md-auto">
               <Nav.Link
                 as={Link}
                 to="/"
