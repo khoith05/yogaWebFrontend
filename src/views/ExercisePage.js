@@ -37,12 +37,13 @@ const MyVerticallyCenteredModal = (props) => {
           }}
         >
           <ReactPlayer
-            url="https://www.youtube.com/watch?v=VHjMJeLsI0o&list=RDVHjMJeLsI0o&start_radio=1"
+            url="https://www.youtube.com/watch?v=EXSApAVZ7KA"
             className="react-player"
             width="100%"
             height="100%"
-            controls={true}
+            controls={false}
             playing={true}
+            loop={true}
           />
         </div>
       </Modal.Body>
